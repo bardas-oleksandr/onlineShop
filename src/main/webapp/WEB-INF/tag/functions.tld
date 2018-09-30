@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<taglib
+        xmlns="http://java.sun.com/xml/ns/javaee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+        version="2.0">
+
+    <display-name>Custom Functions</display-name>
+    <tlib-version>1.0</tlib-version>
+    <uri>/WEB-INF/tag/functions</uri>
+
+    <function>
+        <name>getBundleByLanguage</name>
+        <function-class>ua.levelup.util.ResourceBundleHolder</function-class>
+        <function-signature>java.util.ResourceBundle getBundleByLanguage(java.lang.String)</function-signature>
+    </function>
+</taglib>

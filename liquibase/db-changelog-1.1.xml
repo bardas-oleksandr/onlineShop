@@ -1,0 +1,796 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="create_foreign_keys" author="root">
+        <preConditions onFail="CONTINUE">
+            <tableExists tableName="categories" />
+            <tableExists tableName="manufacturers" />
+            <tableExists tableName="products" />
+            <tableExists tableName="users" />
+            <tableExists tableName="orders" />
+            <tableExists tableName="orders_products" />
+        </preConditions>
+
+        <!--********************************-->
+        <!--Initial data for users table-->
+        <!--********************************-->
+
+        <insert tableName="users">
+            <column name="id" type="INT UNSIGNED">1</column>
+            <column name="user_name" type="varchar(20)">Admin</column>
+            <column name="user_password" type="varchar(20)">admin</column>
+            <column name="user_email" type="varchar(320)">admin@gmail.com</column>
+            <column name="user_state" type="smallint">0</column>
+        </insert>
+
+        <insert tableName="users">
+            <column name="id" type="INT UNSIGNED">2</column>
+            <column name="user_name" type="varchar(20)">John Doe</column>
+            <column name="user_password" type="varchar(20)">1234</column>
+            <column name="user_email" type="varchar(320)">active@gmail.com</column>
+            <column name="user_state" type="smallint">1</column>
+        </insert>
+
+        <insert tableName="users">
+            <column name="id" type="INT UNSIGNED">3</column>
+            <column name="user_name" type="varchar(20)">Dr. Evil</column>
+            <column name="user_password" type="varchar(20)">1234</column>
+            <column name="user_email" type="varchar(320)">blocked@gmail.com</column>
+            <column name="user_state" type="smallint">2</column>
+        </insert>
+
+        <!--********************************-->
+        <!--Initial data for categories table-->
+        <!--********************************-->
+
+        <insert tableName="categories">
+            <column name="id" type="INT UNSIGNED">1</column>
+            <column name="category_name" type="varchar(50)">Carp</column>
+            <column name="category_parent_id" type="INT UNSIGNED">NULL</column>
+        </insert>
+
+        <insert tableName="categories">
+            <column name="id" type="INT UNSIGNED">2</column>
+            <column name="category_name" type="varchar(50)">Predator</column>
+            <column name="category_parent_id" type="INT UNSIGNED">NULL</column>
+        </insert>
+
+        <insert tableName="categories">
+            <column name="id" type="INT UNSIGNED">3</column>
+            <column name="category_name" type="varchar(50)">Sea</column>
+            <column name="category_parent_id" type="INT UNSIGNED">NULL</column>
+        </insert>
+
+        <insert tableName="categories">
+            <column name="id" type="INT UNSIGNED">4</column>
+            <column name="category_name" type="varchar(50)">Reels</column>
+            <column name="category_parent_id" type="INT UNSIGNED">NULL</column>
+        </insert>
+
+        <insert tableName="categories">
+            <column name="id" type="INT UNSIGNED">5</column>
+            <column name="category_name" type="varchar(50)">Rods</column>
+            <column name="category_parent_id" type="INT UNSIGNED">NULL</column>
+        </insert>
+
+        <!--************************************************-->
+        <!--Initial data for categories table. Subcategories-->
+        <!--************************************************-->
+
+        <insert tableName="categories">
+            <column name="id" type="INT UNSIGNED">6</column>
+            <column name="category_name" type="varchar(50)">Carp Fishing Accessories</column>
+            <column name="category_parent_id" type="INT UNSIGNED">1</column>
+        </insert>
+
+        <insert tableName="categories">
+            <column name="id" type="INT UNSIGNED">7</column>
+            <column name="category_name" type="varchar(50)">Carp Fishing Baits</column>
+            <column name="category_parent_id" type="INT UNSIGNED">1</column>
+        </insert>
+
+        <insert tableName="categories">
+            <column name="id" type="INT UNSIGNED">8</column>
+            <column name="category_name" type="varchar(50)">Carp Fishing Hooks</column>
+            <column name="category_parent_id" type="INT UNSIGNED">1</column>
+        </insert>
+
+        <insert tableName="categories">
+            <column name="id" type="INT UNSIGNED">9</column>
+            <column name="category_name" type="varchar(50)">Predator Fishing Accessories</column>
+            <column name="category_parent_id" type="INT UNSIGNED">2</column>
+        </insert>
+
+        <insert tableName="categories">
+            <column name="id" type="INT UNSIGNED">10</column>
+            <column name="category_name" type="varchar(50)">Lures</column>
+            <column name="category_parent_id" type="INT UNSIGNED">2</column>
+        </insert>
+
+        <insert tableName="categories">
+            <column name="id" type="INT UNSIGNED">11</column>
+            <column name="category_name" type="varchar(50)">Pike Fishing Floats</column>
+            <column name="category_parent_id" type="INT UNSIGNED">2</column>
+        </insert>
+
+        <insert tableName="categories">
+            <column name="id" type="INT UNSIGNED">12</column>
+            <column name="category_name" type="varchar(50)">Sea Fishing Accessories</column>
+            <column name="category_parent_id" type="INT UNSIGNED">3</column>
+        </insert>
+
+        <insert tableName="categories">
+            <column name="id" type="INT UNSIGNED">13</column>
+            <column name="category_name" type="varchar(50)">Sea Fishing Hooks</column>
+            <column name="category_parent_id" type="INT UNSIGNED">3</column>
+        </insert>
+
+        <insert tableName="categories">
+            <column name="id" type="INT UNSIGNED">14</column>
+            <column name="category_name" type="varchar(50)">Sea Fishing Lures and Spinners</column>
+            <column name="category_parent_id" type="INT UNSIGNED">3</column>
+        </insert>
+
+        <insert tableName="categories">
+            <column name="id" type="INT UNSIGNED">15</column>
+            <column name="category_name" type="varchar(50)">Baitcasting Reels</column>
+            <column name="category_parent_id" type="INT UNSIGNED">4</column>
+        </insert>
+
+        <insert tableName="categories">
+            <column name="id" type="INT UNSIGNED">16</column>
+            <column name="category_name" type="varchar(50)">Baitrunner/Freespin Reels</column>
+            <column name="category_parent_id" type="INT UNSIGNED">4</column>
+        </insert>
+
+        <insert tableName="categories">
+            <column name="id" type="INT UNSIGNED">17</column>
+            <column name="category_name" type="varchar(50)">Closed Face Reels</column>
+            <column name="category_parent_id" type="INT UNSIGNED">4</column>
+        </insert>
+
+        <insert tableName="categories">
+            <column name="id" type="INT UNSIGNED">18</column>
+            <column name="category_name" type="varchar(50)">Bass Rods</column>
+            <column name="category_parent_id" type="INT UNSIGNED">5</column>
+        </insert>
+
+        <insert tableName="categories">
+            <column name="id" type="INT UNSIGNED">19</column>
+            <column name="category_name" type="varchar(50)">Boat Rods</column>
+            <column name="category_parent_id" type="INT UNSIGNED">5</column>
+        </insert>
+
+        <!--***********************************-->
+        <!--Initial data for manufacturers table-->
+        <!--***********************************-->
+
+        <insert tableName="manufacturers">
+            <column name="id" type="INT UNSIGNED">1</column>
+            <column name="manufacturer_name" type="varchar(50)">Daiwa</column>
+        </insert>
+
+        <insert tableName="manufacturers">
+            <column name="id" type="INT UNSIGNED">2</column>
+            <column name="manufacturer_name" type="varchar(50)">Yo-zuri</column>
+        </insert>
+
+        <insert tableName="manufacturers">
+            <column name="id" type="INT UNSIGNED">3</column>
+            <column name="manufacturer_name" type="varchar(50)">Salmo</column>
+        </insert>
+
+        <insert tableName="manufacturers">
+            <column name="id" type="INT UNSIGNED">4</column>
+            <column name="manufacturer_name" type="varchar(50)">Lucky John</column>
+        </insert>
+
+        <insert tableName="manufacturers">
+            <column name="id" type="INT UNSIGNED">5</column>
+            <column name="manufacturer_name" type="varchar(50)">Shimano</column>
+        </insert>
+
+        <insert tableName="manufacturers">
+            <column name="id" type="INT UNSIGNED">6</column>
+            <column name="manufacturer_name" type="varchar(50)">Shakespeare</column>
+        </insert>
+
+        <insert tableName="manufacturers">
+            <column name="id" type="INT UNSIGNED">7</column>
+            <column name="manufacturer_name" type="varchar(50)">Drennan</column>
+        </insert>
+
+        <insert tableName="manufacturers">
+            <column name="id" type="INT UNSIGNED">8</column>
+            <column name="manufacturer_name" type="varchar(50)">Avid Carp</column>
+        </insert>
+
+        <insert tableName="manufacturers">
+            <column name="id" type="INT UNSIGNED">9</column>
+            <column name="manufacturer_name" type="varchar(50)">Fox</column>
+        </insert>
+
+        <!--********************************-->
+        <!--Initial data for products table-->
+        <!--********************************-->
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">1</column>
+            <column name="product_name" type="varchar(50)">Avid Carp Overnighter Yard Sticks</column>
+            <column name="product_price" type="FLOAT">16.69</column>
+            <column name="product_available" type="boolean" valueBoolean="true"/>
+            <column name="product_description" type="varchar(100)">The sticks are supplied with a 12ft cord</column>
+            <column name="product_category_id" type="INT UNSIGNED">6</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">8</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">2</column>
+            <column name="product_name" type="varchar(50)">Fox Bait and Glug Tubs LARGE</column>
+            <column name="product_price" type="FLOAT">13.99</column>
+            <column name="product_available" type="boolean" valueBoolean="true"/>
+            <column name="product_description" type="varchar(100)">Designed for secure storage of all hook baits.</column>
+            <column name="product_category_id" type="INT UNSIGNED">6</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">9</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">3</column>
+            <column name="product_name" type="varchar(50)">Cygnet Splash Mats</column>
+            <column name="product_price" type="FLOAT">14.99</column>
+            <column name="product_available" type="boolean" valueBoolean="true"/>
+            <column name="product_description" type="varchar(100)">Serving a plethora of purposes</column>
+            <column name="product_category_id" type="INT UNSIGNED">6</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">7</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">4</column>
+            <column name="product_name" type="varchar(50)">Avid Carp CORN Stops</column>
+            <column name="product_price" type="FLOAT">2.75</column>
+            <column name="product_available" type="boolean" valueBoolean="true"/>
+            <column name="product_description" type="varchar(100)"></column>
+            <column name="product_category_id" type="INT UNSIGNED">7</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">8</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">5</column>
+            <column name="product_name" type="varchar(50)">Avid Carp MAGGOT Stops</column>
+            <column name="product_price" type="FLOAT">2.75</column>
+            <column name="product_available" type="boolean" valueBoolean="true"/>
+            <column name="product_description" type="varchar(100)">Available in a variety of different colours</column>
+            <column name="product_category_id" type="INT UNSIGNED">7</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">8</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">6</column>
+            <column name="product_name" type="varchar(50)">Avid Carp MAIZE Stops</column>
+            <column name="product_price" type="FLOAT">2.75</column>
+            <column name="product_available" type="boolean" valueBoolean="true"/>
+            <column name="product_description" type="varchar(100)">Bright colours to attract fish</column>
+            <column name="product_category_id" type="INT UNSIGNED">7</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">8</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">7</column>
+            <column name="product_name" type="varchar(50)">Drennan Carp BARBLESS Spade HOOKS</column>
+            <column name="product_price" type="FLOAT">1.19</column>
+            <column name="product_available" type="boolean" valueBoolean="true"/>
+            <column name="product_description" type="varchar(100)">Each pack contains 10 Barbless Carp Spade Hooks.</column>
+            <column name="product_category_id" type="INT UNSIGNED">8</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">7</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">8</column>
+            <column name="product_name" type="varchar(50)">Drennan Carp Feeder BARBLESS Spade HOOKS</column>
+            <column name="product_price" type="FLOAT">1.19</column>
+            <column name="product_available" type="boolean" valueBoolean="false"/>
+            <column name="product_description" type="varchar(100)">Each pack contains 10 Barbless Spade Carp Feeder Hooks.</column>
+            <column name="product_category_id" type="INT UNSIGNED">8</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">7</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">9</column>
+            <column name="product_name" type="varchar(50)">Fox Edges Armapoint Zig and Floater Hooks</column>
+            <column name="product_price" type="FLOAT">4.49</column>
+            <column name="product_available" type="boolean" valueBoolean="true"/>
+            <column name="product_description" type="varchar(100)"></column>
+            <column name="product_category_id" type="INT UNSIGNED">8</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">9</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">10</column>
+            <column name="product_name" type="varchar(50)">Shakespeare Covert Dark Chod Hooks</column>
+            <column name="product_price" type="FLOAT">4.25</column>
+            <column name="product_available" type="boolean" valueBoolean="false"/>
+            <column name="product_description" type="varchar(100)"></column>
+            <column name="product_category_id" type="INT UNSIGNED">8</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">6</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">11</column>
+            <column name="product_name" type="varchar(50)">Daiwa Boat Rod Holder</column>
+            <column name="product_price" type="FLOAT">7.49</column>
+            <column name="product_available" type="boolean" valueBoolean="true"/>
+            <column name="product_description" type="varchar(100)">Always fits system for mounting and a quick release device</column>
+            <column name="product_category_id" type="INT UNSIGNED">9</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">1</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">12</column>
+            <column name="product_name" type="varchar(50)">Shakespeare Pocket Size Line Stripper</column>
+            <column name="product_price" type="FLOAT">7.99</column>
+            <column name="product_available" type="boolean" valueBoolean="true"/>
+            <column name="product_description" type="varchar(100)">Allows to remove any older lines from reel both quickly and easily</column>
+            <column name="product_category_id" type="INT UNSIGNED">9</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">6</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">13</column>
+            <column name="product_name" type="varchar(50)">Daiwa Capped Plastic Rod Tube Black</column>
+            <column name="product_price" type="FLOAT">5.99</column>
+            <column name="product_available" type="boolean" valueBoolean="true"/>
+            <column name="product_description" type="varchar(100)">These can easily but cut down to the size that you require</column>
+            <column name="product_category_id" type="INT UNSIGNED">9</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">1</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">14</column>
+            <column name="product_name" type="varchar(50)">Salmo Powerbait Sandeels 12cm</column>
+            <column name="product_price" type="FLOAT">4.49</column>
+            <column name="product_available" type="boolean" valueBoolean="true"/>
+            <column name="product_description" type="varchar(100)">Available in three different colours.</column>
+            <column name="product_category_id" type="INT UNSIGNED">10</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">3</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">15</column>
+            <column name="product_name" type="varchar(50)">Yo-Zuri Kick-S Weedless Minnows</column>
+            <column name="product_price" type="FLOAT">5.99</column>
+            <column name="product_available" type="boolean" valueBoolean="true"/>
+            <column name="product_description" type="varchar(100)">Two different types are available.</column>
+            <column name="product_category_id" type="INT UNSIGNED">10</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">2</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">16</column>
+            <column name="product_name" type="varchar(50)">Lucky John Jell-Ignite Soft Shads</column>
+            <column name="product_price" type="FLOAT">3.95</column>
+            <column name="product_available" type="boolean" valueBoolean="true"/>
+            <column name="product_description" type="varchar(100)">Each pack has 3 different colours inside.</column>
+            <column name="product_category_id" type="INT UNSIGNED">10</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">4</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">17</column>
+            <column name="product_name" type="varchar(50)">Salmo Black Minnow Color Box Bodies</column>
+            <column name="product_price" type="FLOAT">3.99</column>
+            <column name="product_available" type="boolean" valueBoolean="true"/>
+            <column name="product_description" type="varchar(100)">This pack features 4 different colours</column>
+            <column name="product_category_id" type="INT UNSIGNED">10</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">3</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">18</column>
+            <column name="product_name" type="varchar(50)">Yo-zuri Rage Dropshot Fry</column>
+            <column name="product_price" type="FLOAT">3.99</column>
+            <column name="product_available" type="boolean" valueBoolean="false"/>
+            <column name="product_description" type="varchar(100)">Four colour options</column>
+            <column name="product_category_id" type="INT UNSIGNED">10</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">2</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">19</column>
+            <column name="product_name" type="varchar(50)">Yo-zuri Rage Dart Head</column>
+            <column name="product_price" type="FLOAT">4.99</column>
+            <column name="product_available" type="boolean" valueBoolean="false"/>
+            <column name="product_description" type="varchar(100)">Available in a 1/0 size hook</column>
+            <column name="product_category_id" type="INT UNSIGNED">10</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">2</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">20</column>
+            <column name="product_name" type="varchar(50)">Yo-zuri Rage Micro Fry 4cm</column>
+            <column name="product_price" type="FLOAT">4.49</column>
+            <column name="product_available" type="boolean" valueBoolean="false"/>
+            <column name="product_description" type="varchar(100)">10 per pack.</column>
+            <column name="product_category_id" type="INT UNSIGNED">10</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">2</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">21</column>
+            <column name="product_name" type="varchar(50)">Drennan Pike Zeppler</column>
+            <column name="product_price" type="FLOAT">2.95</column>
+            <column name="product_available" type="boolean" valueBoolean="true"/>
+            <column name="product_description" type="varchar(100)">These are an extremely popular pike float</column>
+            <column name="product_category_id" type="INT UNSIGNED">11</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">7</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">22</column>
+            <column name="product_name" type="varchar(50)">Drennan Pike Subfloat</column>
+            <column name="product_price" type="FLOAT">2.75</column>
+            <column name="product_available" type="boolean" valueBoolean="true"/>
+            <column name="product_description" type="varchar(100)">Ideal for suspending any live baits</column>
+            <column name="product_category_id" type="INT UNSIGNED">11</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">7</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">23</column>
+            <column name="product_name" type="varchar(50)">Drennan Pikebob</column>
+            <column name="product_price" type="FLOAT">2.75</column>
+            <column name="product_available" type="boolean" valueBoolean="false"/>
+            <column name="product_description" type="varchar(100)">Ideal for smaller baits</column>
+            <column name="product_category_id" type="INT UNSIGNED">11</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">7</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">24</column>
+            <column name="product_name" type="varchar(50)">British Inshore Fish Guide Chart</column>
+            <column name="product_price" type="FLOAT">2.5</column>
+            <column name="product_available" type="boolean" valueBoolean="true"/>
+            <column name="product_description" type="varchar(100)">A laminated illustrated guide to the sea fish found</column>
+            <column name="product_category_id" type="INT UNSIGNED">12</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">1</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">25</column>
+            <column name="product_name" type="varchar(50)">Drennan Meat Hooks</column>
+            <column name="product_price" type="FLOAT">2.5</column>
+            <column name="product_available" type="boolean" valueBoolean="true"/>
+            <column name="product_description" type="varchar(100)">Sharpened to perfection to provide a clean yet precise pierce</column>
+            <column name="product_category_id" type="INT UNSIGNED">13</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">7</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">26</column>
+            <column name="product_name" type="varchar(50)">Drennan Uptide Extra Hooks</column>
+            <column name="product_price" type="FLOAT">2.0</column>
+            <column name="product_available" type="boolean" valueBoolean="true"/>
+            <column name="product_description" type="varchar(100)"></column>
+            <column name="product_category_id" type="INT UNSIGNED">13</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">7</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">27</column>
+            <column name="product_name" type="varchar(50)">Drennan B900c Crab Hook</column>
+            <column name="product_price" type="FLOAT">2.75</column>
+            <column name="product_available" type="boolean" valueBoolean="false"/>
+            <column name="product_description" type="varchar(100)">Specifically designed for soft peeler crab</column>
+            <column name="product_category_id" type="INT UNSIGNED">13</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">7</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">29</column>
+            <column name="product_name" type="varchar(50)">Salmo Bass Bugs 5.5cm</column>
+            <column name="product_price" type="FLOAT">6.49</column>
+            <column name="product_available" type="boolean" valueBoolean="true"/>
+            <column name="product_description" type="varchar(100)"></column>
+            <column name="product_category_id" type="INT UNSIGNED">14</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">3</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">30</column>
+            <column name="product_name" type="varchar(50)">Salmo Chubby Darter 4cm</column>
+            <column name="product_price" type="FLOAT">5.49</column>
+            <column name="product_available" type="boolean" valueBoolean="true"/>
+            <column name="product_description" type="varchar(100)">One of the most effective wobblers ever created!</column>
+            <column name="product_category_id" type="INT UNSIGNED">14</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">3</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">31</column>
+            <column name="product_name" type="varchar(50)">Yo-zuri BX Minnow 10cm</column>
+            <column name="product_price" type="FLOAT">10.49</column>
+            <column name="product_available" type="boolean" valueBoolean="true"/>
+            <column name="product_description" type="varchar(100)">Running Depth: 0.9-1.5m</column>
+            <column name="product_category_id" type="INT UNSIGNED">14</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">2</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">32</column>
+            <column name="product_name" type="varchar(50)">Yo-zuri BX Swimmer 12cm</column>
+            <column name="product_price" type="FLOAT">12.19</column>
+            <column name="product_available" type="boolean" valueBoolean="false"/>
+            <column name="product_description" type="varchar(100)">Running Depth: 4' to 6'</column>
+            <column name="product_category_id" type="INT UNSIGNED">14</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">2</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">33</column>
+            <column name="product_name" type="varchar(50)">Yo-zuri Countdown Magnum 11cm</column>
+            <column name="product_price" type="FLOAT">12.99</column>
+            <column name="product_available" type="boolean" valueBoolean="false"/>
+            <column name="product_description" type="varchar(100)">Super Tough Abachi Wood Construction</column>
+            <column name="product_category_id" type="INT UNSIGNED">14</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">2</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">34</column>
+            <column name="product_name" type="varchar(50)">Shimano Citica 201</column>
+            <column name="product_price" type="FLOAT">104.99</column>
+            <column name="product_available" type="boolean" valueBoolean="true"/>
+            <column name="product_description" type="varchar(100)">Gear Ratio: 7,2:1</column>
+            <column name="product_category_id" type="INT UNSIGNED">15</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">5</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">35</column>
+            <column name="product_name" type="varchar(50)">Shimano Curado K</column>
+            <column name="product_price" type="FLOAT">159.99</column>
+            <column name="product_available" type="boolean" valueBoolean="true"/>
+            <column name="product_description" type="varchar(100)">Braking system controls spool speed for precision casting</column>
+            <column name="product_category_id" type="INT UNSIGNED">15</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">5</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">36</column>
+            <column name="product_name" type="varchar(50)">Shimano Tranx</column>
+            <column name="product_price" type="FLOAT">239.99</column>
+            <column name="product_available" type="boolean" valueBoolean="false"/>
+            <column name="product_description" type="varchar(100)">Super Free System</column>
+            <column name="product_category_id" type="INT UNSIGNED">15</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">5</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">37</column>
+            <column name="product_name" type="varchar(50)">Shimano Baitrunner X-AERO 10000RA</column>
+            <column name="product_price" type="FLOAT">133.99</column>
+            <column name="product_available" type="boolean" valueBoolean="true"/>
+            <column name="product_description" type="varchar(100)">Wider spool than traditional bait runner range</column>
+            <column name="product_category_id" type="INT UNSIGNED">16</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">5</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">38</column>
+            <column name="product_name" type="varchar(50)">Shimano Baitrunner X-AERO 6000RA</column>
+            <column name="product_price" type="FLOAT">129.99</column>
+            <column name="product_available" type="boolean" valueBoolean="true"/>
+            <column name="product_description" type="varchar(100)">Deeper spool for more line capacity</column>
+            <column name="product_category_id" type="INT UNSIGNED">16</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">5</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">39</column>
+            <column name="product_name" type="varchar(50)">Shimano Baitrunner ST 4000FB</column>
+            <column name="product_price" type="FLOAT">43.99</column>
+            <column name="product_available" type="boolean" valueBoolean="false"/>
+            <column name="product_description" type="varchar(100)">Line Capacity (mm/m): 0,25-260 / 0,30-180 / 0,35-130</column>
+            <column name="product_category_id" type="INT UNSIGNED">16</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">5</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">40</column>
+            <column name="product_name" type="varchar(50)">Daiwa Regal BR4000</column>
+            <column name="product_price" type="FLOAT">34.99</column>
+            <column name="product_available" type="boolean" valueBoolean="true"/>
+            <column name="product_description" type="varchar(100)">5 ball bearings</column>
+            <column name="product_category_id" type="INT UNSIGNED">16</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">1</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">41</column>
+            <column name="product_name" type="varchar(50)">Fox EOS 5000 Reel</column>
+            <column name="product_price" type="FLOAT">39.99</column>
+            <column name="product_available" type="boolean" valueBoolean="true"/>
+            <column name="product_description" type="varchar(100)">Gear ratio 5:1</column>
+            <column name="product_category_id" type="INT UNSIGNED">16</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">9</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">42</column>
+            <column name="product_name" type="varchar(50)">Daiwa 506 MKII</column>
+            <column name="product_price" type="FLOAT">57.99</column>
+            <column name="product_available" type="boolean" valueBoolean="true"/>
+            <column name="product_description" type="varchar(100)">New handle assembly is more secure</column>
+            <column name="product_category_id" type="INT UNSIGNED">17</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">1</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">43</column>
+            <column name="product_name" type="varchar(50)">Daiwa 507 MKII</column>
+            <column name="product_price" type="FLOAT">62.99</column>
+            <column name="product_available" type="boolean" valueBoolean="true"/>
+            <column name="product_description" type="varchar(100)">Capacity: 100m/0.25mm</column>
+            <column name="product_category_id" type="INT UNSIGNED">17</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">1</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">44</column>
+            <column name="product_name" type="varchar(50)">Daiwa 125M Closed Face</column>
+            <column name="product_price" type="FLOAT">68.99</column>
+            <column name="product_available" type="boolean" valueBoolean="true"/>
+            <column name="product_description" type="varchar(100)">Designed for float work on rivers</column>
+            <column name="product_category_id" type="INT UNSIGNED">17</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">1</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">45</column>
+            <column name="product_name" type="varchar(50)">Daiwa D Wave Sea Bass 11ft</column>
+            <column name="product_price" type="FLOAT">43.99</column>
+            <column name="product_available" type="boolean" valueBoolean="true"/>
+            <column name="product_description" type="varchar(100)">Sections: 3</column>
+            <column name="product_category_id" type="INT UNSIGNED">18</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">1</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">46</column>
+            <column name="product_name" type="varchar(50)">Daiwa Sand Storm Bass 11ft</column>
+            <column name="product_price" type="FLOAT">149.99</column>
+            <column name="product_available" type="boolean" valueBoolean="true"/>
+            <column name="product_description" type="varchar(100)">Casting weight: 2-4oz</column>
+            <column name="product_category_id" type="INT UNSIGNED">18</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">1</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">47</column>
+            <column name="product_name" type="varchar(50)">Daiwa Sea Hunter Z Bass 11.6ft</column>
+            <column name="product_price" type="FLOAT">56.99</column>
+            <column name="product_available" type="boolean" valueBoolean="false"/>
+            <column name="product_description" type="varchar(100)">Casting Weight: 2-4oz</column>
+            <column name="product_category_id" type="INT UNSIGNED">18</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">1</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">48</column>
+            <column name="product_name" type="varchar(50)">Daiwa Sea Hunter Z Travel Bass 11ft</column>
+            <column name="product_price" type="FLOAT">64.99</column>
+            <column name="product_available" type="boolean" valueBoolean="true"/>
+            <column name="product_description" type="varchar(100)">Casting Weight: 1-3oz</column>
+            <column name="product_category_id" type="INT UNSIGNED">18</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">1</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">49</column>
+            <column name="product_name" type="varchar(50)">Daiwa Supercast Bass 11.6ft</column>
+            <column name="product_price" type="FLOAT">159.99</column>
+            <column name="product_available" type="boolean" valueBoolean="true"/>
+            <column name="product_description" type="varchar(100)">Casting weight: 2-4oz</column>
+            <column name="product_category_id" type="INT UNSIGNED">18</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">1</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">50</column>
+            <column name="product_name" type="varchar(50)">Shakespeare Agility 2 Bass 11.6ft</column>
+            <column name="product_price" type="FLOAT">56.99</column>
+            <column name="product_available" type="boolean" valueBoolean="true"/>
+            <column name="product_description" type="varchar(100)">Lure Rating: 60-120g</column>
+            <column name="product_category_id" type="INT UNSIGNED">18</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">6</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">51</column>
+            <column name="product_name" type="varchar(50)">Shakespeare Agility 2 Expedition Bass</column>
+            <column name="product_price" type="FLOAT">61.99</column>
+            <column name="product_available" type="boolean" valueBoolean="false"/>
+            <column name="product_description" type="varchar(100)">Lure Rating: 60-120g</column>
+            <column name="product_category_id" type="INT UNSIGNED">18</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">6</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">52</column>
+            <column name="product_name" type="varchar(50)">Daiwa Saltiga Airportable Rods</column>
+            <column name="product_price" type="FLOAT">314.99</column>
+            <column name="product_available" type="boolean" valueBoolean="true"/>
+            <column name="product_description" type="varchar(100)">Max Casting Weight: 40-120g - Length: 8.5ft</column>
+            <column name="product_category_id" type="INT UNSIGNED">19</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">1</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">53</column>
+            <column name="product_name" type="varchar(50)">Daiwa D Wave Boat 20-30lb</column>
+            <column name="product_price" type="FLOAT">31.99</column>
+            <column name="product_available" type="boolean" valueBoolean="false"/>
+            <column name="product_description" type="varchar(100)">Line Rating: 20-30lb</column>
+            <column name="product_category_id" type="INT UNSIGNED">19</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">1</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">54</column>
+            <column name="product_name" type="varchar(50)">Daiwa Saltist Braid Special</column>
+            <column name="product_price" type="FLOAT">148.99</column>
+            <column name="product_available" type="boolean" valueBoolean="true"/>
+            <column name="product_description" type="varchar(100)">Premium carbon blanks using high grade carbon.</column>
+            <column name="product_category_id" type="INT UNSIGNED">19</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">1</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">55</column>
+            <column name="product_name" type="varchar(50)">Daiwa Sea Hunter Z Boat Rods</column>
+            <column name="product_price" type="FLOAT">52.99</column>
+            <column name="product_available" type="boolean" valueBoolean="true"/>
+            <column name="product_description" type="varchar(100)">IFGA Rating: 12-20lb - Length: 7ft 6in - Guides: A/O</column>
+            <column name="product_category_id" type="INT UNSIGNED">19</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">1</column>
+        </insert>
+
+        <!--***********************************-->
+        <!--Initial data for orders table-->
+        <!--***********************************-->
+
+        <insert tableName="orders">
+            <column name="id" type="INT UNSIGNED">1</column>
+            <column name="order_user_id" type="INT UNSIGNED">2</column>
+            <column name="order_state" type="SMALLINT">0</column>
+            <column name="order_date" type="TIMESTAMP">2018-09-03 22:15:38.646</column>
+            <column name="order_address" type="varchar(255)">15, Yemen road, Yemen</column>
+            <column name="order_payment_conditions" type="SMALLINT">1</column>
+        </insert>
+
+        <!--***********************************-->
+        <!--Initial data for products_orders table-->
+        <!--***********************************-->
+
+        <insert tableName="orders_products">
+            <column name="order_id" type="INT UNSIGNED">1</column>
+            <column name="product_id" type="INT UNSIGNED">50</column>
+            <column name="order_product_quantity" type="INT UNSIGNED">1</column>
+            <column name="order_product_unit_price" type="FLOAT">56.99</column>
+        </insert>
+
+        <insert tableName="orders_products">
+            <column name="order_id" type="INT UNSIGNED">1</column>
+            <column name="product_id" type="INT UNSIGNED">15</column>
+            <column name="order_product_quantity" type="INT UNSIGNED">2</column>
+            <column name="order_product_unit_price" type="FLOAT">5.99</column>
+        </insert>
+
+    </changeSet>
+
+    <changeSet id="tag-1.1" author="root">
+        <tagDatabase tag="1.1"/>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,21 @@
+.left-side-bar{
+    width:330px;
+    float:left;
+    margin:10px 10px 10px 10px;
+}
+
+.main-bar{
+    margin:10px 10px 10px 350px;
+ 	width:50%;
+}
+
+.order-bar{
+    margin:10px 10px 10px 350px;
+ 	width:70%;
+}
+
+.message-style{
+    margin:100px auto 10px auto;
+	width:50%;
+	text-align:center;
+}
