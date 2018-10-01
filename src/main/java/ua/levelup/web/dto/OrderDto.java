@@ -7,18 +7,17 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
 
-public class OrderViewDto implements Serializable {
+public class OrderDto implements Serializable {
 
     private static final long serialVersionUID = 7990045339187007992L;
 
     private int id;
-    private int userId;
-    private String userName;
-    private int state;
+    private UserDto userDto;
+    private int orderState;
     private Timestamp date;
     private String address;
     private int conditions;
-    private List<OrderPositionViewDto> orderPositionList;
+    private List<OrderPositionDto> orderPositionList;
 
     public int getId() {
         return id;
@@ -28,28 +27,20 @@ public class OrderViewDto implements Serializable {
         this.id = id;
     }
 
-    public int getUserId() {
-        return userId;
+    public UserDto getUserDto() {
+        return userDto;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUserDto(UserDto userDto) {
+        this.userDto = userDto;
     }
 
-    public String getUserName() {
-        return userName;
+    public int getOrderState() {
+        return orderState;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public int getState() {
-        return state;
-    }
-
-    public void setState(int stateIndex) {
-        this.state = stateIndex;
+    public void setOrderState(int stateIndex) {
+        this.orderState = stateIndex;
     }
 
     public Timestamp getDate() {
@@ -76,11 +67,11 @@ public class OrderViewDto implements Serializable {
         this.conditions = conditionsIndex;
     }
 
-    public List<OrderPositionViewDto> getOrderPositionList() {
+    public List<OrderPositionDto> getOrderPositionList() {
         return orderPositionList;
     }
 
-    public void setOrderPositionList(List<OrderPositionViewDto> orderPositionList) {
+    public void setOrderPositionList(List<OrderPositionDto> orderPositionList) {
         this.orderPositionList = orderPositionList;
     }
 
@@ -88,9 +79,8 @@ public class OrderViewDto implements Serializable {
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
                 .append(id)
-                .append(userId)
-                .append(userName)
-                .append(state)
+                .append(userDto)
+                .append(orderState)
                 .append(date)
                 .append(address)
                 .append(conditions)
@@ -106,12 +96,11 @@ public class OrderViewDto implements Serializable {
         if (other == null || getClass() != other.getClass()) {
             return false;
         }
-        OrderViewDto order = (OrderViewDto) other;
+        OrderDto order = (OrderDto) other;
         return new EqualsBuilder()
                 .append(id, order.id)
-                .append(userId, order.userId)
-                .append(userName, order.userName)
-                .append(state, order.state)
+                .append(userDto, order.userDto)
+                .append(orderState, order.orderState)
                 .append(date, order.date)
                 .append(address, order.address)
                 .append(conditions, order.conditions)

@@ -6,7 +6,7 @@ import ua.levelup.dao.support.DaoHolder;
 import ua.levelup.model.Category;
 import ua.levelup.service.CategoryService;
 import ua.levelup.validator.CategoryValidator;
-import ua.levelup.web.dto.CategoryCreateDto;
+import ua.levelup.web.dto.create.CategoryCreateDto;
 
 public class CategoryServiceImpl implements CategoryService {
 

@@ -11,14 +11,14 @@ public class Category implements Serializable {
 
     private int id;
     private String name;
-    private int parentId;
+    private Category parentCategory;
 
     public Category() {
     }
 
-    public Category(String name, int parentId) {
+    public Category(String name, Category parentCategory) {
         this.name = name;
-        this.parentId = parentId;
+        this.parentCategory = parentCategory;
     }
 
     public int getId() {
@@ -37,12 +37,12 @@ public class Category implements Serializable {
         this.name = name;
     }
 
-    public int getParentId() {
-        return parentId;
+    public Category getParentCategory() {
+        return parentCategory;
     }
 
-    public void setParentId(int parentId) {
-        this.parentId = parentId;
+    public void setParentCategory(Category parentCategory) {
+        this.parentCategory = parentCategory;
     }
 
     @Override
@@ -57,7 +57,7 @@ public class Category implements Serializable {
         return new EqualsBuilder()
                 .append(id, category.id)
                 .append(name, category.name)
-                .append(parentId, category.parentId)
+                .append(parentCategory, category.parentCategory)
                 .isEquals();
     }
 
@@ -66,7 +66,7 @@ public class Category implements Serializable {
         return new HashCodeBuilder(17, 37)
                 .append(id)
                 .append(name)
-                .append(parentId)
+                .append(parentCategory)
                 .toHashCode();
     }
 
@@ -75,7 +75,7 @@ public class Category implements Serializable {
         return "Category{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", parentId=" + parentId +
+                ", parent category=" + parentCategory +
                 '}';
     }
 }

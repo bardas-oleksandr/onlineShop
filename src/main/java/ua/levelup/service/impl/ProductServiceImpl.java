@@ -5,12 +5,11 @@ import ua.levelup.dao.ProductDao;
 import ua.levelup.dao.support.DaoHolder;
 import ua.levelup.exception.ApplicationException;
 import ua.levelup.exception.support.MessageHolder;
-import ua.levelup.model.Product;
 import ua.levelup.service.ProductService;
 import ua.levelup.web.servlet.support.SearchParams;
 import ua.levelup.validator.ProductValidator;
-import ua.levelup.web.dto.ProductCreateDto;
-import ua.levelup.web.dto.ProductViewDto;
+import ua.levelup.web.dto.create.ProductCreateDto;
+import ua.levelup.web.dto.ProductDto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -25,11 +24,11 @@ public class ProductServiceImpl implements ProductService {
             .getDaoObject(DaoHolder.PRODUCT_DAO);
 
     @Override
-    public List<ProductViewDto> searchProducts(SearchParams searchParams) {
-        List<Product> productList = productDao.getFilteredProducts(searchParams.getProduct(),
+    public List<ProductDto> searchProducts(SearchParams searchParams) {
+        List<ua.levelup.model.Product> productList = productDao.getFilteredProducts(searchParams.getProduct(),
                 searchParams.getMinPrice(), searchParams.getMaxPrice(), searchParams.getOrderMethod());
-        List<ProductViewDto> productViewDtoList = new ArrayList<>();
-        for (Product item : productList) {
+        List<ProductDto> productViewDtoList = new ArrayList<>();
+        for (ua.levelup.model.Product item : productList) {
             productViewDtoList.add(ProductConverter.asProductViewDto(item));
         }
         return productViewDtoList;
@@ -52,7 +51,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void updateProduct(ProductCreateDto productCreateDto, int productId) {
         ProductValidator.validateNewProduct(productCreateDto);
-        Product product = ProductConverter.asProduct(productCreateDto);
+        ua.levelup.model.Product product = ProductConverter.asProduct(productCreateDto);
         product.setId(productId);
         int count = productDao.update(product);
         if (count == 0) {
@@ -69,7 +68,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void createNewProduct(ProductCreateDto productCreateDto) {
         ProductValidator.validateNewProduct(productCreateDto);
-        Product product = ProductConverter.asProduct(productCreateDto);
+        ua.levelup.model.Product product = ProductConverter.asProduct(productCreateDto);
         productDao.add(product);
     }
 }

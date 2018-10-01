@@ -9,8 +9,8 @@ import ua.levelup.model.User;
 import ua.levelup.service.SecurityService;
 import ua.levelup.service.UserService;
 import ua.levelup.validator.UserValidator;
-import ua.levelup.web.dto.UserCreateDto;
-import ua.levelup.web.dto.UserViewDto;
+import ua.levelup.web.dto.create.UserCreateDto;
+import ua.levelup.web.dto.UserDto;
 
 public class UserServiceImpl implements UserService {
 
@@ -19,7 +19,7 @@ public class UserServiceImpl implements UserService {
     private SecurityService securityService = new SecurityServiceImpl();
 
     @Override
-    public UserViewDto registerUser(UserCreateDto userCreateDto) {
+    public UserDto registerUser(UserCreateDto userCreateDto) {
         UserValidator.validateNewUser(userCreateDto);
         User user = UserConverter.asUser(userCreateDto);
         user = userDao.add(user);
@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserViewDto login(String email, String password) {
+    public UserDto login(String email, String password) {
         UserValidator.validateUsersCredentials(email, password);
         User user = userDao.getByEmail(email);
         if(!securityService.isCorrectPassword(user, password)){

@@ -5,7 +5,7 @@ import ua.levelup.exception.support.MessageHolder;
 import ua.levelup.model.Cart;
 import ua.levelup.service.CartService;
 import ua.levelup.service.support.ServiceHolder;
-import ua.levelup.web.dto.ProductViewDto;
+import ua.levelup.web.dto.ProductDto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -45,8 +45,8 @@ public class CartServlet extends HttpServlet {
                 HttpSession session = request.getSession(true);
                 Cart cart = (Cart) session.getAttribute(CART);
                 if(cart != null){
-                    Map<Integer, ProductViewDto> map = cartService.retrieveCartProducts(cart);
-                    cart.setProductViewDtoMap(map);
+                    Map<Integer, ProductDto> map = cartService.retrieveCartProducts(cart);
+                    cart.setProductMap(map);
                 }
                 response.sendRedirect(CART_VIEW_JSP);
             } catch (Exception e) {

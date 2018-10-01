@@ -3,12 +3,11 @@ package ua.levelup.web.servlet;
 import ua.levelup.dao.support.OrderMethod;
 import ua.levelup.exception.ApplicationException;
 import ua.levelup.exception.support.MessageHolder;
-import ua.levelup.model.Product;
 import ua.levelup.service.ProductService;
 import ua.levelup.service.support.ServiceHolder;
 import ua.levelup.web.servlet.support.SearchParams;
-import ua.levelup.web.dto.ProductCreateDto;
-import ua.levelup.web.dto.ProductViewDto;
+import ua.levelup.web.dto.create.ProductCreateDto;
+import ua.levelup.web.dto.ProductDto;
 import ua.levelup.web.servlet.support.ServletUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
@@ -151,7 +150,7 @@ public class ProductServlet extends HttpServlet {
         float minPrice = Float.parseFloat(request.getParameter(MIN_PRICE));
         float maxPrice = Float.parseFloat(request.getParameter(MAX_PRICE));
         short orderMethod = Short.parseShort(request.getParameter(SORT_BY_PARAM));
-        Product product = new Product();
+        ua.levelup.model.Product product = new ua.levelup.model.Product();
         product.setCategoryId(actualSearchedCategoryId);
         int manufacturerId = Integer.parseInt(request.getParameter(MANUFACTURER_ID));
         product.setManufacturerId(manufacturerId);
@@ -173,7 +172,7 @@ public class ProductServlet extends HttpServlet {
     }
 
     private void productSearch(HttpSession session, SearchParams searchParams) {
-        List<ProductViewDto> productList = productService.searchProducts(searchParams);
+        List<ProductDto> productList = productService.searchProducts(searchParams);
         session.setAttribute(PRODUCT_LIST, productList);
         session.setAttribute(SEARCH_PARAMS, searchParams);
     }

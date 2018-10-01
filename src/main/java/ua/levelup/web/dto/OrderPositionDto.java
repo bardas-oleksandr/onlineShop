@@ -5,18 +5,22 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.io.Serializable;
 
-public class OrderPositionCreateDto implements Serializable {
+public class OrderPositionDto implements Serializable {
 
-    private static final long serialVersionUID = -139510653392433018L;
+    private static final long serialVersionUID = -2094362351988443765L;
 
+    private int orderId;
     private int productId;
+    private String productName;
     private int quantity;
     private float unitPrice;
 
-    public OrderPositionCreateDto(int productId, int quantity, float unitPrice) {
-        this.productId = productId;
-        this.quantity = quantity;
-        this.unitPrice = unitPrice;
+    public int getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
     }
 
     public int getProductId() {
@@ -25,6 +29,14 @@ public class OrderPositionCreateDto implements Serializable {
 
     public void setProductId(int productId) {
         this.productId = productId;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
     public int getQuantity() {
@@ -46,7 +58,9 @@ public class OrderPositionCreateDto implements Serializable {
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
+                .append(orderId)
                 .append(productId)
+                .append(productName)
                 .append(quantity)
                 .append(unitPrice)
                 .toHashCode();
@@ -60,9 +74,11 @@ public class OrderPositionCreateDto implements Serializable {
         if (other == null || getClass() != other.getClass()) {
             return false;
         }
-        OrderPositionCreateDto orderPosition = (OrderPositionCreateDto) other;
+        OrderPositionDto orderPosition = (OrderPositionDto) other;
         return new EqualsBuilder()
+                .append(orderId, orderPosition.orderId)
                 .append(productId, orderPosition.productId)
+                .append(productName, orderPosition.productName)
                 .append(quantity, orderPosition.quantity)
                 .append(unitPrice, orderPosition.unitPrice)
                 .isEquals();

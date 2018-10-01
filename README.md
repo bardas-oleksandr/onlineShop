@@ -5,7 +5,7 @@ Users of application might be in one of three possible states:
 
 Different user states provide different rights during using of application.
 After mvn liquibase:update is executed, application database will
-contain three users - one for each state.
+contain three users - one for each orderState.
 
 Admin credentials:
 email - admin@gmail.com

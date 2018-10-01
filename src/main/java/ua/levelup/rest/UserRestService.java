@@ -9,8 +9,8 @@ import ua.levelup.exception.support.MessageHolder;
 import ua.levelup.model.User;
 import ua.levelup.rest.support.HeaderValidator;
 import ua.levelup.validator.UserValidator;
-import ua.levelup.web.dto.UserCreateDto;
-import ua.levelup.web.dto.UserViewDto;
+import ua.levelup.web.dto.create.UserCreateDto;
+import ua.levelup.web.dto.UserDto;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
@@ -48,7 +48,7 @@ public class UserRestService {
         try {
             HeaderValidator.validateHeaders(accept, contentType);
             User user = userDao.getById(id);
-            UserViewDto userViewDto = UserConverter.asUserViewDto(user);
+            UserDto userViewDto = UserConverter.asUserViewDto(user);
             return Response.ok(getJson(userViewDto)).build();
         } catch (RestException e) {
             return Response.status(e.getHttpStatus()).build();
@@ -66,7 +66,7 @@ public class UserRestService {
         try {
             HeaderValidator.validateHeaders(accept, contentType);
             User user = userDao.getByEmail(email);
-            UserViewDto userViewDto = UserConverter.asUserViewDto(user);
+            UserDto userViewDto = UserConverter.asUserViewDto(user);
             return Response.ok(getJson(userViewDto)).build();
         } catch (RestException e) {
             return Response.status(e.getHttpStatus()).build();
@@ -142,9 +142,9 @@ public class UserRestService {
         try {
             HeaderValidator.validateHeaders(accept, contentType);
             List<User> users = userDao.getAllUsers();
-            List<UserViewDto> userViewDtos = new ArrayList<>();
+            List<UserDto> userViewDtos = new ArrayList<>();
             for (User user : users) {
-                UserViewDto userViewDto = UserConverter.asUserViewDto(user);
+                UserDto userViewDto = UserConverter.asUserViewDto(user);
                 userViewDtos.add(userViewDto);
             }
             return Response.ok(getJson(userViewDtos)).build();

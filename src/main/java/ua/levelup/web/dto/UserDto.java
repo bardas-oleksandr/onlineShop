@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 @XmlRootElement(name = "userViewDto")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class UserViewDto implements Serializable {
+public class UserDto implements Serializable {
 
     private static final long serialVersionUID = -5411991248978416452L;
 
@@ -69,7 +69,7 @@ public class UserViewDto implements Serializable {
         if (other == null || getClass() != other.getClass()) {
             return false;
         }
-        UserViewDto user = (UserViewDto) other;
+        UserDto user = (UserDto) other;
         return new EqualsBuilder()
                 .append(id, user.id)
                 .append(userName, user.userName)

@@ -3,8 +3,8 @@ package ua.levelup.web.servlet;
 import ua.levelup.model.support.UserState;
 import ua.levelup.service.support.ServiceHolder;
 import ua.levelup.service.UserService;
-import ua.levelup.web.dto.UserCreateDto;
-import ua.levelup.web.dto.UserViewDto;
+import ua.levelup.web.dto.create.UserCreateDto;
+import ua.levelup.web.dto.UserDto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -52,7 +52,7 @@ public class RegistrationServlet extends HttpServlet {
         if (!response.isCommitted()) {
             try {
                 UserCreateDto userCreateDto = extractUser(request);
-                UserViewDto userViewDto = userService.registerUser(userCreateDto);
+                UserDto userViewDto = userService.registerUser(userCreateDto);
                 HttpSession session = request.getSession(true);
                 session.setAttribute(USER, userViewDto);
                 response.sendRedirect(PROFILE_JSP);

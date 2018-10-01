@@ -6,7 +6,7 @@ import ua.levelup.dao.support.DaoHolder;
 import ua.levelup.model.Manufacturer;
 import ua.levelup.service.ManufacturerService;
 import ua.levelup.validator.ManufacturerValidator;
-import ua.levelup.web.dto.ManufacturerCreateDto;
+import ua.levelup.web.dto.create.ManufacturerCreateDto;
 
 public class ManufacturerServiceImpl implements ManufacturerService {
 

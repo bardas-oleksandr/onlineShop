@@ -4,6 +4,7 @@ import ua.levelup.model.support.UserState;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import ua.levelup.web.dto.create.UserCreateDto;
 
 public class UserCreateDtoTest {
     private UserCreateDto userCreateDto;

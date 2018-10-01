@@ -11,7 +11,7 @@ public enum MessageHolder {
     ;
 
     private final static String errorMessagesFileName = PropertiesManager.getApplicationProperties()
-            .getProperty("error.messages.properties");
+            .getProperty("exception.messages.properties");
     private static Properties properties;
 
     static {

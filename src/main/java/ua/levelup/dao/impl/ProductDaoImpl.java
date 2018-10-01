@@ -40,8 +40,8 @@ public class ProductDaoImpl extends AbstractDaoImpl implements ProductDao {
             } else {
                 statement.setNull(4, Types.VARCHAR);
             }
-            statement.setInt(5, product.getCategoryId());
-            statement.setInt(6, product.getManufacturerId());
+            statement.setInt(5, product.getCategory().getId());
+            statement.setInt(6, product.getManufacturer().getId());
             statement.executeUpdate();
             ResultSet generatedKeys = statement.getGeneratedKeys();
             if (generatedKeys.next()) {
@@ -74,8 +74,8 @@ public class ProductDaoImpl extends AbstractDaoImpl implements ProductDao {
             } else {
                 statement.setNull(4, Types.VARCHAR);
             }
-            statement.setInt(5, product.getCategoryId());
-            statement.setInt(6, product.getManufacturerId());
+            statement.setInt(5, product.getCategory().getId());
+            statement.setInt(6, product.getManufacturer().getId());
             statement.setInt(7, product.getId());
             return statement.executeUpdate();
         } catch (SQLException e) {
@@ -121,7 +121,8 @@ public class ProductDaoImpl extends AbstractDaoImpl implements ProductDao {
     }
 
     @Override
-    public List<Product> getFilteredProducts(Product product, float minPrice, float maxPrice, OrderMethod method)
+    public List<Product> getFilteredProducts(Product product, float minPrice, float maxPrice,
+                                             OrderMethod method)
             throws ApplicationException {
         String query = getSelectQuery(product, method);
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -147,14 +148,14 @@ public class ProductDaoImpl extends AbstractDaoImpl implements ProductDao {
         if (product.isAvailable()) {
             query.append(" AND products.product_available = " + product.isAvailable());
         }
-        if (product.getManufacturerId() != 0) {
-            query.append(" AND products.product_manufacturer_id = " + product.getManufacturerId());
+        if (product.getManufacturer().getId() != 0) {
+            query.append(" AND products.product_manufacturer_id = " + product.getManufacturer().getId());
         }
-        if (product.getCategoryId() != 0) {
-            query.append(" AND (products.product_category_id = " + product.getCategoryId());
+        if (product.getCategory().getId() != 0) {
+            query.append(" AND (products.product_category_id = " + product.getCategory().getId());
             query.append(" OR products.product_category_id " +
                     "IN (SELECT categories.id FROM categories WHERE categories.category_parent_id = "
-                    + product.getCategoryId() + "))");
+                    + product.getCategory().getId() + "))");
         }
         switch (method) {
             case PRODUCT_NAME:

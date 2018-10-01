@@ -1,9 +1,9 @@
 package ua.levelup.service;
 
-import ua.levelup.web.dto.UserCreateDto;
-import ua.levelup.web.dto.UserViewDto;
+import ua.levelup.web.dto.create.UserCreateDto;
+import ua.levelup.web.dto.UserDto;
 
 public interface UserService {
-    UserViewDto registerUser(UserCreateDto user);
-    UserViewDto login(String email, String password);
+    UserDto registerUser(UserCreateDto user);
+    UserDto login(String email, String password);
 }

@@ -5,7 +5,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.io.Serializable;
 
-public class ProductViewDto implements Serializable {
+public class ProductDto implements Serializable {
 
     private static final long serialVersionUID = -6826469302682953337L;
 
@@ -14,10 +14,8 @@ public class ProductViewDto implements Serializable {
     private float price;
     private boolean available;
     private String description;
-    private int categoryId;
-    private String categoryName;
-    private int manufacturerId;
-    private String manufacturerName;
+    private CategoryDto categoryDto;
+    private ManufacturerDto manufacturerDto;
 
     public int getId() {
         return id;
@@ -59,36 +57,20 @@ public class ProductViewDto implements Serializable {
         this.description = description;
     }
 
-    public int getCategoryId() {
-        return categoryId;
+    public CategoryDto getCategoryDto() {
+        return categoryDto;
     }
 
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
+    public void setCategoryDto(CategoryDto categoryDto) {
+        this.categoryDto = categoryDto;
     }
 
-    public String getCategoryName() {
-        return categoryName;
+    public ManufacturerDto getManufacturerDto() {
+        return manufacturerDto;
     }
 
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
-    }
-
-    public int getManufacturerId() {
-        return manufacturerId;
-    }
-
-    public void setManufacturerId(int manufacturerId) {
-        this.manufacturerId = manufacturerId;
-    }
-
-    public String getManufacturerName() {
-        return manufacturerName;
-    }
-
-    public void setManufacturerName(String manufacturerName) {
-        this.manufacturerName = manufacturerName;
+    public void setManufacturerDto(ManufacturerDto manufacturerDto) {
+        this.manufacturerDto = manufacturerDto;
     }
 
     @Override
@@ -99,10 +81,8 @@ public class ProductViewDto implements Serializable {
                 .append(price)
                 .append(available)
                 .append(description)
-                .append(categoryId)
-                .append(categoryName)
-                .append(manufacturerId)
-                .append(manufacturerName)
+                .append(categoryDto)
+                .append(manufacturerDto)
                 .toHashCode();
     }
 
@@ -114,17 +94,15 @@ public class ProductViewDto implements Serializable {
         if (other == null || getClass() != other.getClass()) {
             return false;
         }
-        ProductViewDto product = (ProductViewDto) other;
+        ProductDto product = (ProductDto) other;
         return new EqualsBuilder()
                 .append(id, product.id)
                 .append(name, product.name)
                 .append(price, product.price)
                 .append(available, product.available)
                 .append(description, product.description)
-                .append(categoryId, product.categoryId)
-                .append(categoryName, product.categoryName)
-                .append(manufacturerId, product.manufacturerId)
-                .append(manufacturerName, product.manufacturerName)
+                .append(categoryDto, product.categoryDto)
+                .append(manufacturerDto, product.manufacturerDto)
                 .isEquals();
     }
 }

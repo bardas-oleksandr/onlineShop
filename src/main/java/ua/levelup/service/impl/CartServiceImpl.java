@@ -4,10 +4,9 @@ import ua.levelup.converter.ProductConverter;
 import ua.levelup.dao.ProductDao;
 import ua.levelup.dao.support.DaoHolder;
 import ua.levelup.model.Cart;
-import ua.levelup.model.Product;
 import ua.levelup.service.CartService;
 import ua.levelup.validator.CartValidator;
-import ua.levelup.web.dto.ProductViewDto;
+import ua.levelup.web.dto.ProductDto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -28,11 +27,11 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public Map<Integer, ProductViewDto> retrieveCartProducts(Cart cart) {
-        Map<Integer, ProductViewDto> map = new HashMap<>();
+    public Map<Integer, ProductDto> retrieveCartProducts(Cart cart) {
+        Map<Integer, ProductDto> map = new HashMap<>();
         Set<Integer> productIdSet = cart.getProductCountMap().keySet();
         for (Integer productId : productIdSet) {
-            Product product = productDao.getById(productId);
+            ua.levelup.model.Product product = productDao.getById(productId);
             map.put(productId, ProductConverter.asProductViewDto(product));
         }
         return map;

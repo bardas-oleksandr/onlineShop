@@ -5,12 +5,13 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.io.Serializable;
 
-public class ManufacturerViewDto implements Serializable {
+public class CategoryDto implements Serializable {
 
-    private static final long serialVersionUID = -1010367575480383830L;
+    private static final long serialVersionUID = 4187360651127209514L;
 
     private int id;
     private String name;
+    private CategoryDto parentCategoryDto;
 
     public int getId() {
         return id;
@@ -28,11 +29,20 @@ public class ManufacturerViewDto implements Serializable {
         this.name = name;
     }
 
+    public CategoryDto getParentCategoryDto() {
+        return parentCategoryDto;
+    }
+
+    public void setParentCategoryDto(CategoryDto parentCategoryDto) {
+        this.parentCategoryDto = parentCategoryDto;
+    }
+
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
                 .append(id)
                 .append(name)
+                .append(parentCategoryDto)
                 .toHashCode();
     }
 
@@ -44,10 +54,11 @@ public class ManufacturerViewDto implements Serializable {
         if (other == null || getClass() != other.getClass()) {
             return false;
         }
-        ManufacturerViewDto manufacturer = (ManufacturerViewDto) other;
+        CategoryDto category = (CategoryDto) other;
         return new EqualsBuilder()
-                .append(id, manufacturer.id)
-                .append(name, manufacturer.name)
+                .append(id, category.id)
+                .append(name, category.name)
+                .append(parentCategoryDto, category.parentCategoryDto)
                 .isEquals();
     }
 }

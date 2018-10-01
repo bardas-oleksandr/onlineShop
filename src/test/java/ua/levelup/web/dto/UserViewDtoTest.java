@@ -5,11 +5,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class UserViewDtoTest {
-    private UserViewDto userViewDto;
+    private UserDto userViewDto;
 
     @Before
     public void init() {
-        userViewDto = new UserViewDto();
+        userViewDto = new UserDto();
         userViewDto.setId(1);
         userViewDto.setUserName("user");
         userViewDto.setEmail("email");
@@ -19,7 +19,7 @@ public class UserViewDtoTest {
     @Test
     public void equalsTest_whenEqualObjects_thenTrue() throws Exception {
         //GIVEN
-        UserViewDto other = new UserViewDto();
+        UserDto other = new UserDto();
         other.setId(1);
         other.setUserName("user");
         other.setEmail("email");
@@ -31,22 +31,22 @@ public class UserViewDtoTest {
     @Test
     public void equalsTest_whenNotEqualObjects_thenFalse() throws Exception {
         //GIVEN
-        UserViewDto first = new UserViewDto();
+        UserDto first = new UserDto();
         first.setId(2);
         first.setUserName("user");
         first.setEmail("email");
         first.setState(0);
-        UserViewDto second = new UserViewDto();
+        UserDto second = new UserDto();
         second.setId(1);
         second.setUserName("other user");
         second.setEmail("email");
         second.setState(0);
-        UserViewDto third = new UserViewDto();
+        UserDto third = new UserDto();
         third.setId(1);
         third.setUserName("user");
         third.setEmail("other email");
         third.setState(0);
-        UserViewDto fourth = new UserViewDto();
+        UserDto fourth = new UserDto();
         fourth.setId(1);
         fourth.setUserName("user");
         fourth.setEmail("email");

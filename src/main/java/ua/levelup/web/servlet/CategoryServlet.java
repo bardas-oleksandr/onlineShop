@@ -2,7 +2,7 @@ package ua.levelup.web.servlet;
 
 import ua.levelup.service.CategoryService;
 import ua.levelup.service.support.ServiceHolder;
-import ua.levelup.web.dto.CategoryCreateDto;
+import ua.levelup.web.dto.create.CategoryCreateDto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

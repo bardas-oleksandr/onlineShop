@@ -2,7 +2,7 @@ package ua.levelup.validator;
 
 import ua.levelup.exception.ValidationException;
 import ua.levelup.model.support.UserState;
-import ua.levelup.web.dto.UserCreateDto;
+import ua.levelup.web.dto.create.UserCreateDto;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;

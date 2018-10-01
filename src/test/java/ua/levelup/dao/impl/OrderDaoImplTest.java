@@ -77,10 +77,10 @@ public class OrderDaoImplTest extends AbstractDaoImplTest {
         //GIVEN
         order = orderDao.add(order);
         order.setUserId(user.getId());
-        order.setState(OrderState.PAYED.ordinal());
+        order.setOrderState(OrderState.PAYED.ordinal());
         order.setDate(new Timestamp(System.currentTimeMillis()));
         order.setAddress("new address");
-        order.setConditions(PaymentConditions.CASH.ordinal());
+        order.setPaymentConditions(PaymentConditions.CASH.ordinal());
         //WHEN
         int count = orderDao.update(order);
         Order extractedFromDb = orderDao.getById(order.getId());

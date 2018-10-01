@@ -14,20 +14,19 @@ public class Product implements Serializable {
     private float price;
     private boolean available;
     private String description;
-    private int categoryId;
-    private String categoryName;
-    private int manufacturerId;
-    private String manufacturerName;
+    private Category category;
+    private Manufacturer manufacturer;
 
     public Product() { }
 
-    public Product(String name, float price, boolean available, String description, int categoryId, int manufacturerId) {
+    public Product(String name, float price, boolean available, String description,
+                   Category category, Manufacturer manufacturer) {
         this.name = name;
         this.price = price;
         this.available = available;
         this.description = description;
-        this.categoryId = categoryId;
-        this.manufacturerId = manufacturerId;
+        this.category = category;
+        this.manufacturer = manufacturer;
     }
 
     public int getId() {
@@ -70,36 +69,20 @@ public class Product implements Serializable {
         this.description = description;
     }
 
-    public int getCategoryId() {
-        return categoryId;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
-    public String getCategoryName() {
-        return categoryName;
+    public Manufacturer getManufacturer() {
+        return manufacturer;
     }
 
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
-    }
-
-    public int getManufacturerId() {
-        return manufacturerId;
-    }
-
-    public void setManufacturerId(int manufacturerId) {
-        this.manufacturerId = manufacturerId;
-    }
-
-    public String getManufacturerName() {
-        return manufacturerName;
-    }
-
-    public void setManufacturerName(String manufacturerName) {
-        this.manufacturerName = manufacturerName;
+    public void setManufacturer(Manufacturer manufacturer) {
+        this.manufacturer = manufacturer;
     }
 
     @Override
@@ -117,10 +100,8 @@ public class Product implements Serializable {
                 .append(price, product.price)
                 .append(available, product.available)
                 .append(description, product.description)
-                .append(categoryId, product.categoryId)
-                .append(categoryName, product.categoryName)
-                .append(manufacturerId, product.manufacturerId)
-                .append(manufacturerName, product.manufacturerName)
+                .append(category, product.category)
+                .append(manufacturer, product.manufacturer)
                 .isEquals();
     }
 
@@ -132,10 +113,8 @@ public class Product implements Serializable {
                 .append(price)
                 .append(available)
                 .append(description)
-                .append(categoryId)
-                .append(categoryName)
-                .append(manufacturerId)
-                .append(manufacturerName)
+                .append(category)
+                .append(manufacturer)
                 .toHashCode();
     }
 
@@ -147,10 +126,8 @@ public class Product implements Serializable {
                 ", price=" + price +
                 ", available=" + available +
                 ", description='" + description + '\'' +
-                ", categoryId=" + categoryId +
-                ", categoryName='" + categoryName + '\'' +
-                ", manufacturerId=" + manufacturerId +
-                ", manufacturerName='" + manufacturerName + '\'' +
+                ", category=" + category +
+                ", manufacturer=" + manufacturer +
                 '}';
     }
 }

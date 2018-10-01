@@ -1,4 +1,4 @@
-package ua.levelup.model;
+package ua.levelup.web.dto;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -7,19 +7,13 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Cart implements Serializable {
+public class CartDto implements Serializable {
 
-    private static final long serialVersionUID = -1701271203258179128L;
+    private static final long serialVersionUID = 6585089281336642307L;
 
     private Map<Integer, Integer> productCountMap = new HashMap<>();    //ProductId - key, product count - value
-    private Map<Integer,Product> productMap = new HashMap<>();          //ProductId - key, product - value
+    private Map<Integer,ProductDto> productDtoMap = new HashMap<>();          //ProductId - key, product - value
     private int size = 0;
-
-    public void putProduct(int productId, int productCount) {
-        productCountMap.compute(productId,
-                (key, value) -> value == null? productCount: value + productCount);
-        size = productCountMap.size();
-    }
 
     public Map<Integer, Integer> getProductCountMap() {
         return productCountMap;
@@ -29,20 +23,20 @@ public class Cart implements Serializable {
         this.productCountMap = productCountMap;
     }
 
-    public Map<Integer, Product> getProductMap() {
-        return productMap;
+    public Map<Integer, ProductDto> getProductDtoMap() {
+        return productDtoMap;
     }
 
-    public void setProductMap(Map<Integer, Product> productMap) {
-        this.productMap = productMap;
+    public void setProductDtoMap(Map<Integer, ProductDto> productDtoMap) {
+        this.productDtoMap = productDtoMap;
+    }
+
+    public int getSize() {
+        return size;
     }
 
     public void setSize(int size) {
         this.size = size;
-    }
-
-    public int getSize(){
-        return size;
     }
 
     @Override
@@ -53,11 +47,11 @@ public class Cart implements Serializable {
         if (other == null || getClass() != other.getClass()) {
             return false;
         }
-        Cart cart = (Cart) other;
+        CartDto cartDto = (CartDto) other;
         return new EqualsBuilder()
-                .append(productCountMap, cart.productCountMap)
-                .append(productMap, cart.productMap)
-                .append(size, cart.size)
+                .append(productCountMap, cartDto.productCountMap)
+                .append(productDtoMap, cartDto.productDtoMap)
+                .append(size, cartDto.size)
                 .isEquals();
     }
 
@@ -65,7 +59,7 @@ public class Cart implements Serializable {
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
                 .append(productCountMap)
-                .append(productMap)
+                .append(productDtoMap)
                 .append(size)
                 .toHashCode();
     }

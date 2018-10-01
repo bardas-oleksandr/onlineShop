@@ -2,8 +2,8 @@ package ua.levelup.validator;
 
 import ua.levelup.exception.ValidationException;
 import ua.levelup.exception.support.MessageHolder;
-import ua.levelup.web.dto.UserCreateDto;
 import org.apache.commons.lang3.StringUtils;
+import ua.levelup.model.User;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -11,9 +11,9 @@ import java.util.regex.Pattern;
 public enum UserValidator {
     ;
 
-    public static void validateNewUser(UserCreateDto userCreateDto) {
-        validateUsersCredentials(userCreateDto.getEmail(), userCreateDto.getPassword());
-        validateUserName(userCreateDto.getUserName());
+    public static void validateNewUser(User user) {
+        validateUsersCredentials(user.getEmail(), user.getPassword());
+        validateUserName(user.getUserName());
     }
 
     public static void validateUsersCredentials(String email, String password) {

@@ -7,7 +7,11 @@ import ua.levelup.model.support.OrderState;
 import ua.levelup.service.CartService;
 import ua.levelup.service.OrderService;
 import ua.levelup.service.support.ServiceHolder;
-import ua.levelup.web.dto.*;
+import ua.levelup.web.dto.create.OrderCreateDto;
+import ua.levelup.web.dto.create.OrderPositionCreateDto;
+import ua.levelup.web.dto.OrderDto;
+import ua.levelup.web.dto.ProductDto;
+import ua.levelup.web.dto.UserDto;
 import ua.levelup.web.servlet.support.ServletUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -62,9 +66,9 @@ public class OrderServlet extends HttpServlet {
                 switch (method){
                     case GET_FOR_USER:{
                         HttpSession session = request.getSession(true);
-                        UserViewDto user = (UserViewDto) session.getAttribute(USER);
+                        UserDto user = (UserDto) session.getAttribute(USER);
                         if(user != null){
-                            List<OrderViewDto> orderViewDtoList = orderService.getUsersOrders(user.getId());
+                            List<OrderDto> orderViewDtoList = orderService.getUsersOrders(user.getId());
                             session.setAttribute(ORDER_LIST, orderViewDtoList);
                         }
                         response.sendRedirect(ORDERS_VIEW_JSP);
@@ -152,7 +156,7 @@ public class OrderServlet extends HttpServlet {
 
     private OrderCreateDto extractNewOrder(HttpServletRequest request) {
         HttpSession session = request.getSession(true);
-        UserViewDto user = (UserViewDto) session.getAttribute(USER);
+        UserDto user = (UserDto) session.getAttribute(USER);
         Integer orderState = OrderState.REGISTERED.ordinal();
         String address = request.getParameter(ADDRESS);
         Integer paymentConditions = Integer.parseInt(request.getParameter(PAYMENT_CONDITIONS));
@@ -164,7 +168,7 @@ public class OrderServlet extends HttpServlet {
         HttpSession session = request.getSession(true);
         Cart cart = (Cart) session.getAttribute(CART);
         Map<Integer, Integer> productCountMap = cart.getProductCountMap();
-        Map<Integer, ProductViewDto> productViewDtoMap = cartService.retrieveCartProducts(cart);
+        Map<Integer, ProductDto> productViewDtoMap = cartService.retrieveCartProducts(cart);
         Set<Integer> productIdSet = productCountMap.keySet();
         List<OrderPositionCreateDto> list = new ArrayList<>();
         for (Integer productId : productIdSet) {
@@ -176,7 +180,7 @@ public class OrderServlet extends HttpServlet {
     }
 
     private void setOrderListAttribute(HttpSession session){
-        List<OrderViewDto> orderViewDtoList = orderService.getAllOrders();
+        List<OrderDto> orderViewDtoList = orderService.getAllOrders();
         session.setAttribute(ORDER_LIST, orderViewDtoList);
     }
 }

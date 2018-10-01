@@ -1,24 +1,19 @@
 package ua.levelup.converter;
 
 import ua.levelup.model.Category;
-import ua.levelup.web.dto.CategoryCreateDto;
-import ua.levelup.web.dto.CategoryViewDto;
+import ua.levelup.web.dto.CategoryDto;
 
 public enum CategoryConverter {
     ;
 
-    public static Category asCategory(CategoryCreateDto createdCategory){
-        Category category = new Category();
-        category.setName(createdCategory.getName());
-        category.setParentId(createdCategory.getParentId());
-        return category;
-    }
-
-    public static CategoryViewDto asCategoryViewDto(Category category){
-        CategoryViewDto viewDto = new CategoryViewDto();
-        viewDto.setId(category.getId());
-        viewDto.setName(category.getName());
-        viewDto.setParentId(category.getParentId());
-        return viewDto;
+    public static CategoryDto asCategoryDto(Category category){
+        CategoryDto categoryDto = new CategoryDto();
+        categoryDto.setId(category.getId());
+        categoryDto.setName(category.getName());
+        if(category.getParentCategory() != null){
+            CategoryDto parent = CategoryConverter.asCategoryDto(category.getParentCategory());
+            categoryDto.setParentCategoryDto(parent);
+        }
+        return categoryDto;
     }
 }

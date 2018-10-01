@@ -1,26 +1,17 @@
 package ua.levelup.converter;
 
 import ua.levelup.model.OrderPosition;
-import ua.levelup.web.dto.OrderPositionCreateDto;
-import ua.levelup.web.dto.OrderPositionViewDto;
+import ua.levelup.web.dto.OrderPositionDto;
 
 public enum OrderPositionConverter {
     ;
 
-    public static OrderPosition asOrderPosition(OrderPositionCreateDto createdOrderPosition){
-        OrderPosition orderPosition = new OrderPosition();
-        orderPosition.setProductId(createdOrderPosition.getProductId());
-        orderPosition.setQuantity(createdOrderPosition.getQuantity());
-        orderPosition.setUnitPrice(createdOrderPosition.getUnitPrice());
-        return orderPosition;
-    }
-
-    public static OrderPositionViewDto asOrderPositionViewDto(OrderPosition orderPosition){
-        OrderPositionViewDto viewDto = new OrderPositionViewDto();
-        viewDto.setProductId(orderPosition.getProductId());
-        viewDto.setProductName(orderPosition.getProductName());
-        viewDto.setQuantity(orderPosition.getQuantity());
-        viewDto.setUnitPrice(orderPosition.getUnitPrice());
-        return viewDto;
+    public static OrderPositionDto asOrderPositionDto(OrderPosition orderPosition){
+        OrderPositionDto orderPositionDto = new OrderPositionDto();
+        orderPositionDto.setProductId(orderPosition.getProductId());
+        orderPositionDto.setProductName(orderPosition.getProductName());
+        orderPositionDto.setQuantity(orderPosition.getQuantity());
+        orderPositionDto.setUnitPrice(orderPosition.getUnitPrice());
+        return orderPositionDto;
     }
 }

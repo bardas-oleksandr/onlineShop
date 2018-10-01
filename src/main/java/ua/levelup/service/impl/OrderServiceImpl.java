@@ -9,9 +9,9 @@ import ua.levelup.model.Order;
 import ua.levelup.model.OrderPosition;
 import ua.levelup.service.OrderService;
 import ua.levelup.validator.OrderValidator;
-import ua.levelup.web.dto.OrderCreateDto;
-import ua.levelup.web.dto.OrderPositionCreateDto;
-import ua.levelup.web.dto.OrderViewDto;
+import ua.levelup.web.dto.create.OrderCreateDto;
+import ua.levelup.web.dto.create.OrderPositionCreateDto;
+import ua.levelup.web.dto.OrderDto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -28,24 +28,24 @@ public class OrderServiceImpl implements OrderService {
             .getDaoObject(DaoHolder.ORDER_POSITION_DAO);
 
     @Override
-    public OrderViewDto createOrder(OrderCreateDto orderCreateDto) {
-        OrderValidator.validateNewOrder(orderCreateDto);
+    public OrderDto createOrder(OrderCreateDto orderCreateDto) {
+        OrderValidator.validateOrderWithOrderPositionList(orderCreateDto);
         Order order = OrderConverter.asOrder(orderCreateDto);
         order = orderDao.add(order);
         List<OrderPosition> orderPositionList = getOrderPositionList(orderCreateDto.getOrderPositionList());
         order.setOrderPositionList(orderPositionList);
         orderPositionDao.addAll(order);
-        return OrderConverter.asOrderViewDto(order);
+        return OrderConverter.asOrderDto(order);
     }
 
     @Override
-    public List<OrderViewDto> getUsersOrders(int userId) {
+    public List<OrderDto> getUsersOrders(int userId) {
         List<Order> orderList = orderDao.getAllByUserId(userId);
         return getOrderViewDtoList(orderList);
     }
 
     @Override
-    public List<OrderViewDto> getAllOrders() {
+    public List<OrderDto> getAllOrders() {
         List<Order> orderList = orderDao.getAll();
         return getOrderViewDtoList(orderList);
     }
@@ -66,12 +66,12 @@ public class OrderServiceImpl implements OrderService {
         return list;
     }
 
-    private List<OrderViewDto> getOrderViewDtoList(List<Order> orderList){
-        List<OrderViewDto> orderViewDtoList = new ArrayList<>();
+    private List<OrderDto> getOrderViewDtoList(List<Order> orderList){
+        List<OrderDto> orderViewDtoList = new ArrayList<>();
         for (Order order: orderList) {
             List<OrderPosition> orderPositionList = orderPositionDao.getAllByOrderId(order.getId());
             order.setOrderPositionList(orderPositionList);
-            OrderViewDto viewDto = OrderConverter.asOrderViewDto(order);
+            OrderDto viewDto = OrderConverter.asOrderDto(order);
             orderViewDtoList.add(viewDto);
         }
         return orderViewDtoList;

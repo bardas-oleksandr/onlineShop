@@ -22,10 +22,10 @@ public class OrderMapper extends AbstractMapper<Order> {
         order.setId(resultSet.getInt(ID));
         order.setUserId(resultSet.getInt(USER_ID));
         order.setUserName(resultSet.getString(USER_NAME));
-        order.setState(resultSet.getInt(STATE));
+        order.setOrderState(resultSet.getInt(STATE));
         order.setDate(resultSet.getTimestamp(DATE));
         order.setAddress(resultSet.getString(ADDRESS));
-        order.setConditions(resultSet.getInt(PAYMENT_CONDITIONS));
+        order.setPaymentConditions(resultSet.getInt(PAYMENT_CONDITIONS));
         order.setOrderPositionList(new ArrayList<>());
         return order;
     }

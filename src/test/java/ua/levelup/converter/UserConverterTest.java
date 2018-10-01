@@ -4,8 +4,8 @@ import ua.levelup.exception.ApplicationException;
 import ua.levelup.exception.support.MessageHolder;
 import ua.levelup.model.User;
 import ua.levelup.model.support.UserState;
-import ua.levelup.web.dto.UserCreateDto;
-import ua.levelup.web.dto.UserViewDto;
+import ua.levelup.web.dto.create.UserCreateDto;
+import ua.levelup.web.dto.UserDto;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
@@ -75,12 +75,12 @@ public class UserConverterTest {
     public void asUserViewDtoTest() throws Exception {
         //GIVEN
         final User USER = new User(USER_NAME, PASSWORD, EMAIL, UserState.ACTIVE.ordinal());
-        final UserViewDto EXPECTED = new UserViewDto();
+        final UserDto EXPECTED = new UserDto();
         EXPECTED.setUserName(USER.getUserName());
         EXPECTED.setEmail(USER.getEmail());
         EXPECTED.setState(USER.getUserState().ordinal());
         //WHEN
-        UserViewDto userViewDto = UserConverter.asUserViewDto(USER);
+        UserDto userViewDto = UserConverter.asUserViewDto(USER);
         //THEN
         Assert.assertNotNull(userViewDto);
         Assert.assertEquals(EXPECTED, userViewDto);

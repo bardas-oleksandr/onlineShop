@@ -15,31 +15,21 @@ public class Order implements Serializable {
     private static final long serialVersionUID = -8048642462864555907L;
 
     private int id;
-    private int userId;
-    private String userName;
-    private OrderState state;
+    private User user;
+    private OrderState orderState;
     private Timestamp date;
     private String address;
-    private PaymentConditions conditions;
+    private PaymentConditions paymentConditions;
     private List<OrderPosition> orderPositionList;
 
     public Order() { }
 
-    public Order(int userId, int state, Timestamp date, String address, int conditions, List<OrderPosition> orderPositionList) {
-        this.userId = userId;
-        this.state = OrderState.getOrderState(state);
+    public Order(User user, int orderStateIndex, Timestamp date, String address, int paymentConditionsIndex) {
+        this.user = user;
+        this.orderState = OrderState.getOrderState(orderStateIndex);
         this.date = date;
         this.address = address;
-        this.conditions = PaymentConditions.getPaymentConditions(conditions);
-        this.orderPositionList = orderPositionList;
-    }
-
-    public Order(int userId, int state, Timestamp date, String address, int conditions) {
-        this.userId = userId;
-        this.state = OrderState.getOrderState(state);
-        this.date = date;
-        this.address = address;
-        this.conditions = PaymentConditions.getPaymentConditions(conditions);
+        this.paymentConditions = PaymentConditions.getPaymentConditions(paymentConditionsIndex);
         this.orderPositionList = new ArrayList<>();
     }
 
@@ -55,28 +45,20 @@ public class Order implements Serializable {
         this.id = id;
     }
 
-    public int getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public String getUserName() {
-        return userName;
+    public OrderState getOrderState() {
+        return orderState;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public OrderState getState() {
-        return state;
-    }
-
-    public void setState(int state) {
-        this.state = OrderState.getOrderState(state);
+    public void setOrderState(int orderState) {
+        this.orderState = OrderState.getOrderState(orderState);
     }
 
     public Timestamp getDate() {
@@ -95,12 +77,12 @@ public class Order implements Serializable {
         this.address = address;
     }
 
-    public PaymentConditions getConditions() {
-        return conditions;
+    public PaymentConditions getPaymentConditions() {
+        return paymentConditions;
     }
 
-    public void setConditions(int conditions) {
-        this.conditions = PaymentConditions.getPaymentConditions(conditions);
+    public void setPaymentConditions(int paymentConditionsIndex) {
+        this.paymentConditions = PaymentConditions.getPaymentConditions(paymentConditionsIndex);
     }
 
     public List<OrderPosition> getOrderPositionList() {
@@ -122,12 +104,11 @@ public class Order implements Serializable {
         Order order = (Order) other;
         return new EqualsBuilder()
                 .append(id, order.id)
-                .append(userId, order.userId)
-                .append(userName, order.userName)
-                .append(state, order.state)
+                .append(user, order.user)
+                .append(orderState, order.orderState)
                 .append(date, order.date)
                 .append(address, order.address)
-                .append(conditions, order.conditions)
+                .append(paymentConditions, order.paymentConditions)
                 .append(orderPositionList, order.orderPositionList)
                 .isEquals();
     }
@@ -136,12 +117,11 @@ public class Order implements Serializable {
     public int hashCode(){
         return new HashCodeBuilder(17, 37)
                 .append(id)
-                .append(userId)
-                .append(userName)
-                .append(state)
+                .append(user)
+                .append(orderState)
                 .append(date)
                 .append(address)
-                .append(conditions)
+                .append(paymentConditions)
                 .append(orderPositionList)
                 .toHashCode();
     }
@@ -150,12 +130,11 @@ public class Order implements Serializable {
     public String toString(){
         return "Order{" +
                 "id=" + id +
-                ", userId=" + userId +
-                ", userName=" + userName +
-                ", state='" + state + '\'' +
+                ", user=" + user +
+                ", orderState='" + orderState + '\'' +
                 ", date=" + date +
                 ", address='" + address + '\'' +
-                ", conditions='" + conditions + '\'' +
+                ", paymentConditions='" + paymentConditions + '\'' +
                 ", orderPositionList=" + orderPositionList +
                 '}';
     }
