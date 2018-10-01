@@ -1,32 +1,20 @@
 package ua.levelup.web.dto;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.io.Serializable;
 
+@Setter
+@Getter
 public class ManufacturerDto implements Serializable {
 
     private static final long serialVersionUID = -1010367575480383830L;
 
     private int id;
     private String name;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     @Override
     public int hashCode() {

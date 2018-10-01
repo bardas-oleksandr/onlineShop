@@ -1,5 +1,7 @@
 package ua.levelup.web.dto;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -7,6 +9,8 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+@Setter
+@Getter
 public class CartDto implements Serializable {
 
     private static final long serialVersionUID = 6585089281336642307L;
@@ -14,30 +18,6 @@ public class CartDto implements Serializable {
     private Map<Integer, Integer> productCountMap = new HashMap<>();    //ProductId - key, product count - value
     private Map<Integer,ProductDto> productDtoMap = new HashMap<>();          //ProductId - key, product - value
     private int size = 0;
-
-    public Map<Integer, Integer> getProductCountMap() {
-        return productCountMap;
-    }
-
-    public void setProductCountMap(Map<Integer, Integer> productCountMap) {
-        this.productCountMap = productCountMap;
-    }
-
-    public Map<Integer, ProductDto> getProductDtoMap() {
-        return productDtoMap;
-    }
-
-    public void setProductDtoMap(Map<Integer, ProductDto> productDtoMap) {
-        this.productDtoMap = productDtoMap;
-    }
-
-    public int getSize() {
-        return size;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
-    }
 
     @Override
     public boolean equals(Object other) {

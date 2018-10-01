@@ -1,5 +1,7 @@
 package ua.levelup.model;
 
+import lombok.Getter;
+import lombok.Setter;
 import ua.levelup.model.support.UserState;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -15,59 +17,24 @@ public class User implements Serializable {
 
     private static final long serialVersionUID = -1153406954451373752L;
 
-    private int id;
-    private String userName;
-    private String password;
-    private String email;
-    private UserState userState;
+    @Getter @Setter private int id;
+    @Getter @Setter private String userName;
+    @Getter @Setter private String password;
+    @Getter @Setter private String email;
+    @Getter private UserState userState;
 
-    public User() { }
+    public User() {
+    }
 
-    public User(String userName, String password, String email, int state) {
+    public User(String userName, String password, String email, int stateIndex) {
         this.userName = userName;
         this.password = password;
         this.email = email;
-        this.userState = UserState.getUserState(state);
+        this.userState = UserState.getUserState(stateIndex);
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public UserState getUserState() {
-        return userState;
-    }
-
-    public void setUserState(int state) {
-        this.userState = UserState.getUserState(state);
+    public void setUserState(int stateIndex) {
+        this.userState = UserState.getUserState(stateIndex);
     }
 
     @Override
@@ -89,7 +56,7 @@ public class User implements Serializable {
     }
 
     @Override
-    public int hashCode(){
+    public int hashCode() {
         return new HashCodeBuilder(17, 37)
                 .append(id)
                 .append(userName)
@@ -100,7 +67,7 @@ public class User implements Serializable {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "User{" +
                 "id=" + id +
                 ", userName='" + userName + '\'' +

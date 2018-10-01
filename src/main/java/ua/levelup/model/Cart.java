@@ -1,5 +1,7 @@
 package ua.levelup.model;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -7,6 +9,8 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+@Getter
+@Setter
 public class Cart implements Serializable {
 
     private static final long serialVersionUID = -1701271203258179128L;
@@ -19,30 +23,6 @@ public class Cart implements Serializable {
         productCountMap.compute(productId,
                 (key, value) -> value == null? productCount: value + productCount);
         size = productCountMap.size();
-    }
-
-    public Map<Integer, Integer> getProductCountMap() {
-        return productCountMap;
-    }
-
-    public void setProductCountMap(Map<Integer, Integer> productCountMap) {
-        this.productCountMap = productCountMap;
-    }
-
-    public Map<Integer, Product> getProductMap() {
-        return productMap;
-    }
-
-    public void setProductMap(Map<Integer, Product> productMap) {
-        this.productMap = productMap;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
-    }
-
-    public int getSize(){
-        return size;
     }
 
     @Override

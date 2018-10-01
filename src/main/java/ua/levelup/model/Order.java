@@ -1,5 +1,7 @@
 package ua.levelup.model;
 
+import lombok.Getter;
+import lombok.Setter;
 import ua.levelup.model.support.OrderState;
 import ua.levelup.model.support.PaymentConditions;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -14,13 +16,13 @@ public class Order implements Serializable {
 
     private static final long serialVersionUID = -8048642462864555907L;
 
-    private int id;
-    private User user;
-    private OrderState orderState;
-    private Timestamp date;
-    private String address;
-    private PaymentConditions paymentConditions;
-    private List<OrderPosition> orderPositionList;
+    @Getter @Setter private int id;
+    @Getter @Setter private User user;
+    @Getter private OrderState orderState;
+    @Getter @Setter private Timestamp date;
+    @Getter @Setter private String address;
+    @Getter private PaymentConditions paymentConditions;
+    @Getter @Setter private List<OrderPosition> orderPositionList;
 
     public Order() { }
 
@@ -37,60 +39,12 @@ public class Order implements Serializable {
         this.orderPositionList.add(orderPosition);
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public OrderState getOrderState() {
-        return orderState;
-    }
-
     public void setOrderState(int orderState) {
         this.orderState = OrderState.getOrderState(orderState);
     }
 
-    public Timestamp getDate() {
-        return date;
-    }
-
-    public void setDate(Timestamp date) {
-        this.date = date;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public PaymentConditions getPaymentConditions() {
-        return paymentConditions;
-    }
-
     public void setPaymentConditions(int paymentConditionsIndex) {
         this.paymentConditions = PaymentConditions.getPaymentConditions(paymentConditionsIndex);
-    }
-
-    public List<OrderPosition> getOrderPositionList() {
-        return orderPositionList;
-    }
-
-    public void setOrderPositionList(List<OrderPosition> orderPositionList) {
-        this.orderPositionList = orderPositionList;
     }
 
     @Override

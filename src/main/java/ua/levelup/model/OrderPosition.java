@@ -1,10 +1,14 @@
 package ua.levelup.model;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.io.Serializable;
 
+@Getter
+@Setter
 public class OrderPosition implements Serializable {
 
     private static final long serialVersionUID = -3811193438177918259L;
@@ -22,46 +26,6 @@ public class OrderPosition implements Serializable {
         this.productId = productId;
         this.productName = productName;
         this.quantity = quantity;
-        this.unitPrice = unitPrice;
-    }
-
-    public int getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
-    }
-
-    public int getProductId() {
-        return productId;
-    }
-
-    public void setProductId(int productId) {
-        this.productId = productId;
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public float getUnitPrice() {
-        return unitPrice;
-    }
-
-    public void setUnitPrice(float unitPrice) {
         this.unitPrice = unitPrice;
     }
 

@@ -1,5 +1,7 @@
 package ua.levelup.web.dto;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -10,6 +12,8 @@ import java.io.Serializable;
 
 @XmlRootElement(name = "userViewDto")
 @XmlAccessorType(XmlAccessType.FIELD)
+@Setter
+@Getter
 public class UserDto implements Serializable {
 
     private static final long serialVersionUID = -5411991248978416452L;
@@ -18,38 +22,6 @@ public class UserDto implements Serializable {
     private String userName;
     private String email;
     private int state;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public int getState() {
-        return state;
-    }
-
-    public void setState(int stateIndex) {
-        this.state = stateIndex;
-    }
 
     @Override
     public int hashCode() {

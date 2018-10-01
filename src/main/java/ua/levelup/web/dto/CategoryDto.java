@@ -1,10 +1,14 @@
 package ua.levelup.web.dto;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.io.Serializable;
 
+@Setter
+@Getter
 public class CategoryDto implements Serializable {
 
     private static final long serialVersionUID = 4187360651127209514L;
@@ -12,30 +16,6 @@ public class CategoryDto implements Serializable {
     private int id;
     private String name;
     private CategoryDto parentCategoryDto;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public CategoryDto getParentCategoryDto() {
-        return parentCategoryDto;
-    }
-
-    public void setParentCategoryDto(CategoryDto parentCategoryDto) {
-        this.parentCategoryDto = parentCategoryDto;
-    }
 
     @Override
     public int hashCode() {

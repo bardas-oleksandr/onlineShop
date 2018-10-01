@@ -1,10 +1,14 @@
 package ua.levelup.web.dto;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.io.Serializable;
 
+@Setter
+@Getter
 public class ProductDto implements Serializable {
 
     private static final long serialVersionUID = -6826469302682953337L;
@@ -16,62 +20,6 @@ public class ProductDto implements Serializable {
     private String description;
     private CategoryDto categoryDto;
     private ManufacturerDto manufacturerDto;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public float getPrice() {
-        return price;
-    }
-
-    public void setPrice(float price) {
-        this.price = price;
-    }
-
-    public boolean isAvailable() {
-        return available;
-    }
-
-    public void setAvailable(boolean available) {
-        this.available = available;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public CategoryDto getCategoryDto() {
-        return categoryDto;
-    }
-
-    public void setCategoryDto(CategoryDto categoryDto) {
-        this.categoryDto = categoryDto;
-    }
-
-    public ManufacturerDto getManufacturerDto() {
-        return manufacturerDto;
-    }
-
-    public void setManufacturerDto(ManufacturerDto manufacturerDto) {
-        this.manufacturerDto = manufacturerDto;
-    }
 
     @Override
     public int hashCode() {

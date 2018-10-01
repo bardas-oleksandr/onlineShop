@@ -1,10 +1,14 @@
 package ua.levelup.model;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.io.Serializable;
 
+@Getter
+@Setter
 public class Manufacturer implements Serializable {
 
     private static final long serialVersionUID = -3697471520398417681L;
@@ -15,22 +19,6 @@ public class Manufacturer implements Serializable {
     public Manufacturer() { }
 
     public Manufacturer(String name) {
-        this.name = name;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
         this.name = name;
     }
 
