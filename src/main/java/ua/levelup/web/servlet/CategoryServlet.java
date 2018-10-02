@@ -1,8 +1,8 @@
 package ua.levelup.web.servlet;
 
+import ua.levelup.model.Category;
 import ua.levelup.service.CategoryService;
 import ua.levelup.service.support.ServiceHolder;
-import ua.levelup.web.dto.create.CategoryCreateDto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -32,8 +32,8 @@ public class CategoryServlet extends HttpServlet {
             throws ServletException, IOException {
         if (!response.isCommitted()){
             try{
-                CategoryCreateDto categoryCreateDto = extractNewCategory(request);
-                categoryService.createNewCategory(categoryCreateDto);
+                Category category = extractNewCategory(request);
+                categoryService.createNewCategory(category);
                 response.sendRedirect(SUCCESS_JSP);
             }catch(Exception e){
                 request.setAttribute(EXCEPTION, e);
@@ -44,9 +44,15 @@ public class CategoryServlet extends HttpServlet {
         }
     }
 
-    private CategoryCreateDto extractNewCategory(HttpServletRequest request){
+    private Category extractNewCategory(HttpServletRequest request){
         String categoryName = request.getParameter(CATEGORY_NAME);
         Integer parentCategoryId = Integer.parseInt(request.getParameter(PARENT_CATEGORY_ID));
-        return new CategoryCreateDto(categoryName,parentCategoryId);
+
+
+        //Неизвестно имя родительской категории
+        Category parent = new Category("", null);
+        parent.setId(parentCategoryId);
+
+        return new Category(categoryName,parent);
     }
 }

@@ -1,27 +1,33 @@
 package ua.levelup.service.impl;
 
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ua.levelup.converter.UserConverter;
 import ua.levelup.dao.UserDao;
-import ua.levelup.dao.support.DaoHolder;
 import ua.levelup.exception.ValidationException;
 import ua.levelup.exception.support.MessageHolder;
 import ua.levelup.model.User;
 import ua.levelup.service.SecurityService;
 import ua.levelup.service.UserService;
 import ua.levelup.validator.UserValidator;
-import ua.levelup.web.dto.create.UserCreateDto;
 import ua.levelup.web.dto.UserDto;
 
+@Service("userService")
+@Getter
+@Setter
 public class UserServiceImpl implements UserService {
 
-    private UserDao userDao = (UserDao) DaoHolder
-            .getDaoObject(DaoHolder.USER_DAO);
-    private SecurityService securityService = new SecurityServiceImpl();
+    @Autowired
+    private UserDao userDao;
+
+    @Autowired
+    private SecurityService securityService;
 
     @Override
-    public UserDto registerUser(UserCreateDto userCreateDto) {
-        UserValidator.validateNewUser(userCreateDto);
-        User user = UserConverter.asUser(userCreateDto);
+    public UserDto registerUser(User user) {
+        UserValidator.validateNewUser(user);
         user = userDao.add(user);
         return UserConverter.asUserViewDto(user);
     }

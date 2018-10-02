@@ -1,7 +1,7 @@
 package ua.levelup.service;
 
-import ua.levelup.web.dto.create.ManufacturerCreateDto;
+import ua.levelup.model.Manufacturer;
 
 public interface ManufacturerService {
-    void createNewManufacturer(ManufacturerCreateDto manufacturerreateDto);
+    void createNewManufacturer(Manufacturer manufacturer);
 }

@@ -1,8 +1,8 @@
 package ua.levelup.web.servlet;
 
+import ua.levelup.model.Manufacturer;
 import ua.levelup.service.ManufacturerService;
 import ua.levelup.service.support.ServiceHolder;
-import ua.levelup.web.dto.create.ManufacturerCreateDto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -31,8 +31,8 @@ public class ManufacturerServlet extends HttpServlet {
             throws ServletException, IOException {
         if (!response.isCommitted()){
             try{
-                ManufacturerCreateDto manufacturerCreateDto = extractNewManufacturer(request);
-                manufacturerService.createNewManufacturer(manufacturerCreateDto);
+                Manufacturer manufacturer = extractNewManufacturer(request);
+                manufacturerService.createNewManufacturer(manufacturer);
                 response.sendRedirect(SUCCESS_JSP);
             }catch(Exception e){
                 request.setAttribute(EXCEPTION, e);
@@ -43,8 +43,8 @@ public class ManufacturerServlet extends HttpServlet {
         }
     }
 
-    private ManufacturerCreateDto extractNewManufacturer(HttpServletRequest request){
+    private Manufacturer extractNewManufacturer(HttpServletRequest request){
         String manufacturerName = request.getParameter(MANUFACTURER_NAME);
-        return new ManufacturerCreateDto(manufacturerName);
+        return new Manufacturer(manufacturerName);
     }
 }

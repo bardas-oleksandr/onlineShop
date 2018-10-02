@@ -20,8 +20,17 @@ public class OrderMapper extends AbstractMapper<Order> {
     protected Order getObject(ResultSet resultSet) throws SQLException {
         Order order = new Order();
         order.setId(resultSet.getInt(ID));
-        order.setUserId(resultSet.getInt(USER_ID));
-        order.setUserName(resultSet.getString(USER_NAME));
+
+
+
+
+        //order.setUserId(resultSet.getInt(USER_ID));
+        //order.setUserName(resultSet.getString(USER_NAME));
+
+
+
+
+
         order.setOrderState(resultSet.getInt(STATE));
         order.setDate(resultSet.getTimestamp(DATE));
         order.setAddress(resultSet.getString(ADDRESS));

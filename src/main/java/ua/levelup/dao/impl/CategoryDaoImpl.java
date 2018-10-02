@@ -31,10 +31,10 @@ public class CategoryDaoImpl extends AbstractDaoImpl implements CategoryDao {
     public Category add(Category category) throws ApplicationException {
         try (PreparedStatement statement = connection.prepareStatement(INSERT_QUERY, new String[]{"id"})) {
             statement.setString(1, category.getName());
-            if (category.getParentId() == 0) {
+            if (category.getParentCategory().getId() == 0) {
                 statement.setNull(2, Types.INTEGER);
             } else {
-                statement.setInt(2, category.getParentId());
+                statement.setInt(2, category.getParentCategory().getId());
             }
             statement.executeUpdate();
             ResultSet generatedKeys = statement.getGeneratedKeys();
@@ -61,10 +61,10 @@ public class CategoryDaoImpl extends AbstractDaoImpl implements CategoryDao {
     public int update(Category category) throws ApplicationException {
         try (PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY)) {
             statement.setString(1, category.getName());
-            if (category.getParentId() == 0) {
+            if (category.getParentCategory().getId() == 0) {
                 statement.setNull(2, Types.INTEGER);
             } else {
-                statement.setInt(2, category.getParentId());
+                statement.setInt(2, category.getParentCategory().getId());
             }
             statement.setInt(3, category.getId());
             return statement.executeUpdate();

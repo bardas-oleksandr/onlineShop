@@ -3,12 +3,13 @@ package ua.levelup.web.servlet;
 import ua.levelup.exception.ApplicationException;
 import ua.levelup.exception.support.MessageHolder;
 import ua.levelup.model.Cart;
+import ua.levelup.model.Order;
+import ua.levelup.model.OrderPosition;
+import ua.levelup.model.User;
 import ua.levelup.model.support.OrderState;
 import ua.levelup.service.CartService;
 import ua.levelup.service.OrderService;
 import ua.levelup.service.support.ServiceHolder;
-import ua.levelup.web.dto.create.OrderCreateDto;
-import ua.levelup.web.dto.create.OrderPositionCreateDto;
 import ua.levelup.web.dto.OrderDto;
 import ua.levelup.web.dto.ProductDto;
 import ua.levelup.web.dto.UserDto;
@@ -126,57 +127,70 @@ public class OrderServlet extends HttpServlet {
 
     private void confirmOrder(HttpServletRequest request)
             throws ServletException, IOException {
-        OrderCreateDto orderCreateDto = extractOrderWithOrderPositions(request);
-        orderService.createOrder(orderCreateDto);
+        Order order = extractOrderWithOrderPositions(request);
+        orderService.createOrder(order);
         HttpSession session = request.getSession(true);
         session.removeAttribute(CART);
     }
 
     private void updateOrder(HttpServletRequest request) throws IOException {
         int orderId = ServletUtils.retrieveEntityId(request);
-        OrderCreateDto orderCreateDto = extractOrderForUpdate(request);
-        orderService.updateOrder(orderCreateDto, orderId);
+        Order order = extractOrderForUpdate(request);
+        orderService.updateOrder(order, orderId);
     }
 
-    private OrderCreateDto extractOrderWithOrderPositions(HttpServletRequest request) {
-        OrderCreateDto orderCreateDto = extractNewOrder(request);
-        List<OrderPositionCreateDto> orderPositionCreateDtoList = extractOrderPositions(request);
-        orderCreateDto.setOrderPositionList(orderPositionCreateDtoList);
-        return orderCreateDto;
+    private Order extractOrderWithOrderPositions(HttpServletRequest request) {
+        Order order = extractNewOrder(request);
+        List<OrderPosition> orderPositionCreateDtoList = extractOrderPositions(request);
+        order.setOrderPositionList(orderPositionCreateDtoList);
+        return order;
     }
 
-    private OrderCreateDto extractOrderForUpdate(HttpServletRequest request) {
+    private Order extractOrderForUpdate(HttpServletRequest request) {
+
+        //Вероятно тут надо вытащить юзера из сессии
         Integer userId = Integer.parseInt(request.getParameter(USER_ID));
+        User user = new User();
+
+
         Integer orderState = Integer.parseInt(request.getParameter(ORDER_STATE));
         String address = request.getParameter(ADDRESS);
         Integer paymentConditions = Integer.parseInt(request.getParameter(PAYMENT_CONDITIONS));
         Timestamp date = Timestamp.valueOf(request.getParameter(ORDER_DATE));
-        return new OrderCreateDto(userId, orderState, date, address, paymentConditions);
+        return new Order(user, orderState, date, address, paymentConditions);
     }
 
-    private OrderCreateDto extractNewOrder(HttpServletRequest request) {
+    private Order extractNewOrder(HttpServletRequest request) {
+
+        //В сессии у меня userDto а мне надо user.
         HttpSession session = request.getSession(true);
-        UserDto user = (UserDto) session.getAttribute(USER);
+        UserDto userDto = (UserDto) session.getAttribute(USER);
+        User user = new User();
+
         Integer orderState = OrderState.REGISTERED.ordinal();
         String address = request.getParameter(ADDRESS);
         Integer paymentConditions = Integer.parseInt(request.getParameter(PAYMENT_CONDITIONS));
         Timestamp date = new Timestamp(System.currentTimeMillis());
-        return new OrderCreateDto(user.getId(), orderState, date, address, paymentConditions);
+        return new Order(user, orderState, date, address, paymentConditions);
     }
 
-    private List<OrderPositionCreateDto> extractOrderPositions(HttpServletRequest request) {
-        HttpSession session = request.getSession(true);
-        Cart cart = (Cart) session.getAttribute(CART);
-        Map<Integer, Integer> productCountMap = cart.getProductCountMap();
-        Map<Integer, ProductDto> productViewDtoMap = cartService.retrieveCartProducts(cart);
-        Set<Integer> productIdSet = productCountMap.keySet();
-        List<OrderPositionCreateDto> list = new ArrayList<>();
-        for (Integer productId : productIdSet) {
-            int count = productCountMap.get(productId);
-            float price = productViewDtoMap.get(productId).getPrice();
-            list.add(new OrderPositionCreateDto(productId, count, price));
-        }
-        return list;
+    private List<OrderPosition> extractOrderPositions(HttpServletRequest request) {
+//        HttpSession session = request.getSession(true);
+//        Cart cart = (Cart) session.getAttribute(CART);
+//        Map<Integer, Integer> productCountMap = cart.getProductCountMap();
+//        Map<Integer, ProductDto> productDtoMap = cartService.retrieveCartProducts(cart);
+//        Set<Integer> productIdSet = productCountMap.keySet();
+//        List<OrderPosition> list = new ArrayList<>();
+//        for (Integer productId : productIdSet) {
+//            int count = productCountMap.get(productId);
+//            float price = productDtoMap.get(productId).getPrice();
+//
+//
+//            list.add(new OrderPosition(productId, count, price));
+//        }
+//        return list;
+
+        return null;
     }
 
     private void setOrderListAttribute(HttpSession session){

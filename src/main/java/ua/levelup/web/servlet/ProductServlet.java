@@ -3,10 +3,10 @@ package ua.levelup.web.servlet;
 import ua.levelup.dao.support.OrderMethod;
 import ua.levelup.exception.ApplicationException;
 import ua.levelup.exception.support.MessageHolder;
+import ua.levelup.model.Product;
 import ua.levelup.service.ProductService;
 import ua.levelup.service.support.ServiceHolder;
 import ua.levelup.web.servlet.support.SearchParams;
-import ua.levelup.web.dto.create.ProductCreateDto;
 import ua.levelup.web.dto.ProductDto;
 import ua.levelup.web.servlet.support.ServletUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -129,8 +129,8 @@ public class ProductServlet extends HttpServlet {
 
     private void updateProduct(HttpServletRequest request) throws ServletException, IOException {
         int productId = ServletUtils.retrieveEntityId(request);
-        ProductCreateDto productCreateDto = extractNewProduct(request);
-        productService.updateProduct(productCreateDto, productId);
+        Product product = extractNewProduct(request);
+        productService.updateProduct(product, productId);
     }
 
     private void deleteProduct(HttpServletRequest request) throws ServletException, IOException {
@@ -139,8 +139,8 @@ public class ProductServlet extends HttpServlet {
     }
 
     private void createNewProduct(HttpServletRequest request) throws IOException {
-        ProductCreateDto productCreateDto = extractNewProduct(request);
-        productService.createNewProduct(productCreateDto);
+        Product product = extractNewProduct(request);
+        productService.createNewProduct(product);
     }
 
     private SearchParams extractSearchParams(HttpServletRequest request) {
@@ -150,17 +150,22 @@ public class ProductServlet extends HttpServlet {
         float minPrice = Float.parseFloat(request.getParameter(MIN_PRICE));
         float maxPrice = Float.parseFloat(request.getParameter(MAX_PRICE));
         short orderMethod = Short.parseShort(request.getParameter(SORT_BY_PARAM));
-        ua.levelup.model.Product product = new ua.levelup.model.Product();
-        product.setCategoryId(actualSearchedCategoryId);
-        int manufacturerId = Integer.parseInt(request.getParameter(MANUFACTURER_ID));
-        product.setManufacturerId(manufacturerId);
+        Product product = new Product();
+
+
+//        product.setCategoryId(actualSearchedCategoryId);
+//        int manufacturerId = Integer.parseInt(request.getParameter(MANUFACTURER_ID));
+//        product.setManufacturerId(manufacturerId);
+
+
+
         boolean available = request.getParameter(AVAILABLE) != null;    //Checkbox can equals either "on" or null
         product.setAvailable(available);
         return new SearchParams(product, categoryId, subcategoryId,
                 minPrice, maxPrice, OrderMethod.getOrderMethod(orderMethod));
     }
 
-    private ProductCreateDto extractNewProduct(HttpServletRequest request) {
+    private Product extractNewProduct(HttpServletRequest request) {
         String productName = request.getParameter(PRODUCT_NAME);
         String stringPrice = request.getParameter(PRICE);
         float price = StringUtils.isEmpty(stringPrice) ? 0 : Float.parseFloat(stringPrice);
@@ -168,7 +173,10 @@ public class ProductServlet extends HttpServlet {
         String description = request.getParameter(DESCRIPTION);
         int categoryId = Integer.parseInt(request.getParameter(CATEGORY_ID));
         int manufacturerId = Integer.parseInt(request.getParameter(MANUFACTURER_ID));
-        return new ProductCreateDto(productName, price, available, description, categoryId, manufacturerId);
+
+
+        //return new Product(productName, price, available, description, categoryId, manufacturerId);
+        return null;
     }
 
     private void productSearch(HttpSession session, SearchParams searchParams) {

@@ -1,21 +1,25 @@
 package ua.levelup.service.impl;
 
-import ua.levelup.converter.CategoryConverter;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ua.levelup.dao.CategoryDao;
-import ua.levelup.dao.support.DaoHolder;
 import ua.levelup.model.Category;
 import ua.levelup.service.CategoryService;
 import ua.levelup.validator.CategoryValidator;
-import ua.levelup.web.dto.create.CategoryCreateDto;
 
+@Service("categoryService")
+@Getter
+@Setter
 public class CategoryServiceImpl implements CategoryService {
 
-    private CategoryDao categoryDao = (CategoryDao) DaoHolder.getDaoObject(DaoHolder.CATEGORY_DAO);
+    @Autowired
+    private CategoryDao categoryDao;
 
     @Override
-    public void createNewCategory(CategoryCreateDto categoryCreateDto) {
-        CategoryValidator.validateNewCategory(categoryCreateDto);
-        Category category = CategoryConverter.asCategory(categoryCreateDto);
+    public void createNewCategory(Category category) {
+        CategoryValidator.validateNewCategory(category);
         categoryDao.add(category);
     }
 }

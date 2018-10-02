@@ -37,8 +37,13 @@ public class ServletUtils {
 
     public static SearchParams getDefaultSearchParams(){
         Product product = new Product();
-        product.setCategoryId(DEFAULT_CATEGORY_ID);
-        product.setManufacturerId(DEFAULT_MANUFACTURER_ID);
+
+
+        //product.setCategoryId(DEFAULT_CATEGORY_ID);
+        //product.setManufacturerId(DEFAULT_MANUFACTURER_ID);
+
+
+
         product.setAvailable(DEFAULT_PRODUCT_AVAILABILITY);
         return new SearchParams(product, DEFAULT_CATEGORY_ID, DEFAULT_SUBCATEGORY_ID,
                 DEFAULT_MIN_PRICE, DEFAULT_MAXPRICE, DEFAULT_ORDER_METHOD);

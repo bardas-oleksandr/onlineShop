@@ -1,13 +1,13 @@
 package ua.levelup.service;
 
-import ua.levelup.web.dto.create.OrderCreateDto;
+import ua.levelup.model.Order;
 import ua.levelup.web.dto.OrderDto;
 
 import java.util.List;
 
 public interface OrderService {
-    OrderDto createOrder(OrderCreateDto orderCreateDto);
+    OrderDto createOrder(Order order);
     List<OrderDto> getUsersOrders(int userId);
-    void updateOrder(OrderCreateDto orderCreateDto, int orderId);
+    void updateOrder(Order order, int orderId);
     List<OrderDto> getAllOrders();
 }

@@ -9,7 +9,6 @@ import ua.levelup.exception.support.MessageHolder;
 import ua.levelup.model.User;
 import ua.levelup.rest.support.HeaderValidator;
 import ua.levelup.validator.UserValidator;
-import ua.levelup.web.dto.create.UserCreateDto;
 import ua.levelup.web.dto.UserDto;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -82,11 +81,10 @@ public class UserRestService {
                             String userCreateDtoString) {
         try {
             HeaderValidator.validateHeaders(accept, contentType);
-            Type type = new TypeToken<UserCreateDto>() {
+            Type type = new TypeToken<User>() {
             }.getType();
-            UserCreateDto userCreateDto = (UserCreateDto) extractFromJson(userCreateDtoString, type);
-            UserValidator.validateNewUser(userCreateDto);
-            User user = UserConverter.asUser(userCreateDto);
+            User user = (User) extractFromJson(userCreateDtoString, type);
+            UserValidator.validateNewUser(user);
             userDao.add(user);
             return Response.status(201).build(); //Created
         } catch (RestException e) {
@@ -105,11 +103,10 @@ public class UserRestService {
                                String userCreateDtoString) {
         try {
             HeaderValidator.validateHeaders(accept, contentType);
-            Type type = new TypeToken<UserCreateDto>() {
+            Type type = new TypeToken<User>() {
             }.getType();
-            UserCreateDto userCreateDto = (UserCreateDto) extractFromJson(userCreateDtoString, type);
-            UserValidator.validateNewUser(userCreateDto);
-            User user = UserConverter.asUser(userCreateDto);
+            User user = (User) extractFromJson(userCreateDtoString, type);
+            UserValidator.validateNewUser(user);
             int count = userDao.update(id, user);
             return Response.status(count == 0 ? 404 : 200).build();
         } catch (RestException e) {
@@ -148,34 +145,6 @@ public class UserRestService {
                 userViewDtos.add(userViewDto);
             }
             return Response.ok(getJson(userViewDtos)).build();
-        } catch (RestException e) {
-            return Response.status(e.getHttpStatus()).build();
-        } catch (ApplicationException e) {
-            return getResponseOnApplicationException(e);
-        }
-    }
-
-    @PUT
-    @Consumes({MediaType.APPLICATION_JSON})
-    public Response updateUsersList(@HeaderParam("Accept") String accept,
-                                    @HeaderParam("Content-Type") String contentType,
-                                    String mapUserCreateDtoString) {
-        try {
-            HeaderValidator.validateHeaders(accept, contentType);
-            Type type = new TypeToken<HashMap<String,UserCreateDto>>() {
-            }.getType();
-            Map<String,UserCreateDto> userCreateDtoMap = (Map<String,UserCreateDto>) extractFromJson(
-                    mapUserCreateDtoString, type);
-            Set<String> emails = userCreateDtoMap.keySet();
-            Map<String, User> userMap = new HashMap<>();
-            for (String email: emails) {
-                UserCreateDto userCreateDto = userCreateDtoMap.get(email);
-                UserValidator.validateNewUser(userCreateDto);
-                User user = UserConverter.asUser(userCreateDto);
-                userMap.put(email, user);
-            }
-            int count = userDao.updateByMap(userMap);
-            return Response.status(200).build();
         } catch (RestException e) {
             return Response.status(e.getHttpStatus()).build();
         } catch (ApplicationException e) {

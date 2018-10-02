@@ -25,10 +25,16 @@ public class ProductMapper extends AbstractMapper<Product> {
         product.setPrice(resultSet.getFloat(PRICE));
         product.setAvailable(resultSet.getBoolean(AVAILABLE));
         product.setDescription(resultSet.getString(DESCRIPTION));
-        product.setCategoryId(resultSet.getInt(CATEGORY_ID));
-        product.setManufacturerId(resultSet.getInt(MANUFACTURER_ID));
-        product.setCategoryName(resultSet.getString(CATEGORY_NAME));
-        product.setManufacturerName(resultSet.getString(MANUFACTURER_NAME));
+
+
+
+
+        //product.setCategoryId(resultSet.getInt(CATEGORY_ID));
+        //product.setManufacturerId(resultSet.getInt(MANUFACTURER_ID));
+        //product.setCategoryName(resultSet.getString(CATEGORY_NAME));
+        //product.setManufacturerName(resultSet.getString(MANUFACTURER_NAME));
+
+
         return product;
     }
 }

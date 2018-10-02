@@ -1,5 +1,6 @@
 package ua.levelup.converter;
 
+import lombok.NonNull;
 import ua.levelup.model.Order;
 import ua.levelup.model.OrderPosition;
 import ua.levelup.web.dto.OrderPositionDto;
@@ -11,7 +12,7 @@ import java.util.List;
 public enum OrderConverter {
     ;
 
-    public static OrderDto asOrderDto(Order order){
+    public static OrderDto asOrderDto(@NonNull Order order){
         OrderDto orderDto = new OrderDto();
         orderDto.setId(order.getId());
         orderDto.setUserDto(UserConverter.asUserViewDto(order.getUser()));

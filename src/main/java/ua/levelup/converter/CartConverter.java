@@ -1,5 +1,6 @@
 package ua.levelup.converter;
 
+import lombok.NonNull;
 import ua.levelup.model.Cart;
 import ua.levelup.model.Product;
 import ua.levelup.web.dto.CartDto;
@@ -11,7 +12,7 @@ import java.util.Map;
 public enum CartConverter {
     ;
 
-    public static CartDto asCartDto(Cart cart) {
+    public static CartDto asCartDto(@NonNull Cart cart) {
         CartDto cartDto = new CartDto();
         Map<Integer, Integer> productCountMap= cart.getProductCountMap();
         Map<Integer, Integer> productDtoCountMap = new LinkedHashMap<>();
@@ -21,7 +22,7 @@ public enum CartConverter {
         Map<Integer, Product> productMap = cart.getProductMap();
         Map<Integer, ProductDto> productDtoMap = new LinkedHashMap<>();
         productMap.forEach((key, product) -> productDtoMap
-                .put(key, ProductConverter.asProductViewDto(product)));
+                .put(key, ProductConverter.asProductDto(product)));
         cartDto.setProductDtoMap(productDtoMap);
 
         cartDto.setSize(cart.getSize());

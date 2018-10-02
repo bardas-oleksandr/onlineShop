@@ -1,12 +1,13 @@
 package ua.levelup.converter;
 
+import lombok.NonNull;
 import ua.levelup.model.Product;
 import ua.levelup.web.dto.ProductDto;
 
 public enum ProductConverter {
     ;
 
-    public static ProductDto asProductViewDto(Product product){
+    public static ProductDto asProductDto(@NonNull Product product){
         ProductDto productDto = new ProductDto();
         productDto.setId(product.getId());
         productDto.setName(product.getName());

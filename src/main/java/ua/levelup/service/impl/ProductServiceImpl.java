@@ -1,14 +1,17 @@
 package ua.levelup.service.impl;
 
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ua.levelup.converter.ProductConverter;
 import ua.levelup.dao.ProductDao;
-import ua.levelup.dao.support.DaoHolder;
 import ua.levelup.exception.ApplicationException;
 import ua.levelup.exception.support.MessageHolder;
+import ua.levelup.model.Product;
 import ua.levelup.service.ProductService;
 import ua.levelup.web.servlet.support.SearchParams;
 import ua.levelup.validator.ProductValidator;
-import ua.levelup.web.dto.create.ProductCreateDto;
 import ua.levelup.web.dto.ProductDto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,12 +19,15 @@ import org.apache.logging.log4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service("productService")
+@Getter
+@Setter
 public class ProductServiceImpl implements ProductService {
 
     private static final Logger logger = LogManager.getLogger();
 
-    private ProductDao productDao = (ProductDao) DaoHolder
-            .getDaoObject(DaoHolder.PRODUCT_DAO);
+    @Autowired
+    private ProductDao productDao;
 
     @Override
     public List<ProductDto> searchProducts(SearchParams searchParams) {
@@ -29,7 +35,7 @@ public class ProductServiceImpl implements ProductService {
                 searchParams.getMinPrice(), searchParams.getMaxPrice(), searchParams.getOrderMethod());
         List<ProductDto> productViewDtoList = new ArrayList<>();
         for (ua.levelup.model.Product item : productList) {
-            productViewDtoList.add(ProductConverter.asProductViewDto(item));
+            productViewDtoList.add(ProductConverter.asProductDto(item));
         }
         return productViewDtoList;
     }
@@ -49,9 +55,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void updateProduct(ProductCreateDto productCreateDto, int productId) {
-        ProductValidator.validateNewProduct(productCreateDto);
-        ua.levelup.model.Product product = ProductConverter.asProduct(productCreateDto);
+    public void updateProduct(Product product, int productId) {
+        ProductValidator.validateNewProduct(product);
         product.setId(productId);
         int count = productDao.update(product);
         if (count == 0) {
@@ -66,9 +71,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void createNewProduct(ProductCreateDto productCreateDto) {
-        ProductValidator.validateNewProduct(productCreateDto);
-        ua.levelup.model.Product product = ProductConverter.asProduct(productCreateDto);
+    public void createNewProduct(Product product) {
+        ProductValidator.validateNewProduct(product);
         productDao.add(product);
     }
 }

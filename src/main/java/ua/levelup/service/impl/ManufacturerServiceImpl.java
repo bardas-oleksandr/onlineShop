@@ -1,22 +1,25 @@
 package ua.levelup.service.impl;
 
-import ua.levelup.converter.ManufacturerConverter;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ua.levelup.dao.ManufacturerDao;
-import ua.levelup.dao.support.DaoHolder;
 import ua.levelup.model.Manufacturer;
 import ua.levelup.service.ManufacturerService;
 import ua.levelup.validator.ManufacturerValidator;
-import ua.levelup.web.dto.create.ManufacturerCreateDto;
 
+@Service("manufacturerService")
+@Getter
+@Setter
 public class ManufacturerServiceImpl implements ManufacturerService {
 
-    private ManufacturerDao manufacturerDao = (ManufacturerDao) DaoHolder
-            .getDaoObject(DaoHolder.MANUFACTURER_DAO);
+    @Autowired
+    private ManufacturerDao manufacturerDao;
 
     @Override
-    public void createNewManufacturer(ManufacturerCreateDto manufacturerCreateDto) {
-        ManufacturerValidator.validateNewManufacturer(manufacturerCreateDto);
-        Manufacturer manufacturer = ManufacturerConverter.asManufacturer(manufacturerCreateDto);
+    public void createNewManufacturer(Manufacturer manufacturer) {
+        ManufacturerValidator.validateNewManufacturer(manufacturer);
         manufacturerDao.add(manufacturer);
     }
 }

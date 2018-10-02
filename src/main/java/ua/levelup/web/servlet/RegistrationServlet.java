@@ -1,9 +1,9 @@
 package ua.levelup.web.servlet;
 
+import ua.levelup.model.User;
 import ua.levelup.model.support.UserState;
 import ua.levelup.service.support.ServiceHolder;
 import ua.levelup.service.UserService;
-import ua.levelup.web.dto.create.UserCreateDto;
 import ua.levelup.web.dto.UserDto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -51,10 +51,10 @@ public class RegistrationServlet extends HttpServlet {
             throws ServletException, IOException {
         if (!response.isCommitted()) {
             try {
-                UserCreateDto userCreateDto = extractUser(request);
-                UserDto userViewDto = userService.registerUser(userCreateDto);
+                User user = extractUser(request);
+                UserDto userDto = userService.registerUser(user);
                 HttpSession session = request.getSession(true);
-                session.setAttribute(USER, userViewDto);
+                session.setAttribute(USER, userDto);
                 response.sendRedirect(PROFILE_JSP);
             }
             catch(Exception e){
@@ -66,11 +66,11 @@ public class RegistrationServlet extends HttpServlet {
         }
     }
 
-    private UserCreateDto extractUser(HttpServletRequest request) {
+    private User extractUser(HttpServletRequest request) {
         String userName = request.getParameter(USER_NAME);
         String password = request.getParameter(USER_PASSWORD);
         String email = request.getParameter(USER_EMAIL);
         UserState state = UserState.ACTIVE;
-        return new UserCreateDto(userName, password, email, state);
+        return new User(userName, password, email, state.ordinal());
     }
 }

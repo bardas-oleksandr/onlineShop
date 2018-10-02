@@ -16,7 +16,12 @@ public class CategoryMapper extends AbstractMapper<Category> {
         Category category = new Category();
         category.setId(resultSet.getInt(ID));
         category.setName(resultSet.getString(NAME));
-        category.setParentId(resultSet.getInt(PARENT_ID));
+
+
+        //category.setParentId(resultSet.getInt(PARENT_ID));
+
+
+
         return category;
     }
 }
