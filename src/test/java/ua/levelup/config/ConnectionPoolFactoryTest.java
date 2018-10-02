@@ -10,7 +10,7 @@ public class ConnectionPoolFactoryTest {
     @Test
     public void getConnectionPoolTest() throws Exception {
         //WHEN
-        GenericObjectPool<Connection> pool = ConnectionPoolHolder.getConnectionPool();
+        GenericObjectPool<Connection> pool = ConnectionPoolConfig.getConnectionPool();
         //THEN
         Assert.assertNotNull(pool);
     }

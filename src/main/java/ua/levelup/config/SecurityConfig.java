@@ -1,5 +1,9 @@
 package ua.levelup.config;
 
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import ua.levelup.exception.ApplicationException;
 import ua.levelup.exception.support.MessageHolder;
 import org.apache.logging.log4j.LogManager;
@@ -11,25 +15,31 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashSet;
+import java.util.Properties;
 import java.util.Set;
 import java.util.stream.Stream;
 
-public enum SecurityConfig {
-    ;
+@Getter
+@Setter
+@Configuration
+public class SecurityConfig {
 
     private static final Logger logger = LogManager.getLogger();
 
-    private static Set<String> protectedURLs;
-    private static Set<String> protectedFromAdminURLs;
-    private static Set<String> protectedFromActiveURLs;
-    private static Set<String> protectedFromBlockedURLs;
-    private static final String protectedUrlsFileName = PropertiesManager.getApplicationProperties()
+    @Autowired
+    private Properties applicationProperties;
+
+    private Set<String> protectedURLs;
+    private Set<String> protectedFromAdminURLs;
+    private Set<String> protectedFromActiveURLs;
+    private Set<String> protectedFromBlockedURLs;
+    private String protectedUrlsFileName = applicationProperties
             .getProperty("protected.urls");
-    private static final String protectedFromAdminUrlsFileName = PropertiesManager.getApplicationProperties()
+    private String protectedFromAdminUrlsFileName = applicationProperties
             .getProperty("protected.from.admin.urls");
-    private static final String protectedFromActiveUrlsFileName = PropertiesManager.getApplicationProperties()
+    private String protectedFromActiveUrlsFileName = applicationProperties
             .getProperty("protected.from.active.urls");
-    private static final String protectedFromBlockedUrlsFileName = PropertiesManager.getApplicationProperties()
+    private String protectedFromBlockedUrlsFileName = applicationProperties
             .getProperty("protected.from.blocked.urls");
 
     static {

@@ -1,6 +1,6 @@
 package ua.levelup.dao.impl;
 
-import ua.levelup.config.ConnectionPoolHolder;
+import ua.levelup.config.ConnectionPoolConfig;
 import ua.levelup.exception.ApplicationException;
 import ua.levelup.exception.support.MessageHolder;
 import org.apache.logging.log4j.LogManager;
@@ -17,7 +17,7 @@ public abstract class AbstractDaoImpl {
 
     public AbstractDaoImpl() {
         try{
-            this.connection = ConnectionPoolHolder.getConnectionPool().borrowObject(MAX_WAIT);
+            this.connection = ConnectionPoolConfig.getConnectionPool().borrowObject(MAX_WAIT);
         }catch (Exception e){
             logger.error("Message: " + e.getMessage() + "\tCause:" + e.getCause());
             throw new ApplicationException(MessageHolder.getMessageProperties()
