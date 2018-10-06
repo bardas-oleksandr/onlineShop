@@ -7,7 +7,7 @@ import ua.levelup.model.Product;
 import ua.levelup.service.ProductService;
 import ua.levelup.service.support.ServiceHolder;
 import ua.levelup.web.servlet.support.SearchParams;
-import ua.levelup.web.dto.ProductDto;
+import ua.levelup.web.dto.view.ProductViewDto;
 import ua.levelup.web.servlet.support.ServletUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
@@ -180,7 +180,7 @@ public class ProductServlet extends HttpServlet {
     }
 
     private void productSearch(HttpSession session, SearchParams searchParams) {
-        List<ProductDto> productList = productService.searchProducts(searchParams);
+        List<ProductViewDto> productList = productService.searchProducts(searchParams);
         session.setAttribute(PRODUCT_LIST, productList);
         session.setAttribute(SEARCH_PARAMS, searchParams);
     }

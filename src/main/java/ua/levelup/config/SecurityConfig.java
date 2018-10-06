@@ -43,26 +43,26 @@ public class SecurityConfig {
             .getProperty("protected.from.blocked.urls");
 
     static {
-        protectedURLs = new HashSet<>();
-        getProtectedUrlsStream(protectedUrlsFileName)
-                .forEach((url) -> protectedURLs.add(url));
-        protectedFromAdminURLs = new HashSet<>();
-        getProtectedUrlsStream(protectedFromAdminUrlsFileName)
-                .forEach((url) -> protectedFromAdminURLs.add(url));
-        protectedFromActiveURLs = new HashSet<>();
-        getProtectedUrlsStream(protectedFromActiveUrlsFileName)
-                .forEach((url) -> protectedFromActiveURLs.add(url));
-        protectedFromBlockedURLs = new HashSet<>();
-        getProtectedUrlsStream(protectedFromBlockedUrlsFileName)
-                .forEach((url) -> protectedFromBlockedURLs.add(url));
+//        protectedURLs = new HashSet<>();
+//        getProtectedUrlsStream(protectedUrlsFileName)
+//                .forEach((url) -> protectedURLs.add(url));
+//        protectedFromAdminURLs = new HashSet<>();
+//        getProtectedUrlsStream(protectedFromAdminUrlsFileName)
+//                .forEach((url) -> protectedFromAdminURLs.add(url));
+//        protectedFromActiveURLs = new HashSet<>();
+//        getProtectedUrlsStream(protectedFromActiveUrlsFileName)
+//                .forEach((url) -> protectedFromActiveURLs.add(url));
+//        protectedFromBlockedURLs = new HashSet<>();
+//        getProtectedUrlsStream(protectedFromBlockedUrlsFileName)
+//                .forEach((url) -> protectedFromBlockedURLs.add(url));
     }
 
     public static Set<String> getProtectedURLs(ProtectedUrlType protectedUrl) {
         switch(protectedUrl){
-            case ALL: return protectedURLs;
-            case ADMIN: return protectedFromAdminURLs;
-            case ACTIVE: return protectedFromActiveURLs;
-            case BLOCKED: return protectedFromBlockedURLs;
+//            case ALL: return protectedURLs;
+//            case ADMIN: return protectedFromAdminURLs;
+//            case ACTIVE: return protectedFromActiveURLs;
+//            case BLOCKED: return protectedFromBlockedURLs;
             default: throw new IllegalStateException("Unsupported ProtectedUrl");
         }
     }

@@ -1,6 +1,6 @@
 package ua.levelup.rest;
 
-import ua.levelup.converter.UserConverter;
+import ua.levelup.converter.toViewDto.UserConverter;
 import ua.levelup.dao.UserDao;
 import ua.levelup.dao.impl.UserDaoImpl;
 import ua.levelup.exception.ApplicationException;
@@ -9,7 +9,7 @@ import ua.levelup.exception.support.MessageHolder;
 import ua.levelup.model.User;
 import ua.levelup.rest.support.HeaderValidator;
 import ua.levelup.validator.UserValidator;
-import ua.levelup.web.dto.UserDto;
+import ua.levelup.web.dto.view.UserViewDto;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
@@ -47,7 +47,7 @@ public class UserRestService {
         try {
             HeaderValidator.validateHeaders(accept, contentType);
             User user = userDao.getById(id);
-            UserDto userViewDto = UserConverter.asUserViewDto(user);
+            UserViewDto userViewDto = UserConverter.asUserViewDto(user);
             return Response.ok(getJson(userViewDto)).build();
         } catch (RestException e) {
             return Response.status(e.getHttpStatus()).build();
@@ -65,7 +65,7 @@ public class UserRestService {
         try {
             HeaderValidator.validateHeaders(accept, contentType);
             User user = userDao.getByEmail(email);
-            UserDto userViewDto = UserConverter.asUserViewDto(user);
+            UserViewDto userViewDto = UserConverter.asUserViewDto(user);
             return Response.ok(getJson(userViewDto)).build();
         } catch (RestException e) {
             return Response.status(e.getHttpStatus()).build();
@@ -139,9 +139,9 @@ public class UserRestService {
         try {
             HeaderValidator.validateHeaders(accept, contentType);
             List<User> users = userDao.getAllUsers();
-            List<UserDto> userViewDtos = new ArrayList<>();
+            List<UserViewDto> userViewDtos = new ArrayList<>();
             for (User user : users) {
-                UserDto userViewDto = UserConverter.asUserViewDto(user);
+                UserViewDto userViewDto = UserConverter.asUserViewDto(user);
                 userViewDtos.add(userViewDto);
             }
             return Response.ok(getJson(userViewDtos)).build();

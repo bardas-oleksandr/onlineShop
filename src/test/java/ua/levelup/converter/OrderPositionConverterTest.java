@@ -4,8 +4,9 @@ import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import ua.levelup.converter.toViewDto.OrderPositionConverter;
 import ua.levelup.model.OrderPosition;
-import ua.levelup.web.dto.OrderPositionDto;
+import ua.levelup.web.dto.view.OrderPositionViewDto;
 
 /*Класс OrderPositionConverterTest содержит тесты для проверки
 * конвертации объектов класса OrderPosition в объекты класса OrderPositionDto
@@ -28,7 +29,7 @@ public class OrderPositionConverterTest {
         OrderPosition orderPosition = new OrderPosition(1,2,"productName",
                 3,4.0f);
         //WHEN
-        OrderPositionDto orderPositionDto = OrderPositionConverter.asOrderPositionDto(orderPosition);
+        OrderPositionViewDto orderPositionDto = OrderPositionConverter.asOrderPositionViewDto(orderPosition);
         //THEN
         Assert.assertNotNull(orderPositionDto);
         Assert.assertEquals(orderPosition.getOrderId(), orderPositionDto.getOrderId());
@@ -48,6 +49,6 @@ public class OrderPositionConverterTest {
         expectedException.expect(NullPointerException.class);
         expectedException.expectMessage("orderPosition is marked @NonNull but is null");
         //THEN
-        OrderPositionConverter.asOrderPositionDto(null);
+        OrderPositionConverter.asOrderPositionViewDto(null);
     }
 }

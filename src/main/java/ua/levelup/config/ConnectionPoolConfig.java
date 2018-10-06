@@ -1,11 +1,9 @@
 package ua.levelup.config;
 
-import lombok.Getter;
-import lombok.Setter;
 import org.apache.commons.pool2.impl.GenericObjectPool;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.sql.Connection;
 
@@ -14,16 +12,13 @@ import java.sql.Connection;
 @Configuration
 public class ConnectionPoolConfig {
 
-    @Getter
-    @Setter
     @Resource(name="connectionFactory")
     private ConnectionFactory connectionFactory;
 
-    @Getter
-    private GenericObjectPool<Connection> connectionPool;
-
-    @PostConstruct
-    void init(){
-        connectionPool = new GenericObjectPool<Connection>(connectionFactory);
+    //Scope по умолчанию - singleton, но можно было бы его изменить, например так:
+    //@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+    @Bean(name="connectionPool")
+    public GenericObjectPool<Connection> genericObjectPool(){
+        return new GenericObjectPool<Connection>(connectionFactory);
     }
 }

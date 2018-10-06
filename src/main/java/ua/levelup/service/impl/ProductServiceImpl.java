@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ua.levelup.converter.ProductConverter;
+import ua.levelup.converter.toViewDto.ProductConverter;
 import ua.levelup.dao.ProductDao;
 import ua.levelup.exception.ApplicationException;
 import ua.levelup.exception.support.MessageHolder;
@@ -12,7 +12,7 @@ import ua.levelup.model.Product;
 import ua.levelup.service.ProductService;
 import ua.levelup.web.servlet.support.SearchParams;
 import ua.levelup.validator.ProductValidator;
-import ua.levelup.web.dto.ProductDto;
+import ua.levelup.web.dto.view.ProductViewDto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -30,12 +30,12 @@ public class ProductServiceImpl implements ProductService {
     private ProductDao productDao;
 
     @Override
-    public List<ProductDto> searchProducts(SearchParams searchParams) {
+    public List<ProductViewDto> searchProducts(SearchParams searchParams) {
         List<ua.levelup.model.Product> productList = productDao.getFilteredProducts(searchParams.getProduct(),
                 searchParams.getMinPrice(), searchParams.getMaxPrice(), searchParams.getOrderMethod());
-        List<ProductDto> productViewDtoList = new ArrayList<>();
+        List<ProductViewDto> productViewDtoList = new ArrayList<>();
         for (ua.levelup.model.Product item : productList) {
-            productViewDtoList.add(ProductConverter.asProductDto(item));
+            productViewDtoList.add(ProductConverter.asProductViewDto(item));
         }
         return productViewDtoList;
     }

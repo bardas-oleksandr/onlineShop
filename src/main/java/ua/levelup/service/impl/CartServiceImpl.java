@@ -4,14 +4,14 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ua.levelup.converter.ProductConverter;
+import ua.levelup.converter.toViewDto.ProductConverter;
 import ua.levelup.dao.ProductDao;
 import ua.levelup.model.Cart;
 import ua.levelup.model.Product;
 import ua.levelup.service.CartService;
 import ua.levelup.validator.CartValidator;
-import ua.levelup.web.dto.CartDto;
-import ua.levelup.web.dto.ProductDto;
+import ua.levelup.web.dto.view.CartViewDto;
+import ua.levelup.web.dto.view.ProductViewDto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -36,12 +36,12 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public Map<Integer, ProductDto> retrieveCartProducts(CartDto cartDto) {
-        Map<Integer, ProductDto> map = new HashMap<>();
+    public Map<Integer, ProductViewDto> retrieveCartProducts(CartViewDto cartDto) {
+        Map<Integer, ProductViewDto> map = new HashMap<>();
         Set<Integer> productIdSet = cartDto.getProductCountMap().keySet();
         for (Integer productId : productIdSet) {
             Product product = productDao.getById(productId);
-            map.put(productId, ProductConverter.asProductDto(product));
+            map.put(productId, ProductConverter.asProductViewDto(product));
         }
         return map;
     }

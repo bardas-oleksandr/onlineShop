@@ -1,9 +1,6 @@
-package ua.levelup.web.dto;
+package ua.levelup.web.dto.view;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.io.Serializable;
 
@@ -11,7 +8,8 @@ import java.io.Serializable;
 @Getter
 @ToString
 @EqualsAndHashCode
-public class ManufacturerDto implements Serializable {
+@NoArgsConstructor
+public class ManufacturerViewDto implements Serializable {
 
     private static final long serialVersionUID = -1010367575480383830L;
 

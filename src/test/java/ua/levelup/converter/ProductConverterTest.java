@@ -4,10 +4,11 @@ import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import ua.levelup.converter.toViewDto.ProductConverter;
 import ua.levelup.model.Category;
 import ua.levelup.model.Manufacturer;
 import ua.levelup.model.Product;
-import ua.levelup.web.dto.ProductDto;
+import ua.levelup.web.dto.view.ProductViewDto;
 
 /*Класс ProductConverterTest содержит тесты для проверки
 * конвертации объектов класса Product в объекты класса ProductDto
@@ -33,7 +34,7 @@ public class ProductConverterTest {
                 category, manufacturer);
         product.setId(1);
         //WHEN
-        ProductDto productDto = ProductConverter.asProductDto(product);
+        ProductViewDto productDto = ProductConverter.asProductViewDto(product);
         //THEN
         Assert.assertNotNull(productDto);
         Assert.assertEquals(product.getId(), productDto.getId());
@@ -55,6 +56,6 @@ public class ProductConverterTest {
         expectedException.expect(NullPointerException.class);
         expectedException.expectMessage("product is marked @NonNull but is null");
         //THEN
-        ProductConverter.asProductDto(null);
+        ProductConverter.asProductViewDto(null);
     }
 }

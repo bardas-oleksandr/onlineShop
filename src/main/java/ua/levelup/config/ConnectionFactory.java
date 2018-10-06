@@ -8,7 +8,6 @@ import org.apache.commons.pool2.impl.DefaultPooledObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Properties;

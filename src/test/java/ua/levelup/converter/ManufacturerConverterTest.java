@@ -4,8 +4,9 @@ import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import ua.levelup.converter.toViewDto.ManufacturerConverter;
 import ua.levelup.model.Manufacturer;
-import ua.levelup.web.dto.ManufacturerDto;
+import ua.levelup.web.dto.view.ManufacturerViewDto;
 
 /*Класс ManufacturerConverterTest содержит тесты для проверки
 * конвертации объектов класса Manufacturer в объекты класса ManufacturerDto
@@ -27,11 +28,11 @@ public class ManufacturerConverterTest {
         //GIVEN
         Manufacturer manufacturer = new Manufacturer("manufaturer");
         manufacturer.setId(1);
-        ManufacturerDto expected = new ManufacturerDto();
+        ManufacturerViewDto expected = new ManufacturerViewDto();
         expected.setName("manufaturer");
         expected.setId(1);
         //WHEN
-        ManufacturerDto manufacturerDto = ManufacturerConverter.asManufacturerDto(manufacturer);
+        ManufacturerViewDto manufacturerDto = ManufacturerConverter.asManufacturerDto(manufacturer);
         //THEN
         Assert.assertNotNull(manufacturerDto);
         Assert.assertEquals(expected, manufacturerDto);

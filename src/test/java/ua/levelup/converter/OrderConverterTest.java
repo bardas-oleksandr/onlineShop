@@ -4,11 +4,12 @@ import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import ua.levelup.converter.toViewDto.OrderConverter;
 import ua.levelup.model.Order;
 import ua.levelup.model.OrderPosition;
 import ua.levelup.model.User;
 import ua.levelup.model.support.UserState;
-import ua.levelup.web.dto.OrderDto;
+import ua.levelup.web.dto.view.OrderViewDto;
 
 import java.sql.Timestamp;
 
@@ -36,7 +37,7 @@ public class OrderConverterTest {
         order.addOrderPosition(new OrderPosition());
         order.setId(1);
         //WHEN
-        OrderDto orderDto = OrderConverter.asOrderDto(order);
+        OrderViewDto orderDto = OrderConverter.asOrderDto(order);
         //THEN
         Assert.assertNotNull(orderDto);
         Assert.assertEquals(order.getId(), orderDto.getId());

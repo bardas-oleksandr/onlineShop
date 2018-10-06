@@ -2,7 +2,7 @@ package ua.levelup.web.servlet;
 
 import ua.levelup.service.support.ServiceHolder;
 import ua.levelup.service.UserService;
-import ua.levelup.web.dto.UserDto;
+import ua.levelup.web.dto.view.UserViewDto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -51,7 +51,7 @@ public class LoginServlet extends HttpServlet {
             try {
                 String email = request.getParameter(USER_EMAIL);
                 String password = request.getParameter(USER_PASSWORD);
-                UserDto user = userService.login(email, password);
+                UserViewDto user = userService.login(email, password);
                 HttpSession session = request.getSession(true);
                 session.setAttribute(USER, user);
                 response.sendRedirect(PROFILE_JSP);

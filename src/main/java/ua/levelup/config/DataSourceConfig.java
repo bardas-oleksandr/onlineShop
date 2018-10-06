@@ -19,7 +19,7 @@ public class DataSourceConfig {
     private Properties applicationProperties;
 
     @Bean
-    public DriverManagerDataSource getDriverManagerDataSource(){
+    public DriverManagerDataSource driverManagerDataSource(){
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(applicationProperties.getProperty("driver"));
         dataSource.setUrl(applicationProperties.getProperty("url"));

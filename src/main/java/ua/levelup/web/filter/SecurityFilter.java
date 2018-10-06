@@ -2,7 +2,7 @@ package ua.levelup.web.filter;
 
 import ua.levelup.config.SecurityConfig;
 import ua.levelup.model.support.UserState;
-import ua.levelup.web.dto.UserDto;
+import ua.levelup.web.dto.view.UserViewDto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -43,7 +43,7 @@ public class SecurityFilter implements Filter {
                     httpServletResponse.sendRedirect(CONTEXT + LOGIN_FORM_JSP);
                 }
             } else if (session != null && session.getAttribute(USER) != null) {
-                UserDto user = (UserDto) session.getAttribute(USER);
+                UserViewDto user = (UserViewDto) session.getAttribute(USER);
                 if (shouldBeProtectedFromBlocked(url) && UserState.BLOCKED.ordinal() == user.getState()) {
                     logger.info("URL " + url + " was protected from blocked user");
                     httpServletResponse.sendRedirect(CONTEXT + PROFILE_JSP);

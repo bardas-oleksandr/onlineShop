@@ -3,8 +3,8 @@ package ua.levelup.model;
 import lombok.*;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
+import java.util.Optional;
 
 @Getter
 @Setter
@@ -15,13 +15,16 @@ public class Cart implements Serializable {
 
     private static final long serialVersionUID = -1701271203258179128L;
 
-    private Map<Integer, Integer> productCountMap = new HashMap<>();    //ProductId - key, product count - value
-    private Map<Integer,Product> productMap = new HashMap<>();          //ProductId - key, product - value
-    private int size = 0;
+    private List<ProductInCart> productInCartList;
 
-    public void putProduct(int productId, int productCount) {
-        productCountMap.compute(productId,
-                (key, value) -> value == null? productCount: value + productCount);
-        size = productCountMap.size();
+    public void putProduct(Product product, int productCount) {
+        Optional<ProductInCart> productInCartOptional = productInCartList.stream().filter((item) -> item
+                .getProduct().getId() == product.getId()).findFirst();
+        if (productInCartOptional.isPresent()){
+            ProductInCart productInCart = productInCartOptional.get();
+            productInCart.setCount(productInCart.getCount() + productCount);
+        }else{
+            productInCartList.add(new ProductInCart(product, productCount));
+        }
     }
 }

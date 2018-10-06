@@ -18,4 +18,23 @@
     <util:properties id="applicationProperties" location="classpath:application.properties"/>
 
     <context:component-scan base-package="ua.levelup"/>
+
+    <util:set id="converterSet">
+        <bean class="ua.levelup.converter.fromCreateDto.OrderPositionCreateDtoConverter"/>
+        <bean class="ua.levelup.converter.fromCreateDto.ProductCreateDtoConverter"/>
+        <bean class="ua.levelup.converter.fromCreateDto.ProductInCartCreateDtoConverter"/>
+        <bean class="ua.levelup.converter.fromCreateDto.UserCreateDtoConverter"/>
+        <bean class="ua.levelup.converter.fromCreateDto.CategoryCreateDtoConverter"/>
+        <bean class="ua.levelup.converter.fromCreateDto.ManufacturerCreateDtoConverter"/>
+        <bean class="ua.levelup.converter.fromCreateDto.OrderCreateDtoConverter"/>
+        <bean class="ua.levelup.converter.toViewDto.CartConverter"/>
+        <bean class="ua.levelup.converter.toViewDto.CategoryConverter"/>
+        <bean class="ua.levelup.converter.toViewDto.ManufacturerConverter"/>
+        <bean class="ua.levelup.converter.toViewDto.OrderConverter"/>
+        <bean class="ua.levelup.converter.toViewDto.OrderPositionConverter"/>
+        <bean class="ua.levelup.converter.toViewDto.ProductConverter"/>
+        <bean class="ua.levelup.converter.toViewDto.ProductInCartConverter"/>
+        <bean class="ua.levelup.converter.toViewDto.UserConverter"/>
+    </util:set>
+
 </beans>

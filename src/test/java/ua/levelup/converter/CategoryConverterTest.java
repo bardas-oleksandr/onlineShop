@@ -4,8 +4,9 @@ import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import ua.levelup.converter.toViewDto.CategoryConverter;
 import ua.levelup.model.Category;
-import ua.levelup.web.dto.CategoryDto;
+import ua.levelup.web.dto.view.CategoryViewDto;
 
 /*Класс CategoryConverterTest содержит тесты для проверки
 * конвертации объектов класса Category в объекты класса CategoryDto
@@ -31,7 +32,7 @@ public class CategoryConverterTest {
         Category category = new Category("heir category",parent);
         category.setId(2);
         //WHEN
-        CategoryDto categoryDto = CategoryConverter.asCategoryDto(category);
+        CategoryViewDto categoryDto = CategoryConverter.asCategoryViewDto(category);
         //THEN
         Assert.assertNotNull(categoryDto);
         Assert.assertEquals(category.getId(),categoryDto.getId());
@@ -49,6 +50,6 @@ public class CategoryConverterTest {
         expectedException.expect(NullPointerException.class);
         expectedException.expectMessage("category is marked @NonNull but is null");
         //THEN
-        CategoryConverter.asCategoryDto(null);
+        CategoryConverter.asCategoryViewDto(null);
     }
 }

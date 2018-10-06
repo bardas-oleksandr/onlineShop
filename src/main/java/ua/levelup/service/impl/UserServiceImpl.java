@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ua.levelup.converter.UserConverter;
+import ua.levelup.converter.toViewDto.UserConverter;
 import ua.levelup.dao.UserDao;
 import ua.levelup.exception.ValidationException;
 import ua.levelup.exception.support.MessageHolder;
@@ -12,7 +12,7 @@ import ua.levelup.model.User;
 import ua.levelup.service.SecurityService;
 import ua.levelup.service.UserService;
 import ua.levelup.validator.UserValidator;
-import ua.levelup.web.dto.UserDto;
+import ua.levelup.web.dto.view.UserViewDto;
 
 @Service("userService")
 @Getter
@@ -26,14 +26,14 @@ public class UserServiceImpl implements UserService {
     private SecurityService securityService;
 
     @Override
-    public UserDto registerUser(User user) {
+    public UserViewDto registerUser(User user) {
         UserValidator.validateNewUser(user);
         user = userDao.add(user);
         return UserConverter.asUserViewDto(user);
     }
 
     @Override
-    public UserDto login(String email, String password) {
+    public UserViewDto login(String email, String password) {
         UserValidator.validateUsersCredentials(email, password);
         User user = userDao.getByEmail(email);
         if(!securityService.isCorrectPassword(user, password)){

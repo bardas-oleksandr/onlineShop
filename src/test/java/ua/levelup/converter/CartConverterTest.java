@@ -4,12 +4,11 @@ import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import ua.levelup.converter.toViewDto.CartConverter;
 import ua.levelup.model.Cart;
-import ua.levelup.web.dto.CartDto;
+import ua.levelup.web.dto.view.CartViewDto;
 
 import java.util.LinkedHashMap;
-
-import static org.junit.Assert.*;
 
 /*Класс CartConverterTest содержит тесты для проверки
 * конвертации объектов класса Cart в объекты класса CartDto
@@ -30,12 +29,12 @@ public class CartConverterTest {
     public void asCartDtoTest() throws Exception {
         //GIVEN
         Cart cart = new Cart();
-        CartDto expected = new CartDto();
+        CartViewDto expected = new CartViewDto();
         expected.setProductCountMap(new LinkedHashMap<>());
         expected.setProductDtoMap(new LinkedHashMap<>());
         expected.setSize(0);
         //WHEN
-        CartDto cartDto = CartConverter.asCartDto(cart);
+        CartViewDto cartDto = CartConverter.asCartViewDto(cart);
         //THEN
         Assert.assertNotNull(cartDto);
         Assert.assertEquals(expected, cartDto);
@@ -51,6 +50,6 @@ public class CartConverterTest {
         expectedException.expect(NullPointerException.class);
         expectedException.expectMessage("cart is marked @NonNull but is null");
         //THEN
-        CartConverter.asCartDto(null);
+        CartConverter.asCartViewDto(null);
     }
 }

@@ -2,7 +2,6 @@ package ua.levelup.web.servlet;
 
 import ua.levelup.exception.ApplicationException;
 import ua.levelup.exception.support.MessageHolder;
-import ua.levelup.model.Cart;
 import ua.levelup.model.Order;
 import ua.levelup.model.OrderPosition;
 import ua.levelup.model.User;
@@ -10,9 +9,8 @@ import ua.levelup.model.support.OrderState;
 import ua.levelup.service.CartService;
 import ua.levelup.service.OrderService;
 import ua.levelup.service.support.ServiceHolder;
-import ua.levelup.web.dto.OrderDto;
-import ua.levelup.web.dto.ProductDto;
-import ua.levelup.web.dto.UserDto;
+import ua.levelup.web.dto.view.OrderViewDto;
+import ua.levelup.web.dto.view.UserViewDto;
 import ua.levelup.web.servlet.support.ServletUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,10 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 @WebServlet(name = "orderServlet", urlPatterns = "/order/*")
 public class OrderServlet extends HttpServlet {
@@ -67,9 +62,9 @@ public class OrderServlet extends HttpServlet {
                 switch (method){
                     case GET_FOR_USER:{
                         HttpSession session = request.getSession(true);
-                        UserDto user = (UserDto) session.getAttribute(USER);
+                        UserViewDto user = (UserViewDto) session.getAttribute(USER);
                         if(user != null){
-                            List<OrderDto> orderViewDtoList = orderService.getUsersOrders(user.getId());
+                            List<OrderViewDto> orderViewDtoList = orderService.getUsersOrders(user.getId());
                             session.setAttribute(ORDER_LIST, orderViewDtoList);
                         }
                         response.sendRedirect(ORDERS_VIEW_JSP);
@@ -164,7 +159,7 @@ public class OrderServlet extends HttpServlet {
 
         //В сессии у меня userDto а мне надо user.
         HttpSession session = request.getSession(true);
-        UserDto userDto = (UserDto) session.getAttribute(USER);
+        UserViewDto userDto = (UserViewDto) session.getAttribute(USER);
         User user = new User();
 
         Integer orderState = OrderState.REGISTERED.ordinal();
@@ -194,7 +189,7 @@ public class OrderServlet extends HttpServlet {
     }
 
     private void setOrderListAttribute(HttpSession session){
-        List<OrderDto> orderViewDtoList = orderService.getAllOrders();
+        List<OrderViewDto> orderViewDtoList = orderService.getAllOrders();
         session.setAttribute(ORDER_LIST, orderViewDtoList);
     }
 }

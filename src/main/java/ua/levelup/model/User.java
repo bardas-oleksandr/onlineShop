@@ -1,9 +1,6 @@
 package ua.levelup.model;
 
 import lombok.*;
-import ua.levelup.model.support.UserState;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -36,5 +33,22 @@ public class User implements Serializable {
 
     public void setUserState(int stateIndex) {
         this.userState = UserState.getUserState(stateIndex);
+    }
+
+    public enum UserState {
+        ADMIN, ACTIVE, BLOCKED;
+
+        public static UserState getUserState(int stateIndex){
+            switch(stateIndex){
+                case 0:
+                    return ADMIN;
+                case 1:
+                    return ACTIVE;
+                case 2:
+                    return BLOCKED;
+                default:
+                    throw new IllegalArgumentException("Illegal user state: " + stateIndex);
+            }
+        }
     }
 }

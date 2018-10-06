@@ -1,8 +1,9 @@
 package ua.levelup.converter;
 
+import ua.levelup.converter.toViewDto.UserConverter;
 import ua.levelup.model.User;
 import ua.levelup.model.support.UserState;
-import ua.levelup.web.dto.UserDto;
+import ua.levelup.web.dto.view.UserViewDto;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
@@ -28,12 +29,12 @@ public class UserConverterTest {
         //GIVEN
         User user = new User("name", "password",
                 "email@gmail.com", UserState.ACTIVE.ordinal());
-        UserDto expected = new UserDto();
+        UserViewDto expected = new UserViewDto();
         expected.setUserName(user.getUserName());
         expected.setEmail(user.getEmail());
         expected.setState(user.getUserState().ordinal());
         //WHEN
-        UserDto userDto = UserConverter.asUserViewDto(user);
+        UserViewDto userDto = UserConverter.asUserViewDto(user);
         //THEN
         Assert.assertNotNull(userDto);
         Assert.assertEquals(expected, userDto);
