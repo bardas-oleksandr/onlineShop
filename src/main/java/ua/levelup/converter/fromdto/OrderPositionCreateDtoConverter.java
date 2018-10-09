@@ -18,7 +18,6 @@ public class OrderPositionCreateDtoConverter
         OrderPosition orderPosition = new OrderPosition();
         orderPosition.setOrderId(orderPositionCreateDto.getOrderId());
         orderPosition.setProductId(orderPositionCreateDto.getProductId());
-        orderPosition.setProductName(orderPositionCreateDto.getProductName());
         orderPosition.setQuantity(orderPositionCreateDto.getQuantity());
         orderPosition.setUnitPrice(orderPositionCreateDto.getUnitPrice());
         return orderPosition;

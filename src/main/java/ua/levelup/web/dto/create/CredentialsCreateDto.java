@@ -12,13 +12,9 @@ import java.io.Serializable;
 @ToString
 @EqualsAndHashCode
 @NoArgsConstructor
-public class UserCreateDto implements Serializable {
+public class CredentialsCreateDto implements Serializable {
 
-    private static final long serialVersionUID = 6331639670419471040L;
-
-    @Size(max = 20, message = "unacceptable_username_length")
-    @NotEmpty(message = "empty_username")
-    private String userName;
+    private static final long serialVersionUID = 3523935973502537231L;
 
     @Size(min = 6,max = 20, message = "unacceptable_password_length")
     @NotEmpty(message = "empty_password")
@@ -28,8 +24,7 @@ public class UserCreateDto implements Serializable {
     @NotEmpty(message = "empty_email")
     private String email;
 
-    public UserCreateDto(String userName, String password, String email) {
-        this.userName = userName;
+    public CredentialsCreateDto(String password, String email) {
         this.password = password;
         this.email = email;
     }

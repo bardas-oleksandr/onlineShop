@@ -19,10 +19,9 @@ public class OrderPosition implements Serializable {
     private int quantity;
     private float unitPrice;
 
-    public OrderPosition(int orderId, int productId, String productName, int quantity, float unitPrice) {
+    public OrderPosition(int orderId, int productId, int quantity, float unitPrice) {
         this.orderId = orderId;
         this.productId = productId;
-        this.productName = productName;
         this.quantity = quantity;
         this.unitPrice = unitPrice;
     }

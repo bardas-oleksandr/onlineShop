@@ -59,7 +59,8 @@ public class OrderConverterTest {
         order = new Order(user, "address", new Timestamp(1),
                 true, 0, 1);
         order.setId(1);
-        orderPosition = new OrderPosition(order.getId(),2,"product",3,4.0f);
+        orderPosition = new OrderPosition(order.getId(),2,3,4.0f);
+        orderPosition.setProductName("product");
 
         UserViewDto userViewDto = new UserViewDto();
         userViewDto.setId(user.getId());

@@ -37,9 +37,9 @@ public class OrderPositionCreateDtoConverterTest {
     public void convertTest_whenOrderPositionCreateDtoNotEqualsNull_thenOk() throws Exception {
         //GIVEN
         OrderPositionCreateDto dto = new OrderPositionCreateDto(1,2,
-                "product", 3,4.0f);
-        OrderPosition expected = new OrderPosition(dto.getOrderId(),dto.getProductId(),
-                dto.getProductName(),dto.getQuantity(),dto.getUnitPrice());
+                3,4.0f);
+        OrderPosition expected = new OrderPosition(dto.getOrderId(),dto.getProductId()
+                ,dto.getQuantity(),dto.getUnitPrice());
         //WHEN
         OrderPosition orderPosition = orderPositionCreateDtoConverter.convert(dto);
         //THEN

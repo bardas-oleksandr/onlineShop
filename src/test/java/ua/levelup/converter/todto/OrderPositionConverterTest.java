@@ -36,8 +36,8 @@ public class OrderPositionConverterTest {
     @Test
     public void convertTest_whenOrderPositionNotEqualsNull_thenOk() throws Exception {
         //GIVEN
-        OrderPosition orderPosition = new OrderPosition(1,2,"productName",
-                3,4.0f);
+        OrderPosition orderPosition = new OrderPosition(1,2,3,4.0f);
+        orderPosition.setProductName("product");
         OrderPositionViewDto expected = new OrderPositionViewDto();
         expected.setOrderId(orderPosition.getOrderId());
         expected.setProductId(orderPosition.getProductId());

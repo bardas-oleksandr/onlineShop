@@ -14,7 +14,7 @@ public class DataSourceConfig {
     @Autowired
     private Properties applicationProperties;
 
-    @Bean
+    @Bean("dataSource")
     public DriverManagerDataSource driverManagerDataSource(){
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(applicationProperties.getProperty("driver"));
