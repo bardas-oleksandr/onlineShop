@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/jdbc
+      http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+      http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans.xsd
+      http://www.springframework.org/schema/context
+      http://www.springframework.org/schema/context/spring-context.xsd
+      http://www.springframework.org/schema/util
+      http://www.springframework.org/schema/util/spring-util.xsd
+	">
+
+    <util:properties id="applicationProperties" location="classpath:application.properties"/>
+
+    <context:component-scan base-package="ua.levelup"/>
+
+    <util:set id="converterSet">
+        <bean class="ua.levelup.converter.fromdto.OrderPositionCreateDtoConverter"/>
+        <bean class="ua.levelup.converter.fromdto.ProductCreateDtoConverter"/>
+        <bean class="ua.levelup.converter.fromdto.ProductInCartCreateDtoConverter"/>
+        <bean class="ua.levelup.converter.fromdto.UserCreateDtoConverter"/>
+        <bean class="ua.levelup.converter.fromdto.CategoryCreateDtoConverter"/>
+        <bean class="ua.levelup.converter.fromdto.ManufacturerCreateDtoConverter"/>
+        <bean class="ua.levelup.converter.fromdto.OrderCreateDtoConverter"/>
+        <bean class="ua.levelup.converter.todto.CartConverter"/>
+        <bean class="ua.levelup.converter.todto.CategoryConverter"/>
+        <bean class="ua.levelup.converter.todto.ManufacturerConverter"/>
+        <bean class="ua.levelup.converter.todto.OrderConverter"/>
+        <bean class="ua.levelup.converter.todto.OrderPositionConverter"/>
+        <bean class="ua.levelup.converter.todto.ProductConverter"/>
+        <bean class="ua.levelup.converter.todto.ProductInCartConverter"/>
+        <bean class="ua.levelup.converter.todto.UserConverter"/>
+    </util:set>
+
+</beans>

@@ -1,7 +1,7 @@
 package ua.levelup.config;
 
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ConversionServiceFactoryBean;
@@ -9,11 +9,9 @@ import org.springframework.core.convert.converter.Converter;
 
 import java.util.Set;
 
-@Setter
 @Configuration
 public class ConverterConfig {
 
-    @Autowired
     private Set<Converter<?,?>> converterSet;
 
     @Bean
@@ -21,5 +19,10 @@ public class ConverterConfig {
         ConversionServiceFactoryBean bean = new ConversionServiceFactoryBean();
         bean.setConverters(converterSet);
         return new ConversionServiceFactoryBean();
+    }
+
+    @Autowired
+    public void setConverterSet(@Value("#{converterSet}") Set<Converter<?,?>> converterSet){
+        this.converterSet = converterSet;
     }
 }

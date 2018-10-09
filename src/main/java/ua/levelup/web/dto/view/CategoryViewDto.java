@@ -15,5 +15,5 @@ public class CategoryViewDto implements Serializable {
 
     private int id;
     private String name;
-    private CategoryViewDto parentCategoryDto;
+    private CategoryViewDto parentCategoryViewDto;
 }

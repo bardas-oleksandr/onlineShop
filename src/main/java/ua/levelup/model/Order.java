@@ -9,7 +9,6 @@ import java.util.List;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @ToString
 @EqualsAndHashCode
 public class Order implements Serializable {
@@ -24,6 +23,19 @@ public class Order implements Serializable {
     private OrderState orderState;
     private PaymentConditions paymentConditions;
     private List<OrderPosition> orderPositionList;
+
+    public Order(){
+        this.orderPositionList = new ArrayList<>();
+    }
+
+    public Order(User user, String address, Timestamp date, int paymentConditionsIndex) {
+        this.user = user;
+        this.address = address;
+        this.date = date;
+        this.payed = false;
+        this.paymentConditions = PaymentConditions.getPaymentConditions(paymentConditionsIndex);
+        this.orderPositionList = new ArrayList<>();
+    }
 
     public Order(User user, String address, Timestamp date, boolean payed,
                  int orderStateIndex, int paymentConditionsIndex) {

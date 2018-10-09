@@ -18,4 +18,13 @@ public class OrderPositionCreateDto implements Serializable {
     private String productName;
     private int quantity;
     private float unitPrice;
+
+    public OrderPositionCreateDto(int orderId, int productId, String productName,
+                                  int quantity, float unitPrice) {
+        this.orderId = orderId;
+        this.productId = productId;
+        this.productName = productName;
+        this.quantity = quantity;
+        this.unitPrice = unitPrice;
+    }
 }

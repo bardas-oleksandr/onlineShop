@@ -1,7 +1,5 @@
 package ua.levelup.config;
 
-import lombok.Getter;
-import lombok.Setter;
 import org.apache.commons.pool2.BasePooledObjectFactory;
 import org.apache.commons.pool2.PooledObject;
 import org.apache.commons.pool2.impl.DefaultPooledObject;
@@ -12,8 +10,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Properties;
 
-@Getter
-@Setter
 @Component("connectionFactory")
 public class ConnectionFactory extends BasePooledObjectFactory<Connection> {
 
@@ -36,7 +32,7 @@ public class ConnectionFactory extends BasePooledObjectFactory<Connection> {
 
     @Override
     public void destroyObject(PooledObject<Connection> connectionWrapper) throws Exception {
-        if(!connectionWrapper.getObject().isClosed()){
+        if (!connectionWrapper.getObject().isClosed()) {
             connectionWrapper.getObject().close();
         }
     }

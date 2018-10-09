@@ -24,11 +24,17 @@ public class User implements Serializable {
     private String email;
     private UserState userState;
 
-    public User(String userName, String password, String email, int stateIndex) {
+    public User(String userName, String password, String email) {
         this.userName = userName;
         this.password = password;
         this.email = email;
-        this.userState = UserState.getUserState(stateIndex);
+    }
+
+    public User(String userName, String password, String email, int userStateIndex) {
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+        this.userState = UserState.getUserState(userStateIndex);
     }
 
     public void setUserState(int stateIndex) {

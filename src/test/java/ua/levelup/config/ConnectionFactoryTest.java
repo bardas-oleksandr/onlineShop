@@ -4,53 +4,77 @@ import org.apache.commons.pool2.PooledObject;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.sql.Connection;
+import java.util.Properties;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = {TestContextConfig.class})
 public class ConnectionFactoryTest {
-    private static final String DRIVER = PropertiesManager.getApplicationProperties()
-            .getProperty("test.driver");
-    private static final String URL = PropertiesManager.getApplicationProperties()
-            .getProperty("test.url");
-    private static final String USER = PropertiesManager.getApplicationProperties()
-            .getProperty("test.username");
-    private static final String PASSWORD = PropertiesManager.getApplicationProperties()
-            .getProperty("test.password");
 
-    private ConnectionFactory factory;
+    @Autowired
+    private Properties applicationProperties;
+
+    @Mock
+    private Properties applicationProps;
+
+    @InjectMocks
+    private ConnectionFactory connectionFactory;
 
     @Before
-    public void init(){
-        factory = new ConnectionFactory(DRIVER, URL, USER, PASSWORD);
+    public void init() {
+        MockitoAnnotations.initMocks(this);
+        Mockito.when(applicationProps.getProperty("driver"))
+                .thenReturn(applicationProperties.getProperty("test.driver"));
+        Mockito.when(applicationProps.getProperty("url"))
+                .thenReturn(applicationProperties.getProperty("test.url"));
+        Mockito.when(applicationProps.getProperty("username"))
+                .thenReturn(applicationProperties.getProperty("test.username"));
+        Mockito.when(applicationProps.getProperty("password"))
+                .thenReturn(applicationProperties.getProperty("test.password"));
     }
 
     @Test
     public void createTest() throws Exception {
         //WHEN
-        Connection connection = factory.create();
+        Connection connection = connectionFactory.create();
         //THEN
         Assert.assertNotNull(connection);
+        Mockito.verify(applicationProps, Mockito.times(1))
+                .getProperty("driver");
+        Mockito.verify(applicationProps, Mockito.times(1))
+                .getProperty("url");
+        Mockito.verify(applicationProps, Mockito.times(1))
+                .getProperty("username");
+        Mockito.verify(applicationProps, Mockito.times(1))
+                .getProperty("password");
+        Mockito.verifyNoMoreInteractions(applicationProps);
     }
 
     @Test
     public void wrapTest() throws Exception {
         //GIVEN
-        Connection connection = factory.create();
+        Connection connection = connectionFactory.create();
         //WHEN
-        PooledObject<Connection> pooledObject = factory.wrap(connection);
+        PooledObject<Connection> pooledObject = connectionFactory.wrap(connection);
         Connection otherReference = pooledObject.getObject();
         //THEN
         Assert.assertNotNull(pooledObject);
-        Assert.assertSame(connection,otherReference);
+        Assert.assertSame(connection, otherReference);
     }
 
     @Test
     public void destroyObjectTest() throws Exception {
         //GIVEN
-        Connection connection = factory.create();
-        PooledObject<Connection> pooledObject = factory.wrap(connection);
+        Connection connection = connectionFactory.create();
+        PooledObject<Connection> pooledObject = connectionFactory.wrap(connection);
         //WHEN
-        factory.destroyObject(pooledObject);
+        connectionFactory.destroyObject(pooledObject);
         //THEN
         Assert.assertNotNull(connection);
         Assert.assertTrue(connection.isClosed());

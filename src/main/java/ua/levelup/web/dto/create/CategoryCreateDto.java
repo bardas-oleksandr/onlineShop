@@ -1,7 +1,6 @@
 package ua.levelup.web.dto.create;
 
 import lombok.*;
-import ua.levelup.model.Category;
 
 import java.io.Serializable;
 
@@ -16,4 +15,9 @@ public class CategoryCreateDto implements Serializable {
 
     private String name;
     private int parentCategoryId;
+
+    public CategoryCreateDto(String name, int parentCategoryId) {
+        this.name = name;
+        this.parentCategoryId = parentCategoryId;
+    }
 }

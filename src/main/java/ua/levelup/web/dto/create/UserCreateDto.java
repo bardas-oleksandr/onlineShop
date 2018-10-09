@@ -16,4 +16,10 @@ public class UserCreateDto implements Serializable {
     private String userName;
     private String password;
     private String email;
+
+    public UserCreateDto(String userName, String password, String email) {
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+    }
 }

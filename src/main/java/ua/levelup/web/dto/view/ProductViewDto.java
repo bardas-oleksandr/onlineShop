@@ -18,6 +18,6 @@ public class ProductViewDto implements Serializable {
     private float price;
     private boolean available;
     private String description;
-    private CategoryViewDto categoryDto;
-    private ManufacturerViewDto manufacturerDto;
+    private CategoryViewDto categoryViewDto;
+    private ManufacturerViewDto manufacturerViewDto;
 }

@@ -18,4 +18,11 @@ public class OrderCreateDto implements Serializable {
     private String address;
     private Timestamp date;
     private int paymentConditionsIndex;
+
+    public OrderCreateDto(int userId, String address, Timestamp date, int paymentConditionsIndex) {
+        this.userId = userId;
+        this.address = address;
+        this.date = date;
+        this.paymentConditionsIndex = paymentConditionsIndex;
+    }
 }
