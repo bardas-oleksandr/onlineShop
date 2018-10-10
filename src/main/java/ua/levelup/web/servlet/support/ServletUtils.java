@@ -2,6 +2,7 @@ package ua.levelup.web.servlet.support;
 
 import ua.levelup.dao.support.OrderMethod;
 import ua.levelup.model.Product;
+import ua.levelup.web.dto.create.SearchParamsCreateDto;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -35,7 +36,7 @@ public class ServletUtils {
         return requestURL;
     }
 
-    public static SearchParams getDefaultSearchParams(){
+    public static SearchParamsCreateDto getDefaultSearchParams(){
         Product product = new Product();
 
 
@@ -45,7 +46,7 @@ public class ServletUtils {
 
 
         product.setAvailable(DEFAULT_PRODUCT_AVAILABILITY);
-        return new SearchParams(product, DEFAULT_CATEGORY_ID, DEFAULT_SUBCATEGORY_ID,
+        return new SearchParamsCreateDto(product, DEFAULT_CATEGORY_ID, DEFAULT_SUBCATEGORY_ID,
                 DEFAULT_MIN_PRICE, DEFAULT_MAXPRICE, DEFAULT_ORDER_METHOD);
     }
 }

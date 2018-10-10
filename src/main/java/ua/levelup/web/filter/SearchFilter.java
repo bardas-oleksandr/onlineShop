@@ -1,6 +1,6 @@
 package ua.levelup.web.filter;
 
-import ua.levelup.web.servlet.support.SearchParams;
+import ua.levelup.web.dto.create.SearchParamsCreateDto;
 import ua.levelup.service.support.SearchUtils;
 import ua.levelup.web.servlet.support.ServletUtils;
 import org.apache.logging.log4j.LogManager;
@@ -33,7 +33,7 @@ public class SearchFilter implements Filter {
             SearchUtils.initSearchingModel(request);
 
             HttpSession session = request.getSession(true);
-            SearchParams searchParams = (SearchParams) session.getAttribute(SEARCH_PARAMS);
+            SearchParamsCreateDto searchParams = (SearchParamsCreateDto) session.getAttribute(SEARCH_PARAMS);
             if(searchParams == null){
                 searchParams = ServletUtils.getDefaultSearchParams();
                 session.setAttribute(SEARCH_PARAMS, searchParams);

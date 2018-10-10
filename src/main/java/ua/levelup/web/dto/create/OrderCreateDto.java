@@ -2,10 +2,7 @@ package ua.levelup.web.dto.create;
 
 import lombok.*;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
@@ -25,7 +22,7 @@ public class OrderCreateDto implements Serializable {
     @NotEmpty(message = "empty_address")
     private String address;
 
-    @NotEmpty(message = "empty_order_date")
+    @NotNull(message = "empty_order_date")
     private Timestamp date;
 
     @Min(value = 0, message = "unexpected_payment_conditions")

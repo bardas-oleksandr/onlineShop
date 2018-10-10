@@ -2,6 +2,7 @@ package ua.levelup.web.dto.create;
 
 import lombok.*;
 
+import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -20,7 +21,6 @@ public class ProductCreateDto implements Serializable {
     @NotEmpty(message = "empty_product_name")
     private String name;
 
-    @Min(value = 0, message = "unacceptable_price")
     private float price;
 
     private boolean available;
@@ -42,5 +42,10 @@ public class ProductCreateDto implements Serializable {
         this.description = description;
         this.categoryId = categoryId;
         this.manufacturerId = manufacturerId;
+    }
+
+    @AssertTrue(message = "unacceptable_price")
+    public boolean isValidPrice(){
+        return price >= 0.0f;
     }
 }
