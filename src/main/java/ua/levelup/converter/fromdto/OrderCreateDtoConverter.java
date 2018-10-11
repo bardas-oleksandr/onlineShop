@@ -21,7 +21,8 @@ public class OrderCreateDtoConverter implements Converter<OrderCreateDto, Order>
         order.setUser(user);
         order.setAddress(orderCreateDto.getAddress());
         order.setDate(orderCreateDto.getDate());
-        order.setPaymentConditions(orderCreateDto.getPaymentConditionsIndex());
+        order.setPaymentConditions(Order.PaymentConditions.get(orderCreateDto
+                .getPaymentConditionsIndex()));
         return order;
     }
 }

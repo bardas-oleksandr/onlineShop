@@ -32,7 +32,7 @@
 //            statement.setString(1, user.getUserName());
 //            statement.setString(2, user.getPassword());
 //            statement.setString(3, user.getEmail());
-//            statement.setInt(4, user.getUserState().ordinal());
+//            statement.setInt(4, user.get().ordinal());
 //            statement.executeUpdate();
 //            ResultSet generatedKeys = statement.getGeneratedKeys();
 //            if (generatedKeys.next()) {
@@ -59,7 +59,7 @@
 //            statement.setString(1, user.getUserName());
 //            statement.setString(2, user.getPassword());
 //            statement.setString(3, user.getEmail());
-//            statement.setInt(4, user.getUserState().ordinal());
+//            statement.setInt(4, user.get().ordinal());
 //            statement.setInt(5, id);
 //            return statement.executeUpdate();
 //        } catch (SQLException e) {

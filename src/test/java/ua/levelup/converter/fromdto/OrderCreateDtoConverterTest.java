@@ -44,7 +44,7 @@ public class OrderCreateDtoConverterTest {
         User user = new User();
         user.setId(dto.getUserId());
         Order expected = new Order(user, dto.getAddress(), dto.getDate(),
-                dto.getPaymentConditionsIndex());
+                Order.PaymentConditions.get(dto.getPaymentConditionsIndex()));
         //WHEN
         Order order = orderCreateDtoConverter.convert(dto);
         //THEN

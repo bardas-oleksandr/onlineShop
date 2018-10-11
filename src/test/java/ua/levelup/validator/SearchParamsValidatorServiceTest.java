@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ua.levelup.config.TestContextConfig;
-import ua.levelup.dao.support.OrderMethod;
-import ua.levelup.model.Product;
 import ua.levelup.web.dto.create.SearchParamsCreateDto;
 
 import javax.validation.ConstraintViolation;
@@ -17,7 +15,7 @@ import java.util.Set;
 /**
  * Класс SearchParamsValidatorServiceTest содержит интеграционные тесты
  * для проверки корректности валидации объектов SearchParamsCreateDto
- *
+ * <p>
  * Автор: Бардась А.А.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -36,33 +34,13 @@ public class SearchParamsValidatorServiceTest {
     @Test
     public void validateTest_SearchParamsValidated() {
         //GIVEN
-        SearchParamsCreateDto dto = new SearchParamsCreateDto(new Product(),1,
-                2,3.0f,4.0f, OrderMethod.CHEAP_FIRST);
+        SearchParamsCreateDto dto = new SearchParamsCreateDto(1, 2,
+                3, true, 4.0f, 5.0f, 1);
         //WHEN
         Set<ConstraintViolation<SearchParamsCreateDto>> violations = searchParamsValidatorService
                 .validate(dto);
         //THEN
         Assert.assertEquals(0, violations.size());
-    }
-
-    /*Сценарий: валидация объекта SearchParamsCreateDto;
-    *           поле Product product == null
-    * Дано:
-    *   - SearchParamsCreateDto dto
-    * Результат: объект не валидирован.
-    * */
-    @Test
-    public void validateTest_whenProductEgualsNull_thenNotValidated() {
-        //GIVEN
-        SearchParamsCreateDto dto = new SearchParamsCreateDto(null,1,
-                2,3.0f,4.0f, OrderMethod.CHEAP_FIRST);
-        //WHEN
-        Set<ConstraintViolation<SearchParamsCreateDto>> violations = searchParamsValidatorService
-                .validate(dto);
-        //THEN
-        Assert.assertEquals(1, violations.size());
-        Assert.assertEquals("empty_search_product_field",violations.stream()
-                .findFirst().get().getMessage());
     }
 
     /*Сценарий: валидация объекта SearchParamsCreateDto;
@@ -74,14 +52,14 @@ public class SearchParamsValidatorServiceTest {
     @Test
     public void validateTest_whenCategoryIdIsNegative_thenNotValidated() {
         //GIVEN
-        SearchParamsCreateDto dto = new SearchParamsCreateDto(new Product(),-1,
-                2,3.0f,4.0f, OrderMethod.CHEAP_FIRST);
+        SearchParamsCreateDto dto = new SearchParamsCreateDto(-1, 1,
+                2, true, 3.0f, 4.0f, 1);
         //WHEN
         Set<ConstraintViolation<SearchParamsCreateDto>> violations = searchParamsValidatorService
                 .validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
-        Assert.assertEquals("negative_search_category_id",violations.stream()
+        Assert.assertEquals("negative_search_category_id", violations.stream()
                 .findFirst().get().getMessage());
     }
 
@@ -94,14 +72,14 @@ public class SearchParamsValidatorServiceTest {
     @Test
     public void validateTest_whenSubcategoryIdIsNegative_thenNotValidated() {
         //GIVEN
-        SearchParamsCreateDto dto = new SearchParamsCreateDto(new Product(),1,
-                -1,3.0f,4.0f, OrderMethod.CHEAP_FIRST);
+        SearchParamsCreateDto dto = new SearchParamsCreateDto(1, -1,
+                2, true, 3.0f, 4.0f, 1);
         //WHEN
         Set<ConstraintViolation<SearchParamsCreateDto>> violations = searchParamsValidatorService
                 .validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
-        Assert.assertEquals("negative_search_category_id",violations.stream()
+        Assert.assertEquals("negative_search_category_id", violations.stream()
                 .findFirst().get().getMessage());
     }
 
@@ -114,14 +92,14 @@ public class SearchParamsValidatorServiceTest {
     @Test
     public void validateTest_whenMinPriceIsNegative_thenNotValidated() {
         //GIVEN
-        SearchParamsCreateDto dto = new SearchParamsCreateDto(new Product(),1,
-                2,-0.1f,4.0f, OrderMethod.CHEAP_FIRST);
+        SearchParamsCreateDto dto = new SearchParamsCreateDto(0, 1,
+                2, true, -0.1f, 4.0f, 1);
         //WHEN
         Set<ConstraintViolation<SearchParamsCreateDto>> violations = searchParamsValidatorService
                 .validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
-        Assert.assertEquals("unacceptable_price",violations.stream()
+        Assert.assertEquals("unacceptable_price", violations.stream()
                 .findFirst().get().getMessage());
     }
 
@@ -134,34 +112,54 @@ public class SearchParamsValidatorServiceTest {
     @Test
     public void validateTest_whenMinPriceBiggerThenMaxPrice_thenNotValidated() {
         //GIVEN
-        SearchParamsCreateDto dto = new SearchParamsCreateDto(new Product(),1,
-                2,5.0f,4.0f, OrderMethod.CHEAP_FIRST);
+        SearchParamsCreateDto dto = new SearchParamsCreateDto(0, 1,
+                2, true, 5.0f, 4.0f, 1);
         //WHEN
         Set<ConstraintViolation<SearchParamsCreateDto>> violations = searchParamsValidatorService
                 .validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
-        Assert.assertEquals("max_price_bigger_then_min_price",violations.stream()
+        Assert.assertEquals("max_price_bigger_then_min_price", violations.stream()
                 .findFirst().get().getMessage());
     }
 
     /*Сценарий: валидация объекта SearchParamsCreateDto;
-    *           поле OrderMethod == null
+    *           поле OrderMethod < 0
     * Дано:
     *   - SearchParamsCreateDto dto
     * Результат: объект не валидирован.
     * */
     @Test
-    public void validateTest_whenOrderMethodEqualsNull_thenNotValidated() {
+    public void validateTest_whenOrderMethodIsNegative_thenNotValidated() {
         //GIVEN
-        SearchParamsCreateDto dto = new SearchParamsCreateDto(new Product(),1,
-                2,3.0f,4.0f, null);
+        SearchParamsCreateDto dto = new SearchParamsCreateDto(0, 1,
+                2, true, 3.0f, 4.0f, -1);
         //WHEN
         Set<ConstraintViolation<SearchParamsCreateDto>> violations = searchParamsValidatorService
                 .validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
-        Assert.assertEquals("empty_order_method",violations.stream()
+        Assert.assertEquals("unacceptable_order_method", violations.stream()
+                .findFirst().get().getMessage());
+    }
+
+    /*Сценарий: валидация объекта SearchParamsCreateDto;
+    *           поле OrderMethod > 2
+    * Дано:
+    *   - SearchParamsCreateDto dto
+    * Результат: объект не валидирован.
+    * */
+    @Test
+    public void validateTest_whenOrderBiggerThenThree_thenNotValidated() {
+        //GIVEN
+        SearchParamsCreateDto dto = new SearchParamsCreateDto(0, 1,
+                2, true, 3.0f, 4.0f, 3);
+        //WHEN
+        Set<ConstraintViolation<SearchParamsCreateDto>> violations = searchParamsValidatorService
+                .validate(dto);
+        //THEN
+        Assert.assertEquals(1, violations.size());
+        Assert.assertEquals("unacceptable_order_method", violations.stream()
                 .findFirst().get().getMessage());
     }
 }

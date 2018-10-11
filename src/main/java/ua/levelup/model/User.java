@@ -30,21 +30,17 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public User(String userName, String password, String email, int userStateIndex) {
+    public User(String userName, String password, String email, UserState userState) {
         this.userName = userName;
         this.password = password;
         this.email = email;
-        this.userState = UserState.getUserState(userStateIndex);
-    }
-
-    public void setUserState(int stateIndex) {
-        this.userState = UserState.getUserState(stateIndex);
+        this.userState = userState;
     }
 
     public enum UserState {
         ADMIN, ACTIVE, BLOCKED;
 
-        public static UserState getUserState(int stateIndex){
+        public static UserState get(int stateIndex){
             switch(stateIndex){
                 case 0:
                     return ADMIN;

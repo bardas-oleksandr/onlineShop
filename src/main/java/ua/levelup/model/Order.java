@@ -28,42 +28,18 @@ public class Order implements Serializable {
         this.orderPositionList = new ArrayList<>();
     }
 
-    public Order(User user, String address, Timestamp date, int paymentConditionsIndex) {
+    public Order(User user, String address, Timestamp date, PaymentConditions paymentConditions) {
         this.user = user;
         this.address = address;
         this.date = date;
-        this.payed = false;
-        this.paymentConditions = PaymentConditions.getPaymentConditions(paymentConditionsIndex);
+        this.paymentConditions = paymentConditions;
         this.orderPositionList = new ArrayList<>();
-    }
-
-    public Order(User user, String address, Timestamp date, boolean payed,
-                 int orderStateIndex, int paymentConditionsIndex) {
-        this.user = user;
-        this.address = address;
-        this.date = date;
-        this.payed = payed;
-        this.orderState = OrderState.getOrderState(orderStateIndex);
-        this.paymentConditions = PaymentConditions.getPaymentConditions(paymentConditionsIndex);
-        this.orderPositionList = new ArrayList<>();
-    }
-
-    public void addOrderPosition(OrderPosition orderPosition){
-        this.orderPositionList.add(orderPosition);
-    }
-
-    public void setOrderState(int orderState) {
-        this.orderState = OrderState.getOrderState(orderState);
-    }
-
-    public void setPaymentConditions(int paymentConditionsIndex) {
-        this.paymentConditions = PaymentConditions.getPaymentConditions(paymentConditionsIndex);
     }
 
     public enum OrderState {
         REGISTERED, EXECUTED, CANCELED;
 
-        public static OrderState getOrderState(int stateIndex){
+        public static OrderState get(int stateIndex){
             switch(stateIndex){
                 case 0:
                     return REGISTERED;
@@ -80,7 +56,7 @@ public class Order implements Serializable {
     public enum PaymentConditions {
         CASH, CARD;
 
-        public static PaymentConditions getPaymentConditions(int conditionsIndex){
+        public static PaymentConditions get(int conditionsIndex){
             switch(conditionsIndex){
                 case 0:
                     return CASH;

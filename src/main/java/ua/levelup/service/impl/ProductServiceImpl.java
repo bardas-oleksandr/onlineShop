@@ -36,7 +36,7 @@
 //                .getFilteredProducts(searchParams.getProduct(),
 //                        searchParams.getMinPrice(),
 //                        searchParams.getMaxPrice(),
-//                        searchParams.getOrderMethod());
+//                        searchParams.get());
 //        List<ProductViewDto> productViewDtoList = new ArrayList<>();
 //        for (ua.levelup.model.Product item : productList) {
 //            productViewDtoList.add(conversionService.convert(item, ProductViewDto.class));

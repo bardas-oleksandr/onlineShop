@@ -1,8 +1,8 @@
 package ua.levelup.dao;
 
-import ua.levelup.dao.support.OrderMethod;
 import ua.levelup.exception.ApplicationException;
 import ua.levelup.model.Product;
+import ua.levelup.model.SearchParams;
 
 import java.util.List;
 
@@ -16,5 +16,5 @@ public interface ProductDao {
 
     Product getById(int id) throws ApplicationException;
 
-    List<Product> getFilteredProducts(Product product, float minPrice, float maxPrice, OrderMethod method) throws ApplicationException;
+    List<Product> getFilteredProducts(SearchParams searchParams) throws ApplicationException;
 }

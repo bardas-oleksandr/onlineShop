@@ -20,13 +20,15 @@
     <context:component-scan base-package="ua.levelup"/>
 
     <util:set id="converterSet">
+        <bean class="ua.levelup.converter.fromdto.CategoryCreateDtoConverter"/>
+        <bean class="ua.levelup.converter.fromdto.CredentialsCreateDtoConverter"/>
+        <bean class="ua.levelup.converter.fromdto.ManufacturerCreateDtoConverter"/>
+        <bean class="ua.levelup.converter.fromdto.OrderCreateDtoConverter"/>
         <bean class="ua.levelup.converter.fromdto.OrderPositionCreateDtoConverter"/>
         <bean class="ua.levelup.converter.fromdto.ProductCreateDtoConverter"/>
         <bean class="ua.levelup.converter.fromdto.ProductInCartCreateDtoConverter"/>
+        <bean class="ua.levelup.converter.fromdto.SearchParamsCreateDtoConverter"/>
         <bean class="ua.levelup.converter.fromdto.UserCreateDtoConverter"/>
-        <bean class="ua.levelup.converter.fromdto.CategoryCreateDtoConverter"/>
-        <bean class="ua.levelup.converter.fromdto.ManufacturerCreateDtoConverter"/>
-        <bean class="ua.levelup.converter.fromdto.OrderCreateDtoConverter"/>
         <bean class="ua.levelup.converter.todto.CartConverter"/>
         <bean class="ua.levelup.converter.todto.CategoryConverter"/>
         <bean class="ua.levelup.converter.todto.ManufacturerConverter"/>

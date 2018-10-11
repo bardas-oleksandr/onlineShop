@@ -162,7 +162,7 @@
 //        boolean available = request.getParameter(AVAILABLE) != null;    //Checkbox can equals either "on" or null
 //        product.setAvailable(available);
 //        return new SearchParams(product, categoryId, subcategoryId,
-//                minPrice, maxPrice, OrderMethod.getOrderMethod(orderMethod));
+//                minPrice, maxPrice, OrderMethod.get(orderMethod));
 //    }
 //
 //    private Product extractNewProduct(HttpServletRequest request) {

@@ -31,10 +31,10 @@
 //    public Order add(Order order) throws ApplicationException {
 //        try (PreparedStatement statement = connection.prepareStatement(INSERT_QUERY, new String[]{"id"})) {
 //            statement.setInt(1, order.getUser().getId());
-//            statement.setInt(2, order.getOrderState().ordinal());
+//            statement.setInt(2, order.get().ordinal());
 //            statement.setTimestamp(3, order.getDate());
 //            statement.setString(4, order.getAddress());
-//            statement.setInt(5, order.getPaymentConditions().ordinal());
+//            statement.setInt(5, order.get().ordinal());
 //            statement.executeUpdate();
 //            ResultSet generatedKeys = statement.getGeneratedKeys();
 //            if (generatedKeys.next()) {
@@ -55,10 +55,10 @@
 //    public int update(Order order) throws ApplicationException {
 //        try (PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY)) {
 //            statement.setInt(1, order.getUser().getId());
-//            statement.setInt(2, order.getOrderState().ordinal());
+//            statement.setInt(2, order.get().ordinal());
 //            statement.setTimestamp(3, order.getDate());
 //            statement.setString(4, order.getAddress());
-//            statement.setInt(5, order.getPaymentConditions().ordinal());
+//            statement.setInt(5, order.get().ordinal());
 //            statement.setInt(6, order.getId());
 //            return statement.executeUpdate();
 //        } catch (SQLException e) {

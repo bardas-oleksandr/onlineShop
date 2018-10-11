@@ -1,15 +1,12 @@
 //package ua.levelup.dao.impl;
 //
 //import ua.levelup.dao.ProductDao;
-//import ua.levelup.dao.support.OrderMethod;
-//import ua.levelup.dao.support.SqlContainer;
 //import ua.levelup.exception.ApplicationException;
-//import ua.levelup.exception.support.MessageContainer;
-//import ua.levelup.mapper.ProductMapper;
 //import ua.levelup.model.Product;
 //import org.apache.commons.lang3.StringUtils;
 //import org.apache.logging.log4j.LogManager;
 //import org.apache.logging.log4j.Logger;
+//import ua.levelup.model.SearchParams;
 //
 //import java.sql.*;
 //import java.util.List;
@@ -121,8 +118,7 @@
 //    }
 //
 //    @Override
-//    public List<Product> getFilteredProducts(Product product, float minPrice, float maxPrice,
-//                                             OrderMethod method)
+//    public List<Product> getFilteredProducts(SearchParams searchParams)
 //            throws ApplicationException {
 //        String query = getSelectQuery(product, method);
 //        try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -142,9 +138,6 @@
 //
 //    private String getSelectQuery(Product product, OrderMethod method) {
 //        StringBuilder query = new StringBuilder(SELECT_FILTERED_PRODUCTS_QUERY);
-//        if (!StringUtils.isEmpty(product.getName())) {
-//            query.append(" AND products.product_name = " + product.getName());
-//        }
 //        if (product.isAvailable()) {
 //            query.append(" AND products.product_available = " + product.isAvailable());
 //        }

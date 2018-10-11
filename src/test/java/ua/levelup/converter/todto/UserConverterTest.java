@@ -37,7 +37,7 @@ public class UserConverterTest {
     public void convertTest_whenUserNotEqualsNull_thenOk() throws Exception {
         //GIVEN
         User user = new User("name", "password",
-                "email@gmail.com", User.UserState.ACTIVE.ordinal());
+                "email@gmail.com", User.UserState.ACTIVE);
         UserViewDto expected = new UserViewDto();
         expected.setUserName(user.getUserName());
         expected.setEmail(user.getEmail());

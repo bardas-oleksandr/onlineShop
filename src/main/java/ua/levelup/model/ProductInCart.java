@@ -16,7 +16,7 @@ public class ProductInCart implements Serializable {
     private Product product;
     private int count;
 
-    public ProductInCart(@NonNull Product product, int count){
+    public ProductInCart(Product product, int count) {
         this.product = product;
         this.count = count;
     }

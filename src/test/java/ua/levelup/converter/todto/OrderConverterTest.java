@@ -54,10 +54,10 @@ public class OrderConverterTest {
         MockitoAnnotations.initMocks(this);
 
         user = new User("name", "password",
-                "email@gmail.com", User.UserState.ACTIVE.ordinal());
+                "email@gmail.com", User.UserState.ACTIVE);
         user.setId(1);
         order = new Order(user, "address", new Timestamp(1),
-                true, 0, 1);
+                Order.PaymentConditions.get(1));
         order.setId(1);
         orderPosition = new OrderPosition(order.getId(),2,3,4.0f);
         orderPosition.setProductName("product");

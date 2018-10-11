@@ -1,12 +1,10 @@
 package ua.levelup.web.dto.create;
 
 import lombok.*;
-import ua.levelup.dao.support.OrderMethod;
-import ua.levelup.model.Product;
 
 import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -15,39 +13,44 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class SearchParamsCreateDto {
 
-    @NotNull(message = "empty_search_product_field")
-    private Product product;
-
     @Min(value = 0, message = "negative_search_category_id")
     private int categoryId;
 
     @Min(value = 0, message = "negative_search_category_id")
     private int subcategoryId;
 
+    @Min(value = 0, message = "negative_search_manufacturer_id")
+    private int manufacturerId;
+
+    private boolean availableOnly;
+
     private float minPrice;
 
     private float maxPrice;
 
-    @NotNull(message = "empty_order_method")
-    private OrderMethod orderMethod;
+    @Min(value = 0, message = "unacceptable_order_method")
+    @Max(value = 2, message = "unacceptable_order_method")
+    private int orderMethodIndex;
 
-    public SearchParamsCreateDto(Product product, int categoryId, int subcategoryId,
-                                 float minPrice, float maxPrice, OrderMethod orderMethod) {
-        this.product = product;
+    public SearchParamsCreateDto(int categoryId, int subcategoryId, int manufacturerId,
+                                 boolean availableOnly, float minPrice, float maxPrice,
+                                 int orderMethodIndex) {
         this.categoryId = categoryId;
         this.subcategoryId = subcategoryId;
+        this.manufacturerId = manufacturerId;
+        this.availableOnly = availableOnly;
         this.minPrice = minPrice;
         this.maxPrice = maxPrice;
-        this.orderMethod = orderMethod;
+        this.orderMethodIndex = orderMethodIndex;
     }
 
     @AssertTrue(message = "max_price_bigger_then_min_price")
-    public boolean isValidPriceRange(){
+    public boolean isValidPriceRange() {
         return minPrice <= maxPrice;
     }
 
     @AssertTrue(message = "unacceptable_price")
-    public boolean isValidMinPrice(){
+    public boolean isValidMinPrice() {
         return minPrice >= 0.0f;
     }
 }
