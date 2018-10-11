@@ -1,5 +1,6 @@
 package ua.levelup.dao;
 
+import lombok.NonNull;
 import ua.levelup.exception.ApplicationException;
 import ua.levelup.model.Order;
 
@@ -7,11 +8,11 @@ import java.util.List;
 
 public interface OrderDao {
 
-    Order add(Order order) throws ApplicationException;
+    void add(@NonNull Order order) throws ApplicationException;
 
-    int update(Order order) throws ApplicationException;
+    void update(@NonNull Order order) throws ApplicationException;
 
-    int delete(int orderId) throws ApplicationException;
+    void delete(int orderId) throws ApplicationException;
 
     Order getById(int orderId) throws ApplicationException;
 

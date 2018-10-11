@@ -10,6 +10,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Properties;
 
+//По заданию работу с одной из сущностей надо реализвать на "чистом" JDBC
+//Класс пула соединений для работы на "чистом" JDBC
 @Component("connectionFactory")
 public class ConnectionFactory extends BasePooledObjectFactory<Connection> {
 

@@ -6,12 +6,24 @@
 
     <changeSet id="create_db" author="root">
         <preConditions onFail="MARK_RAN">
-            <not><tableExists schemaName="onlineShopDB" tableName="categories" /></not>
-            <not><tableExists schemaName="onlineShopDB" tableName="manufacturers" /></not>
-            <not><tableExists schemaName="onlineShopDB" tableName="products" /></not>
-            <not><tableExists schemaName="onlineShopDB" tableName="users" /></not>
-            <not><tableExists schemaName="onlineShopDB" tableName="orders" /></not>
-            <not><tableExists schemaName="onlineShopDB" tableName="orders_products" /></not>
+            <not>
+                <tableExists schemaName="onlineShopDB" tableName="categories"/>
+            </not>
+            <not>
+                <tableExists schemaName="onlineShopDB" tableName="manufacturers"/>
+            </not>
+            <not>
+                <tableExists schemaName="onlineShopDB" tableName="products"/>
+            </not>
+            <not>
+                <tableExists schemaName="onlineShopDB" tableName="users"/>
+            </not>
+            <not>
+                <tableExists schemaName="onlineShopDB" tableName="orders"/>
+            </not>
+            <not>
+                <tableExists schemaName="onlineShopDB" tableName="orders_products"/>
+            </not>
         </preConditions>
 
         <createTable tableName="categories">
@@ -22,7 +34,7 @@
                 <constraints nullable="false" unique="true"/>
             </column>
             <column name="category_parent_id" type="int unsigned">
-                <constraints nullable="true"/>
+                <constraints nullable="false"/>
             </column>
         </createTable>
 
@@ -85,15 +97,18 @@
             <column name="order_user_id" type="int unsigned">
                 <constraints nullable="false"/>
             </column>
-            <column name="order_state" type="smallint">
-                <constraints nullable="false"
-                             checkConstraint="CHECK (int_value &gt;= 0 AND int_value &lt;= 2)"/>
+            <column name="order_address" type="varchar(255)">
+                <constraints nullable="false"/>
             </column>
             <column name="order_date" type="timestamp">
                 <constraints nullable="false"/>
             </column>
-            <column name="order_address" type="varchar(255)">
+            <column name="order_payed" type="boolean" defaultValueBoolean="false">
                 <constraints nullable="false"/>
+            </column>
+            <column name="order_state" type="smallint">
+                <constraints nullable="false"
+                             checkConstraint="CHECK (int_value &gt;= 0 AND int_value &lt;= 2)"/>
             </column>
             <column name="order_payment_conditions" type="smallint">
                 <constraints nullable="false"
@@ -109,10 +124,12 @@
                 <constraints nullable="false"/>
             </column>
             <column name="order_product_quantity" type="int unsigned">
-                <constraints nullable="false"/>
+                <constraints nullable="false"
+                             checkConstraint="CHECK (int_value &gt;= 1)"/>
             </column>
             <column name="order_product_unit_price" type="float">
-                <constraints nullable="false"/>
+                <constraints nullable="false"
+                             checkConstraint="CHECK (float_value &gt;= 0.0)"/>
             </column>
         </createTable>
 
@@ -148,7 +165,7 @@
         <addForeignKeyConstraint constraintName="fkey_orders"
                                  baseTableName="orders_products" baseColumnNames="order_id"
                                  referencedTableName="orders" referencedColumnNames="id"
-                                 onDelete="NO ACTION" onUpdate="NO ACTION"/>
+                                 onDelete="CASCADE" onUpdate="CASCADE"/>
 
     </changeSet>
 

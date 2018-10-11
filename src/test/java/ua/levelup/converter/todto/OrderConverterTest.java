@@ -11,9 +11,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import ua.levelup.config.TestContextConfig;
+import ua.levelup.testconfig.TestContextConfig;
 import ua.levelup.model.Order;
 import ua.levelup.model.OrderPosition;
 import ua.levelup.model.User;
@@ -31,6 +32,7 @@ import java.util.Collections;
 * */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestContextConfig.class})
+@ActiveProfiles("test")
 public class OrderConverterTest {
 
     @Mock
@@ -59,6 +61,7 @@ public class OrderConverterTest {
         order = new Order(user, "address", new Timestamp(1),
                 Order.PaymentConditions.get(1));
         order.setId(1);
+        order.setOrderState(Order.OrderState.REGISTERED);
         orderPosition = new OrderPosition(order.getId(),2,3,4.0f);
         orderPosition.setProductName("product");
 
@@ -93,8 +96,6 @@ public class OrderConverterTest {
     /*Сценарий: преобразование объекта класса Order в объект класса OrderViewDto;
     *           объект Order order не равен null.
     *           список OrderPositionList объекта Order order не пустой
-    * Дано:
-    *   - Order order
     * Результат: преобразование выполнено успешно
     * */
     @Test
@@ -118,8 +119,6 @@ public class OrderConverterTest {
     /*Сценарий: преобразование объекта класса Order в объект класса OrderViewDto;
     *           объект Order order не равен null.
     *           список OrderPositionList объекта Order order пустой, не равен null
-    * Дано:
-    *   - Order order
     * Результат: исключение NullPointerException
     * */
     @Test

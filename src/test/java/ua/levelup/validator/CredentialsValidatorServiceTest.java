@@ -4,9 +4,10 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import ua.levelup.config.TestContextConfig;
+import ua.levelup.testconfig.TestContextConfig;
 import ua.levelup.web.dto.create.CredentialsCreateDto;
 
 import javax.validation.ConstraintViolation;
@@ -20,6 +21,7 @@ import java.util.Set;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestContextConfig.class})
+@ActiveProfiles("test")
 public class CredentialsValidatorServiceTest {
 
     @Autowired
@@ -27,8 +29,6 @@ public class CredentialsValidatorServiceTest {
 
     /*Сценарий: валидация объекта CredentialsCreateDto;
     *           все поля корректны.
-    * Дано:
-    *   - CredentialsCreateDto dto
     * Результат: объект успешно валидирован.
     * */
     @Test
@@ -44,8 +44,6 @@ public class CredentialsValidatorServiceTest {
 
     /*Сценарий: валидация объекта CredentialsCreateDto;
     *           поле String password == null.
-    * Дано:
-    *   - CredentialsCreateDto dto
     * Результат: объект не валидирован.
     * */
     @Test
@@ -63,8 +61,6 @@ public class CredentialsValidatorServiceTest {
 
     /*Сценарий: валидация объекта CredentialsCreateDto;
     *           поле String password == "".
-    * Дано:
-    *   - CredentialsCreateDto dto
     * Результат: объект не валидирован.
     * */
     @Test
@@ -82,8 +78,6 @@ public class CredentialsValidatorServiceTest {
 
     /*Сценарий: валидация объекта CredentialsCreateDto;
     *           поле String password короче 6 символов.
-    * Дано:
-    *   - CredentialsCreateDto dto
     * Результат: объект не валидирован.
     * */
     @Test
@@ -101,8 +95,6 @@ public class CredentialsValidatorServiceTest {
 
     /*Сценарий: валидация объекта CredentialsCreateDto;
     *           поле String password длинее 20 символов.
-    * Дано:
-    *   - CredentialsCreateDto dto
     * Результат: объект не валидирован.
     * */
     @Test
@@ -121,8 +113,6 @@ public class CredentialsValidatorServiceTest {
 
     /*Сценарий: валидация объекта CredentialsCreateDto;
     *           поле String email имеет неверный формат.
-    * Дано:
-    *   - CredentialsCreateDto dto
     * Результат: объект не валидирован.
     * */
     @Test
@@ -140,8 +130,6 @@ public class CredentialsValidatorServiceTest {
 
     /*Сценарий: валидация объекта CredentialsCreateDto;
     *           поле String email == null.
-    * Дано:
-    *   - CredentialsCreateDto dto
     * Результат: объект не валидирован.
     * */
     @Test
@@ -159,8 +147,6 @@ public class CredentialsValidatorServiceTest {
 
     /*Сценарий: валидация объекта CredentialsCreateDto;
     *           поле String email == "".
-    * Дано:
-    *   - CredentialsCreateDto dto
     * Результат: объект не валидирован.
     * */
     @Test

@@ -49,31 +49,31 @@
         <insert tableName="categories">
             <column name="id" type="INT UNSIGNED">1</column>
             <column name="category_name" type="varchar(50)">Carp</column>
-            <column name="category_parent_id" type="INT UNSIGNED">NULL</column>
+            <column name="category_parent_id" type="INT UNSIGNED">0</column>
         </insert>
 
         <insert tableName="categories">
             <column name="id" type="INT UNSIGNED">2</column>
             <column name="category_name" type="varchar(50)">Predator</column>
-            <column name="category_parent_id" type="INT UNSIGNED">NULL</column>
+            <column name="category_parent_id" type="INT UNSIGNED">0</column>
         </insert>
 
         <insert tableName="categories">
             <column name="id" type="INT UNSIGNED">3</column>
             <column name="category_name" type="varchar(50)">Sea</column>
-            <column name="category_parent_id" type="INT UNSIGNED">NULL</column>
+            <column name="category_parent_id" type="INT UNSIGNED">0</column>
         </insert>
 
         <insert tableName="categories">
             <column name="id" type="INT UNSIGNED">4</column>
             <column name="category_name" type="varchar(50)">Reels</column>
-            <column name="category_parent_id" type="INT UNSIGNED">NULL</column>
+            <column name="category_parent_id" type="INT UNSIGNED">0</column>
         </insert>
 
         <insert tableName="categories">
             <column name="id" type="INT UNSIGNED">5</column>
             <column name="category_name" type="varchar(50)">Rods</column>
-            <column name="category_parent_id" type="INT UNSIGNED">NULL</column>
+            <column name="category_parent_id" type="INT UNSIGNED">0</column>
         </insert>
 
         <!--************************************************-->
@@ -764,9 +764,10 @@
         <insert tableName="orders">
             <column name="id" type="INT UNSIGNED">1</column>
             <column name="order_user_id" type="INT UNSIGNED">2</column>
-            <column name="order_state" type="SMALLINT">0</column>
-            <column name="order_date" type="TIMESTAMP">2018-09-03 22:15:38.646</column>
             <column name="order_address" type="varchar(255)">15, Yemen road, Yemen</column>
+            <column name="order_date" type="TIMESTAMP">2018-09-03 22:15:38.646</column>
+            <column name="order_payed" type="boolean" valueBoolean="false"/>
+            <column name="order_state" type="SMALLINT">0</column>
             <column name="order_payment_conditions" type="SMALLINT">1</column>
         </insert>
 

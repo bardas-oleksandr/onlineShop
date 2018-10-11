@@ -53,6 +53,10 @@ public class Order implements Serializable {
         }
     }
 
+    public void addOrderPosition(OrderPosition orderPosition){
+        this.orderPositionList.add(orderPosition);
+    }
+
     public enum PaymentConditions {
         CASH, CARD;
 

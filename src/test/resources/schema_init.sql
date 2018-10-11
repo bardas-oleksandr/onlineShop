@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS public.products(
 id                         INT UNSIGNED    NOT NULL AUTO_INCREMENT,
 product_name               VARCHAR(50)     NOT NULL UNIQUE,
 product_price              FLOAT           NOT NULL DEFAULT 0.0,
-product_available          BOOLEAN         DEFAULT TRUE,
+product_available          BOOLEAN         NOT NULL DEFAULT TRUE,
 product_description        VARCHAR(255),
 product_category_id        INT UNSIGNED    NOT NULL,
 product_manufacturer_id    INT UNSIGNED    NOT NULL,
@@ -38,9 +38,10 @@ CONSTRAINT user_state_check CHECK (user_state >= 0 AND user_state <= 2));
 CREATE TABLE IF NOT EXISTS public.orders(
 id                          INT UNSIGNED    NOT NULL AUTO_INCREMENT,
 order_user_id               INT UNSIGNED    NOT NULL,
-order_state                 SMALLINT        NOT NULL,
-order_date                  TIMESTAMP       NOT NULL,
 order_address               VARCHAR(255)    NOT NULL,
+order_date                  TIMESTAMP       NOT NULL,
+order_payed                 BOOLEAN         NOT NULL DEFAULT FALSE,
+order_state                 SMALLINT        NOT NULL,
 order_payment_conditions    SMALLINT        NOT NULL,
 CONSTRAINT pkey_order PRIMARY KEY (id),
 CONSTRAINT order_state_check CHECK (order_state >= 0 AND order_state <= 2),
@@ -54,7 +55,9 @@ product_id                  INT UNSIGNED    NOT NULL,
 order_product_quantity      INT UNSIGNED    NOT NULL,
 order_product_unit_price    FLOAT           NOT NULL,
 CONSTRAINT pkey_orders_products PRIMARY KEY (order_id, product_id),
+CONSTRAINT order_product_quantity_check CHECK (order_product_quantity > 0),
+CONSTRAINT order_product_unit_price_check CHECK (order_product_unit_price >= 0.0),
 CONSTRAINT fkey_orders FOREIGN KEY (order_id) REFERENCES orders (id)
 ON DELETE NO ACTION ON UPDATE NO ACTION,
 CONSTRAINT fkey_products FOREIGN KEY (product_id) REFERENCES products (id)
-ON DELETE NO ACTION ON UPDATE NO ACTION);
+ON DELETE CASCADE ON UPDATE CASCADE);

@@ -4,9 +4,10 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import ua.levelup.config.TestContextConfig;
+import ua.levelup.testconfig.TestContextConfig;
 import ua.levelup.web.dto.create.ProductCreateDto;
 
 import javax.validation.ConstraintViolation;
@@ -20,6 +21,7 @@ import java.util.Set;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestContextConfig.class})
+@ActiveProfiles("test")
 public class ProductValidatorServiceTest {
 
     @Autowired
@@ -27,8 +29,6 @@ public class ProductValidatorServiceTest {
 
     /*Сценарий: валидация объекта ProductCreateDto;
     *           все поля корректны.
-    * Дано:
-    *   - ProductCreateDto dto
     * Результат: объект успешно валидирован.
     * */
     @Test
@@ -45,8 +45,6 @@ public class ProductValidatorServiceTest {
 
     /*Сценарий: валидация объекта ProductCreateDto;
     *           поле String name == null.
-    * Дано:
-    *   - ProductCreateDto dto
     * Результат: объект не валидирован.
     * */
     @Test
@@ -65,8 +63,6 @@ public class ProductValidatorServiceTest {
 
     /*Сценарий: валидация объекта ProductCreateDto;
     *           поле String name == "".
-    * Дано:
-    *   - ProductCreateDto dto
     * Результат: объект не валидирован.
     * */
     @Test
@@ -85,8 +81,6 @@ public class ProductValidatorServiceTest {
 
     /*Сценарий: валидация объекта ProductCreateDto;
     *           поле String name имеет длину более 50 символов
-    * Дано:
-    *   - ProductCreateDto dto
     * Результат: объект не валидирован.
     * */
     @Test
@@ -106,8 +100,6 @@ public class ProductValidatorServiceTest {
 
     /*Сценарий: валидация объекта ProductCreateDto;
     *           поле float price < 0.
-    * Дано:
-    *   - ProductCreateDto dto
     * Результат: объект не валидирован.
     * */
     @Test
@@ -126,8 +118,6 @@ public class ProductValidatorServiceTest {
 
     /*Сценарий: валидация объекта ProductCreateDto;
     *           поле String description имеет длину более 100 символов
-    * Дано:
-    *   - ProductCreateDto dto
     * Результат: объект не валидирован.
     * */
     @Test
@@ -147,8 +137,6 @@ public class ProductValidatorServiceTest {
 
     /*Сценарий: валидация объекта ProductCreateDto;
     *           поле int categoryId < 1
-    * Дано:
-    *   - ProductCreateDto dto
     * Результат: объект не валидирован.
     * */
     @Test
@@ -167,8 +155,6 @@ public class ProductValidatorServiceTest {
 
     /*Сценарий: валидация объекта ProductCreateDto;
     *           поле int manufacturerId < 1
-    * Дано:
-    *   - ProductCreateDto dto
     * Результат: объект не валидирован.
     * */
     @Test

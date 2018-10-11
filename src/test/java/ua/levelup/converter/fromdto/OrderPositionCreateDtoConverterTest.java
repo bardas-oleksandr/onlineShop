@@ -6,9 +6,10 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import ua.levelup.config.TestContextConfig;
+import ua.levelup.testconfig.TestContextConfig;
 import ua.levelup.model.OrderPosition;
 import ua.levelup.web.dto.create.OrderPositionCreateDto;
 
@@ -19,6 +20,7 @@ import ua.levelup.web.dto.create.OrderPositionCreateDto;
 * */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestContextConfig.class})
+@ActiveProfiles("test")
 public class OrderPositionCreateDtoConverterTest {
 
     @Autowired
@@ -29,8 +31,6 @@ public class OrderPositionCreateDtoConverterTest {
 
     /*Сценарий: преобразование объекта класса OrderPositionCreateDto в объект класса OrderPosition;
     *           объект OrderPositionCreateDto orderPositionCreateDto не равен null.
-    * Дано:
-    *   - OrderPositionCreateDto orderPositionCreateDto
     * Результат: преобразование выполнено успешно.
     * */
     @Test

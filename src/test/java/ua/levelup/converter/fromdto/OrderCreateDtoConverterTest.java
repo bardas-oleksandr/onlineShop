@@ -6,9 +6,10 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import ua.levelup.config.TestContextConfig;
+import ua.levelup.testconfig.TestContextConfig;
 import ua.levelup.model.Order;
 import ua.levelup.model.User;
 import ua.levelup.web.dto.create.OrderCreateDto;
@@ -22,6 +23,7 @@ import java.sql.Timestamp;
 * */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestContextConfig.class})
+@ActiveProfiles("test")
 public class OrderCreateDtoConverterTest {
 
     @Autowired
@@ -32,8 +34,6 @@ public class OrderCreateDtoConverterTest {
 
     /*Сценарий: преобразование объекта класса OrderCreateDto в объект класса Order;
     *           объект OrderCreateDto orderCreateDto не равен null.
-    * Дано:
-    *   - OrderCreateDto orderCreateDto
     * Результат: преобразование выполнено успешно.
     * */
     @Test

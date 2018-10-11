@@ -4,9 +4,10 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import ua.levelup.config.TestContextConfig;
+import ua.levelup.testconfig.TestContextConfig;
 import ua.levelup.web.dto.create.ProductInCartCreateDto;
 
 import javax.validation.ConstraintViolation;
@@ -20,6 +21,7 @@ import java.util.Set;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestContextConfig.class})
+@ActiveProfiles("test")
 public class ProductInCartValidatorServiceTest {
 
     @Autowired
@@ -27,8 +29,6 @@ public class ProductInCartValidatorServiceTest {
 
     /*Сценарий: валидация объекта ProductInCartCreateDto;
     *           все поля корректны.
-    * Дано:
-    *   - ProductInCartCreateDto dto
     * Результат: объект успешно валидирован.
     * */
     @Test
@@ -44,8 +44,6 @@ public class ProductInCartValidatorServiceTest {
 
     /*Сценарий: валидация объекта ProductInCartCreateDto;
     *           поле int productId < 1.
-    * Дано:
-    *   - ProductInCartCreateDto dto
     * Результат: объект не валидирован.
     * */
     @Test
@@ -63,8 +61,6 @@ public class ProductInCartValidatorServiceTest {
 
     /*Сценарий: валидация объекта ProductInCartCreateDto;
     *           поле int quantity < 1.
-    * Дано:
-    *   - ProductInCartCreateDto dto
     * Результат: объект не валидирован.
     * */
     @Test

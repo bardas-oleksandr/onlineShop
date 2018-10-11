@@ -1,5 +1,6 @@
 package ua.levelup.dao;
 
+import lombok.NonNull;
 import ua.levelup.exception.ApplicationException;
 import ua.levelup.model.Category;
 
@@ -7,11 +8,11 @@ import java.util.List;
 
 public interface CategoryDao {
 
-    Category add(Category category) throws ApplicationException;
+    void add(@NonNull Category category) throws ApplicationException;
 
-    int update(Category category) throws ApplicationException;
+    void update(@NonNull Category category) throws ApplicationException;
 
-    int delete(int id) throws ApplicationException;
+    void delete(int id) throws ApplicationException;
 
     Category getById(int id) throws ApplicationException;
 

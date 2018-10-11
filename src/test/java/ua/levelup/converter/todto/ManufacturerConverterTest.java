@@ -6,9 +6,10 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import ua.levelup.config.TestContextConfig;
+import ua.levelup.testconfig.TestContextConfig;
 import ua.levelup.model.Manufacturer;
 import ua.levelup.web.dto.view.ManufacturerViewDto;
 
@@ -19,6 +20,7 @@ import ua.levelup.web.dto.view.ManufacturerViewDto;
 * */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestContextConfig.class})
+@ActiveProfiles("test")
 public class ManufacturerConverterTest {
 
     @Autowired
@@ -29,8 +31,6 @@ public class ManufacturerConverterTest {
 
     /*Сценарий: преобразование объекта класса Manufacturer в объект класса ManufacturerViewDto;
     *           объект Manufacturer manufacturer не равен null.
-    * Дано:
-    *   - Manufacturer manufacturer
     * Результат: преобразование выполнено успешно.
     * */
     @Test
@@ -50,8 +50,6 @@ public class ManufacturerConverterTest {
 
     /*Сценарий: преобразование объекта класса Manufacturer в объект класса ManufacturerViewDto;
     *           объект Manufacturer manufacturer не равен null.
-    * Дано:
-    *   - Manufacturer manufacturer
     * Результат: преобразование выполнено успешно.
     * */
     @Test

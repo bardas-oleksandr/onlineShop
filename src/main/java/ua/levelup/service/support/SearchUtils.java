@@ -1,7 +1,5 @@
 package ua.levelup.service.support;
 
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import ua.levelup.dao.CategoryDao;
 import ua.levelup.dao.ManufacturerDao;
@@ -11,14 +9,11 @@ import ua.levelup.model.Manufacturer;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-public enum SearchUtils {
-    ;
+public class SearchUtils {
 
-    @Setter
     @Autowired
     private static CategoryDao categoryDao;
 
-    @Setter
     @Autowired
     private static ManufacturerDao manufacturerDao;
 

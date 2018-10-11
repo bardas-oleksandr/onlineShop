@@ -6,9 +6,10 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import ua.levelup.config.TestContextConfig;
+import ua.levelup.testconfig.TestContextConfig;
 import ua.levelup.model.Product;
 import ua.levelup.model.ProductInCart;
 import ua.levelup.web.dto.create.ProductInCartCreateDto;
@@ -20,6 +21,7 @@ import ua.levelup.web.dto.create.ProductInCartCreateDto;
 * */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestContextConfig.class})
+@ActiveProfiles("test")
 public class ProductInCartCreateDtoConverterTest {
 
     @Autowired
@@ -30,8 +32,6 @@ public class ProductInCartCreateDtoConverterTest {
 
     /*Сценарий: преобразование объекта класса ProductInCartCreateDto в объект класса ProductInCart;
     *           объект ProductInCartCreateDto productInCartCreateDto не равен null.
-    * Дано:
-    *   - ProductInCartCreateDto productInCartCreateDto
     * Результат: преобразование выполнено успешно.
     * */
     @Test

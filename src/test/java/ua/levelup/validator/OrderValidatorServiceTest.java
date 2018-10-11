@@ -4,9 +4,10 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import ua.levelup.config.TestContextConfig;
+import ua.levelup.testconfig.TestContextConfig;
 import ua.levelup.web.dto.create.OrderCreateDto;
 
 import javax.validation.ConstraintViolation;
@@ -21,6 +22,7 @@ import java.util.Set;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestContextConfig.class})
+@ActiveProfiles("test")
 public class OrderValidatorServiceTest {
 
     @Autowired
@@ -28,8 +30,6 @@ public class OrderValidatorServiceTest {
 
     /*Сценарий: валидация объекта OrderCreateDto;
     *           все поля корректны.
-    * Дано:
-    *   - OrderCreateDto dto
     * Результат: объект успешно валидирован.
     * */
     @Test
@@ -45,8 +45,6 @@ public class OrderValidatorServiceTest {
 
     /*Сценарий: валидация объекта OrderCreateDto;
     *           поле int userId < 1.
-    * Дано:
-    *   - OrderCreateDto dto
     * Результат: объект не валидирован.
     * */
     @Test
@@ -64,8 +62,6 @@ public class OrderValidatorServiceTest {
 
     /*Сценарий: валидация объекта OrderCreateDto;
     *           поле String address == null
-    * Дано:
-    *   - OrderCreateDto dto
     * Результат: объект не валидирован.
     * */
     @Test
@@ -83,8 +79,6 @@ public class OrderValidatorServiceTest {
 
     /*Сценарий: валидация объекта OrderCreateDto;
     *           поле String address == ""
-    * Дано:
-    *   - OrderCreateDto dto
     * Результат: объект не валидирован.
     * */
     @Test
@@ -102,8 +96,6 @@ public class OrderValidatorServiceTest {
 
     /*Сценарий: валидация объекта OrderCreateDto;
     *           поле String address имеет длину более 255 символов
-    * Дано:
-    *   - OrderCreateDto dto
     * Результат: объект не валидирован.
     * */
     @Test
@@ -124,8 +116,6 @@ public class OrderValidatorServiceTest {
 
     /*Сценарий: валидация объекта OrderCreateDto;
     *           поле TimeStamp date == null
-    * Дано:
-    *   - OrderCreateDto dto
     * Результат: объект не валидирован.
     * */
     @Test
@@ -143,8 +133,6 @@ public class OrderValidatorServiceTest {
 
     /*Сценарий: валидация объекта OrderCreateDto;
     *           поле int paymentConditionsIndex < 0
-    * Дано:
-    *   - OrderCreateDto dto
     * Результат: объект не валидирован.
     * */
     @Test
@@ -162,8 +150,6 @@ public class OrderValidatorServiceTest {
 
     /*Сценарий: валидация объекта OrderCreateDto;
     *           поле int paymentConditionsIndex > 1
-    * Дано:
-    *   - OrderCreateDto dto
     * Результат: объект не валидирован.
     * */
     @Test

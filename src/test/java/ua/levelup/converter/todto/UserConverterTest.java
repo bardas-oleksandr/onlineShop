@@ -2,9 +2,10 @@ package ua.levelup.converter.todto;
 
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import ua.levelup.config.TestContextConfig;
+import ua.levelup.testconfig.TestContextConfig;
 import ua.levelup.model.User;
 import ua.levelup.web.dto.view.UserViewDto;
 import org.junit.Assert;
@@ -19,6 +20,7 @@ import org.junit.rules.ExpectedException;
 * */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestContextConfig.class})
+@ActiveProfiles("test")
 public class UserConverterTest {
 
     @Autowired
@@ -29,8 +31,6 @@ public class UserConverterTest {
 
     /*Сценарий: преобразование объекта класса User в объект класса UserViewDto;
     *           объект User user не равен null.
-    * Дано:
-    *   - User user
     * Результат: преобразование выполнено успешно.
     * */
     @Test

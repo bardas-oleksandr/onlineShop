@@ -1,5 +1,6 @@
 package ua.levelup.dao;
 
+import lombok.NonNull;
 import ua.levelup.exception.ApplicationException;
 import ua.levelup.model.User;
 
@@ -7,15 +8,15 @@ import java.util.List;
 
 public interface UserDao{
 
-    User add(User user) throws ApplicationException;
+    void add(@NonNull User user) throws ApplicationException;
 
-    int update(int id, User user) throws ApplicationException;
+    void update(@NonNull User user) throws ApplicationException;
 
-    int delete(int id) throws ApplicationException;
+    void delete(int id) throws ApplicationException;
 
     User getById(int id) throws ApplicationException;
 
-    User getByEmail(String email) throws ApplicationException;
+    User getByEmail(@NonNull String email) throws ApplicationException;
 
     List<User> getAllUsers() throws ApplicationException;
 }

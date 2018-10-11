@@ -10,9 +10,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import ua.levelup.config.TestContextConfig;
+import ua.levelup.testconfig.TestContextConfig;
 import ua.levelup.model.*;
 import ua.levelup.web.dto.view.CartViewDto;
 import ua.levelup.web.dto.view.ProductInCartViewDto;
@@ -27,6 +28,7 @@ import java.util.Collections;
 * */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestContextConfig.class})
+@ActiveProfiles("test")
 public class CartConverterTest {
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
@@ -45,8 +47,6 @@ public class CartConverterTest {
     /*Сценарий: преобразование объекта класса Cart в объект класса CartViewDto;
     *           объект Cart cart не равен null;
     *           список товаров productInCartList объекта cart содержит одну позицию.
-    * Дано:
-    *   - Cart cart
     * Результат: преобразование выполнено успешно.
     * */
     @Test
@@ -78,8 +78,6 @@ public class CartConverterTest {
     /*Сценарий: преобразование объекта класса Cart в объект класса CartViewDto;
     *           объект Cart cart не равен null;
     *           список товаров productInCartList объекта cart пустой, не равен null.
-    * Дано:
-    *   - Cart cart
     * Результат: преобразование выполнено успешно.
     * */
     @Test

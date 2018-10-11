@@ -7,9 +7,10 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import ua.levelup.config.TestContextConfig;
+import ua.levelup.testconfig.TestContextConfig;
 import ua.levelup.model.Category;
 import ua.levelup.web.dto.view.CategoryViewDto;
 
@@ -20,6 +21,7 @@ import ua.levelup.web.dto.view.CategoryViewDto;
 * */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestContextConfig.class})
+@ActiveProfiles("test")
 public class CategoryConverterTest {
 
     @Autowired
@@ -41,8 +43,6 @@ public class CategoryConverterTest {
     /*Сценарий: преобразование объекта класса Category в объект класса CategoryViewDto;
     *           объект Category category не равен null;
     *           поле Category parentCategory объекта Category category не равно null.
-    * Дано:
-    *   - Category category
     * Результат: преобразование выполнено успешно.
     * */
     @Test
@@ -65,8 +65,6 @@ public class CategoryConverterTest {
     /*Сценарий: преобразование объекта класса Category в объект класса CategoryViewDto;
     *           объект Category category не равен null;
     *           поле String name объекта Category category равно null.
-    * Дано:
-    *   - Category category
     * Результат: преобразование выполнено успешно.
     * */
     @Test
@@ -89,8 +87,6 @@ public class CategoryConverterTest {
     /*Сценарий: преобразование объекта класса Category в объект класса CategoryViewDto;
     *           объект Category category не равен null;
     *           поле Category parentCategory объекта Category category равно null.
-    * Дано:
-    *   - Category category
     * Результат: преобразование выполнено успешно.
     * */
     @Test

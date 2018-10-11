@@ -4,9 +4,10 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import ua.levelup.config.TestContextConfig;
+import ua.levelup.testconfig.TestContextConfig;
 import ua.levelup.web.dto.create.UserCreateDto;
 
 import javax.validation.ConstraintViolation;
@@ -20,6 +21,7 @@ import java.util.Set;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestContextConfig.class})
+@ActiveProfiles("test")
 public class UserValidatorServiceTest {
 
     @Autowired
@@ -27,8 +29,6 @@ public class UserValidatorServiceTest {
 
     /*Сценарий: валидация объекта UserCreateDto;
     *           все поля корректны.
-    * Дано:
-    *   - UserCreateDto dto
     * Результат: объект успешно валидирован.
     * */
     @Test
@@ -43,8 +43,6 @@ public class UserValidatorServiceTest {
 
     /*Сценарий: валидация объекта UserCreateDto;
     *           поле String password == null.
-    * Дано:
-    *   - UserCreateDto dto
     * Результат: объект не валидирован.
     * */
     @Test
@@ -61,8 +59,6 @@ public class UserValidatorServiceTest {
 
     /*Сценарий: валидация объекта UserCreateDto;
     *           поле String password == "".
-    * Дано:
-    *   - UserCreateDto dto
     * Результат: объект не валидирован.
     * */
     @Test
@@ -79,8 +75,6 @@ public class UserValidatorServiceTest {
 
     /*Сценарий: валидация объекта UserCreateDto;
     *           поле String password короче 6 символов.
-    * Дано:
-    *   - UserCreateDto dto
     * Результат: объект не валидирован.
     * */
     @Test
@@ -97,8 +91,6 @@ public class UserValidatorServiceTest {
 
     /*Сценарий: валидация объекта UserCreateDto;
     *           поле String password длинее 20 символов.
-    * Дано:
-    *   - UserCreateDto dto
     * Результат: объект не валидирован.
     * */
     @Test
@@ -116,8 +108,6 @@ public class UserValidatorServiceTest {
 
     /*Сценарий: валидация объекта UserCreateDto;
     *           поле String email имеет неверный формат.
-    * Дано:
-    *   - UserCreateDto dto
     * Результат: объект не валидирован.
     * */
     @Test
@@ -134,8 +124,6 @@ public class UserValidatorServiceTest {
 
     /*Сценарий: валидация объекта UserCreateDto;
     *           поле String email == null.
-    * Дано:
-    *   - UserCreateDto dto
     * Результат: объект не валидирован.
     * */
     @Test
@@ -152,8 +140,6 @@ public class UserValidatorServiceTest {
 
     /*Сценарий: валидация объекта UserCreateDto;
     *           поле String email == "".
-    * Дано:
-    *   - UserCreateDto dto
     * Результат: объект не валидирован.
     * */
     @Test
@@ -170,8 +156,6 @@ public class UserValidatorServiceTest {
 
     /*Сценарий: валидация объекта UserCreateDto;
     *           поле String name == null.
-    * Дано:
-    *   - UserCreateDto dto
     * Результат: объект не валидирован.
     * */
     @Test
@@ -188,8 +172,6 @@ public class UserValidatorServiceTest {
 
     /*Сценарий: валидация объекта UserCreateDto;
     *           поле String name == "".
-    * Дано:
-    *   - UserCreateDto dto
     * Результат: объект не валидирован.
     * */
     @Test
@@ -206,8 +188,6 @@ public class UserValidatorServiceTest {
 
     /*Сценарий: валидация объекта UserCreateDto;
     *           поле String name имеет длину более 20 символов.
-    * Дано:
-    *   - UserCreateDto dto
     * Результат: объект не валидирован.
     * */
     @Test

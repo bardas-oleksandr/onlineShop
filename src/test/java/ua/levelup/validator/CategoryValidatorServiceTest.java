@@ -1,15 +1,13 @@
 package ua.levelup.validator;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import ua.levelup.config.TestContextConfig;
+import ua.levelup.testconfig.TestContextConfig;
 import ua.levelup.web.dto.create.CategoryCreateDto;
 
 import javax.validation.ConstraintViolation;
@@ -23,6 +21,7 @@ import java.util.Set;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestContextConfig.class})
+@ActiveProfiles("test")
 public class CategoryValidatorServiceTest {
 
     @Autowired
@@ -30,8 +29,6 @@ public class CategoryValidatorServiceTest {
 
     /*Сценарий: валидация объекта CategoryCreateDto;
     *           все поля корректны.
-    * Дано:
-    *   - CategoryCreateDto dto
     * Результат: объект успешно валидирован.
     * */
     @Test
@@ -46,8 +43,6 @@ public class CategoryValidatorServiceTest {
 
     /*Сценарий: валидация объекта CategoryCreateDto;
     *           поле String name == null.
-    * Дано:
-    *   - CategoryCreateDto dto
     * Результат: объект не валидирован.
     * */
     @Test
@@ -64,8 +59,6 @@ public class CategoryValidatorServiceTest {
 
     /*Сценарий: валидация объекта CategoryCreateDto;
     *           поле String name == "".
-    * Дано:
-    *   - CategoryCreateDto dto
     * Результат: объект не валидирован.
     * */
     @Test
@@ -82,8 +75,6 @@ public class CategoryValidatorServiceTest {
 
     /*Сценарий: валидация объекта CategoryCreateDto;
     *           поле String name имеет длину более 50 символов.
-    * Дано:
-    *   - CategoryCreateDto dto
     * Результат: объект не валидирован.
     * */
     @Test
@@ -101,8 +92,6 @@ public class CategoryValidatorServiceTest {
 
     /*Сценарий: валидация объекта CategoryCreateDto;
     *           поле int parentCategoryId имеет имеет отрицательное значение.
-    * Дано:
-    *   - CategoryCreateDto dto
     * Результат: объект не валидирован.
     * */
     @Test

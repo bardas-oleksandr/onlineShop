@@ -11,9 +11,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import ua.levelup.config.TestContextConfig;
+import ua.levelup.testconfig.TestContextConfig;
 import ua.levelup.model.Product;
 import ua.levelup.model.ProductInCart;
 import ua.levelup.web.dto.view.ProductInCartViewDto;
@@ -26,6 +27,7 @@ import ua.levelup.web.dto.view.ProductViewDto;
 * */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestContextConfig.class})
+@ActiveProfiles("test")
 public class ProductInCartConverterTest {
 
     @Mock
@@ -45,8 +47,6 @@ public class ProductInCartConverterTest {
 
     /*Сценарий: преобразование объекта класса ProductInCart в объект класса ProductInCartViewDto;
     *           объект ProductInCart productInCart не равен null.
-    * Дано:
-    *   - ProductInCart productInCart
     * Результат: преобразование выполнено успешно.
     * */
     @Test

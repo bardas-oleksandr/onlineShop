@@ -4,9 +4,10 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import ua.levelup.config.TestContextConfig;
+import ua.levelup.testconfig.TestContextConfig;
 import ua.levelup.web.dto.create.OrderPositionCreateDto;
 
 import javax.validation.ConstraintViolation;
@@ -20,6 +21,7 @@ import java.util.Set;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestContextConfig.class})
+@ActiveProfiles("test")
 public class OrderPositionValidatorServiceTest {
 
     @Autowired
@@ -27,8 +29,6 @@ public class OrderPositionValidatorServiceTest {
 
     /*Сценарий: валидация объекта OrderPositionCreateDto;
     *           все поля корректны.
-    * Дано:
-    *   - OrderPositionCreateDto dto
     * Результат: объект успешно валидирован.
     * */
     @Test
@@ -44,8 +44,6 @@ public class OrderPositionValidatorServiceTest {
 
     /*Сценарий: валидация объекта OrderPositionCreateDto;
     *           поле int orderId < 1.
-    * Дано:
-    *   - OrderPositionCreateDto dto
     * Результат: объект не валидирован.
     * */
     @Test
@@ -63,8 +61,6 @@ public class OrderPositionValidatorServiceTest {
 
     /*Сценарий: валидация объекта OrderPositionCreateDto;
     *           поле int productId < 1.
-    * Дано:
-    *   - OrderPositionCreateDto dto
     * Результат: объект не валидирован.
     * */
     @Test
@@ -82,8 +78,6 @@ public class OrderPositionValidatorServiceTest {
 
     /*Сценарий: валидация объекта OrderPositionCreateDto;
     *           поле int quantity < 1.
-    * Дано:
-    *   - OrderPositionCreateDto dto
     * Результат: объект не валидирован.
     * */
     @Test
@@ -101,8 +95,6 @@ public class OrderPositionValidatorServiceTest {
 
     /*Сценарий: валидация объекта OrderPositionCreateDto;
     *           поле float price < 0.
-    * Дано:
-    *   - OrderPositionCreateDto dto
     * Результат: объект не валидирован.
     * */
     @Test
