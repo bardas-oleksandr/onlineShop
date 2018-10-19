@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.SqlInOutParameter;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.object.BatchSqlUpdate;
+import org.springframework.stereotype.Repository;
 import ua.levelup.dao.OrderPositionDao;
 import ua.levelup.exception.ApplicationException;
 import ua.levelup.logger.ShopLogger;
@@ -22,6 +23,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ *
+ */
+@Repository("orderPositionDao")
 public class OrderPositionDaoImpl extends AbstractDaoImpl implements OrderPositionDao, ShopLogger {
 
     private static final Logger logger = LogManager.getLogger();
@@ -69,22 +74,36 @@ public class OrderPositionDaoImpl extends AbstractDaoImpl implements OrderPositi
                 "AND product_id=:product_id";
 
         MapSqlParameterSource source = getSqlParameterSource(orderPosition);
-        saveOrUpdate(sql, source);
+
+        try {
+            updateOrDelete(sql, source);
+        } catch (DuplicateKeyException e) {
+            logError(e);
+            throw new ApplicationException(messagesProperties
+                    .getProperty("NOT_UNIQUE_ORDER_POSITION"), e);
+        } catch (DataIntegrityViolationException e) {
+            logError(e);
+            throw new ApplicationException(messagesProperties
+                    .getProperty("DATA_INTEGRITY_VIOLATION_FOR_ORDER_POSITION"), e);
+        } catch (DataAccessException e) {
+            logError(e);
+            throw new ApplicationException(messagesProperties
+                    .getProperty("FAILED_SAVE_ORDER_POSITION"), e);
+        }
     }
 
     @Override
     public void delete(int orderId, int productId) throws ApplicationException {
-        String sql = "DELETE FROM orders_products WHERE order_id=:order_id AND product_id=:product_id";
+        String sql = "DELETE FROM orders_products " +
+                "WHERE order_id=:order_id " +
+                "AND product_id=:product_id";
 
         MapSqlParameterSource source = new MapSqlParameterSource();
         source.addValue("order_id", orderId);
         source.addValue("product_id", productId);
 
         try {
-            if (namedParameterJdbcTemplate.update(sql, source) == 0) {
-                throw new ApplicationException(messagesProperties
-                        .getProperty("FAILED_DELETE_ORDER_POSITION_NONEXISTENT"));
-            }
+            updateOrDelete(sql, source);
         } catch (DataAccessException e) {
             logError(e);
             throw new ApplicationException(messagesProperties
@@ -94,12 +113,12 @@ public class OrderPositionDaoImpl extends AbstractDaoImpl implements OrderPositi
 
     @Override
     public OrderPosition getByPrimaryKey(int orderId, int productId) throws ApplicationException {
-        String sql = "SELECT orders_products.product_id, orders_products.order_product_quantity, " +
-                "orders_products.order_product_unit_price, products.product_name " +
-                "FROM orders_products, products " +
-                "WHERE orders_products.product_id = products.id " +
-                "AND orders_products.order_id=:order_id " +
-                "AND orders_products.product_id=:product_id";
+        String sql = "SELECT op.order_id, op.product_id, op.order_product_quantity" +
+                ", op.order_product_unit_price, p.product_name " +
+                "FROM orders_products op " +
+                "INNER JOIN products p ON op.product_id = p.id " +
+                "WHERE op.order_id=:order_id " +
+                "AND op.product_id=:product_id";
 
         MapSqlParameterSource source = new MapSqlParameterSource();
         source.addValue("order_id", orderId);
@@ -135,13 +154,12 @@ public class OrderPositionDaoImpl extends AbstractDaoImpl implements OrderPositi
 
     @Override
     public List<OrderPosition> getAllByOrderId(int orderId) throws ApplicationException {
-        String sql = "SELECT orders_products.product_id," +
-                " orders_products.order_product_quantity, orders_products.order_product_unit_price," +
-                " products.product_name " +
-                "FROM orders_products, products " +
-                "WHERE orders_products.product_id = products.id " +
-                "AND order_id=:order_id" +
-                "ORDER BY order_product_unit_price";
+        String sql = "SELECT op.order_id, op.product_id, op.order_product_quantity" +
+                ", op.order_product_unit_price, p.product_name " +
+                "FROM orders_products op " +
+                "INNER JOIN products p ON op.product_id = p.id " +
+                "WHERE op.order_id=:order_id " +
+                "ORDER BY op.order_product_unit_price";
 
         MapSqlParameterSource source = new MapSqlParameterSource();
         source.addValue("order_id", orderId);
@@ -174,21 +192,10 @@ public class OrderPositionDaoImpl extends AbstractDaoImpl implements OrderPositi
         return source;
     }
 
-    private void saveOrUpdate(String sql, MapSqlParameterSource source) {
-        try {
-            namedParameterJdbcTemplate.update(sql, source);
-        } catch (DuplicateKeyException e) {
-            logError(e);
+    private void updateOrDelete(String sql, MapSqlParameterSource source){
+        if (namedParameterJdbcTemplate.update(sql, source) == 0) {
             throw new ApplicationException(messagesProperties
-                    .getProperty("NOT_UNIQUE_ORDER_POSITION"), e);
-        } catch (DataIntegrityViolationException e) {
-            logError(e);
-            throw new ApplicationException(messagesProperties
-                    .getProperty("DATA_INTEGRITY_VIOLATION_FOR_ORDER_POSITION"), e);
-        } catch (DataAccessException e) {
-            logError(e);
-            throw new ApplicationException(messagesProperties
-                    .getProperty("FAILED_SAVE_ORDER_POSITION"), e);
+                    .getProperty("FAILED_UPDATE_ORDER_POSITION_NONEXISTENT"));
         }
     }
 

@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
 import ua.levelup.dao.ProductDao;
 import ua.levelup.exception.ApplicationException;
 import ua.levelup.logger.ShopLogger;
@@ -22,6 +23,10 @@ import ua.levelup.model.SearchParams;
 import java.sql.*;
 import java.util.List;
 
+/**
+ *
+ */
+@Repository("productDao")
 public class ProductDaoImpl extends AbstractDaoImpl implements ProductDao, ShopLogger {
 
     private static final Logger logger = LogManager.getLogger();
@@ -33,22 +38,22 @@ public class ProductDaoImpl extends AbstractDaoImpl implements ProductDao, ShopL
                 ", product_category_id, product_manufacturer_id) " +
                 "VALUES (:name,:price,:available,:description,:category_id,:manufacturer_id)";
 
-        MapSqlParameterSource source = new MapSqlParameterSource();
-        source.addValue("name", product.getName());
-        source.addValue("price", product.getPrice());
-        source.addValue("available", product.isAvailable());
-        source.addValue("description", product.getDescription());
-        source.addValue("category_id", product.getCategory().getId());
-        source.addValue("manufacturer_id", product.getManufacturer().getId());
-        KeyHolder keyHolder = new GeneratedKeyHolder();
-
         try {
+            MapSqlParameterSource source = new MapSqlParameterSource();
+            source.addValue("name", product.getName());
+            source.addValue("price", product.getPrice());
+            source.addValue("available", product.isAvailable());
+            source.addValue("description", product.getDescription());
+            source.addValue("category_id", product.getCategory().getId());
+            source.addValue("manufacturer_id", product.getManufacturer().getId());
+            KeyHolder keyHolder = new GeneratedKeyHolder();
+
             namedParameterJdbcTemplate.update(sql, source, keyHolder);
             product.setId(keyHolder.getKey().intValue());
         } catch (DuplicateKeyException e) {
             logError(e);
             throw new ApplicationException(messagesProperties.getProperty("NOT_UNIQUE_PRODUCT"), e);
-        } catch (DataIntegrityViolationException e) {
+        } catch (DataIntegrityViolationException | NullPointerException e) {
             logError(e);
             throw new ApplicationException(messagesProperties
                     .getProperty("DATA_INTEGRITY_VIOLATION_FOR_PRODUCT"), e);
@@ -59,27 +64,27 @@ public class ProductDaoImpl extends AbstractDaoImpl implements ProductDao, ShopL
     }
 
     @Override
-    public void update(Product product) throws ApplicationException {
-        String sql = "UPDATE products SET product_name=:product_name, product_price=:product_price" +
-                ", product_available=:product_available, product_description=:product_description" +
-                ", product_category_id=:product_category_id, product_manufacturer_id=:product_manufacturer_id " +
+    public void update(@NonNull Product product) throws ApplicationException {
+        String sql = "UPDATE products SET product_name=:name, product_price=:price" +
+                ", product_available=:available, product_description=:description" +
+                ", product_category_id=:category_id, product_manufacturer_id=:manufacturer_id " +
                 "WHERE id=:id";
 
-        MapSqlParameterSource source = new MapSqlParameterSource();
-        source.addValue("name", product.getName());
-        source.addValue("price", product.getPrice());
-        source.addValue("available", product.isAvailable());
-        source.addValue("description", product.getDescription());
-        source.addValue("category_id", product.getCategory().getId());
-        source.addValue("manufacturer_id", product.getManufacturer().getId());
-        source.addValue("id", product.getId());
-
         try {
-            namedParameterJdbcTemplate.update(sql, source);
+            MapSqlParameterSource source = new MapSqlParameterSource();
+            source.addValue("name", product.getName());
+            source.addValue("price", product.getPrice());
+            source.addValue("available", product.isAvailable());
+            source.addValue("description", product.getDescription());
+            source.addValue("category_id", product.getCategory().getId());
+            source.addValue("manufacturer_id", product.getManufacturer().getId());
+            source.addValue("id", product.getId());
+
+            updateOrDelete(sql, source);
         } catch (DuplicateKeyException e) {
             logError(e);
             throw new ApplicationException(messagesProperties.getProperty("NOT_UNIQUE_PRODUCT"), e);
-        } catch (DataIntegrityViolationException e) {
+        } catch (DataIntegrityViolationException | NullPointerException e) {
             logError(e);
             throw new ApplicationException(messagesProperties
                     .getProperty("DATA_INTEGRITY_VIOLATION_FOR_PRODUCT"), e);
@@ -93,12 +98,10 @@ public class ProductDaoImpl extends AbstractDaoImpl implements ProductDao, ShopL
     public void delete(int id) throws ApplicationException {
         String sql = "DELETE FROM products WHERE id=:id";
 
+        MapSqlParameterSource source = new MapSqlParameterSource("id", id);
+
         try {
-            if (namedParameterJdbcTemplate.update(sql
-                    , new MapSqlParameterSource("id", id)) == 0) {
-                throw new ApplicationException(messagesProperties
-                        .getProperty("FAILED_DELETE_PRODUCT_NONEXISTENT"));
-            }
+            updateOrDelete(sql, source);
         } catch (DataIntegrityViolationException e) {
             logError(e);
             throw new ApplicationException(messagesProperties
@@ -112,15 +115,15 @@ public class ProductDaoImpl extends AbstractDaoImpl implements ProductDao, ShopL
 
     @Override
     public Product getById(int id) throws ApplicationException {
-        String sql = "SELECT products.id, products.product_name, products.product_price" +
-                ", products.product_available, products.product_description, products.product_category_id" +
-                ", cat1.category_name, cat1.category_parent_id, products.product_manufacturer_id" +
-                ", manufacturers.manufacturer_name, cat2.category_name " +
-                "FROM products, categories cat1, manufacturers " +
+        String sql = "SELECT p.id, p.product_name, p.product_price, p.product_available" +
+                ", p.product_description, p.product_category_id, cat1.category_name" +
+                ", cat1.category_parent_id, p.product_manufacturer_id" +
+                ", m.manufacturer_name, cat2.category_name " +
+                "FROM products p " +
+                "INNER JOIN categories cat1 ON p.product_category_id = cat1.id " +
+                "INNER JOIN manufacturers m ON p.product_manufacturer_id = m.id " +
                 "LEFT JOIN categories cat2 ON cat1.category_parent_id=cat2.id " +
-                "WHERE products.product_category_id = cat1.id " +
-                "AND products.product_manufacturer_id = manufacturers.id " +
-                "AND products.id=:id ";
+                "WHERE p.id=:id";
 
         try {
             return namedParameterJdbcTemplate.queryForObject(sql
@@ -155,48 +158,55 @@ public class ProductDaoImpl extends AbstractDaoImpl implements ProductDao, ShopL
         }
     }
 
+    @Override
+    public Logger getLogger() {
+        return logger;
+    }
+
     private String getSelectQuery(SearchParams searchParams) {
-        String sql = "SELECT products.id, products.product_name, products.product_price" +
-                ", products.product_available, products.product_description, products.product_category_id" +
-                ", cat1.category_name, cat1.category_parent_id, products.product_manufacturer_id" +
-                ", manufacturers.manufacturer_name, cat2.category_name " +
-                "FROM products, categories cat1, manufacturers " +
+        String sql = "SELECT p.id, p.product_name, p.product_price" +
+                ", p.product_available, p.product_description, p.product_category_id" +
+                ", cat1.category_name, cat1.category_parent_id, p.product_manufacturer_id" +
+                ", m.manufacturer_name, cat2.category_name " +
+                "FROM products p " +
+                "INNER JOIN categories cat1 ON p.product_category_id = cat1.id " +
+                "INNER JOIN manufacturers m ON p.product_manufacturer_id = m.id " +
                 "LEFT JOIN categories cat2 ON cat1.category_parent_id=cat2.id " +
-                "WHERE products.product_category_id = cat1.id " +
-                "AND products.product_manufacturer_id = manufacturers.id " +
-                "AND product_price >=:min_price " +
-                "AND product_price <=:max_price";
+                "WHERE p.product_price >=:min_price " +
+                "AND p.product_price <=:max_price ";
 
         StringBuilder query = new StringBuilder(sql);
         if (searchParams.isAvailableOnly()) {
-            query.append(" AND products.product_available = " + searchParams.isAvailableOnly());
+            query.append(" AND p.product_available = " + searchParams.isAvailableOnly());
         }
         if (searchParams.getManufacturerId() != 0) {
-            query.append(" AND products.product_manufacturer_id = " + searchParams.getManufacturerId());
+            query.append(" AND p.product_manufacturer_id = " + searchParams.getManufacturerId());
         }
         if (searchParams.getCategoryId() != 0) {
-            query.append(" AND (products.product_category_id = " + searchParams.getCategoryId());
-            query.append(" OR products.product_category_id " +
+            query.append(" AND (p.product_category_id = " + searchParams.getCategoryId());
+            query.append(" OR p.product_category_id " +
                     "IN (SELECT categories.id FROM categories WHERE categories.category_parent_id = "
                     + searchParams.getCategoryId() + "))");
         }
         switch (searchParams.getOrderMethod()) {
             case PRODUCT_NAME:
-                query.append(" ORDER BY product_name");
+                query.append(" ORDER BY p.product_name");
                 break;
             case CHEAP_FIRST:
-                query.append(" ORDER BY product_price");
+                query.append(" ORDER BY p.product_price");
                 break;
             case CHEAP_LAST:
-                query.append(" ORDER BY product_price DESC");
+                query.append(" ORDER BY p.product_price DESC");
                 break;
         }
         return query.toString();
     }
 
-    @Override
-    public Logger getLogger() {
-        return logger;
+    private void updateOrDelete(String sql, MapSqlParameterSource source) {
+        if (namedParameterJdbcTemplate.update(sql, source) == 0) {
+            throw new ApplicationException(messagesProperties
+                    .getProperty("FAILED_UPDATE_PRODUCT_NONEXISTENT"));
+        }
     }
 
     private class ProductMapper implements RowMapper<Product> {

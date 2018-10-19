@@ -8,7 +8,7 @@ ON DELETE NO ACTION ON UPDATE NO ACTION);
 
 CREATE TABLE IF NOT EXISTS public.manufacturers(
 id                  INT UNSIGNED    NOT NULL AUTO_INCREMENT,
-manufacturer_name   VARCHAR(50)    NOT NULL UNIQUE,
+manufacturer_name   VARCHAR(50)     NOT NULL UNIQUE,
 CONSTRAINT pkey_manufacturer PRIMARY KEY (id));
 
 CREATE TABLE IF NOT EXISTS public.products(
@@ -47,7 +47,7 @@ CONSTRAINT pkey_order PRIMARY KEY (id),
 CONSTRAINT order_state_check CHECK (order_state >= 0 AND order_state <= 2),
 CONSTRAINT order_payment_conditions_check CHECK (order_payment_conditions >= 0 AND order_payment_conditions <= 2),
 CONSTRAINT fkey_user_to_order FOREIGN KEY (order_user_id) REFERENCES users (id)
-ON DELETE NO ACTION ON UPDATE NO ACTION);
+ON DELETE CASCADE ON UPDATE CASCADE);
 
 CREATE TABLE IF NOT EXISTS public.orders_products(
 order_id                    INT UNSIGNED    NOT NULL,
@@ -58,6 +58,6 @@ CONSTRAINT pkey_orders_products PRIMARY KEY (order_id, product_id),
 CONSTRAINT order_product_quantity_check CHECK (order_product_quantity > 0),
 CONSTRAINT order_product_unit_price_check CHECK (order_product_unit_price >= 0.0),
 CONSTRAINT fkey_orders FOREIGN KEY (order_id) REFERENCES orders (id)
-ON DELETE NO ACTION ON UPDATE NO ACTION,
+ON DELETE CASCADE ON UPDATE CASCADE,
 CONSTRAINT fkey_products FOREIGN KEY (product_id) REFERENCES products (id)
-ON DELETE CASCADE ON UPDATE CASCADE);
+ON DELETE NO ACTION ON UPDATE NO ACTION);

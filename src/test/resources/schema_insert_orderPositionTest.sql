@@ -1,0 +1,18 @@
+INSERT INTO categories (id, category_name, category_parent_id) VALUES (1,'parent category',NULL);
+INSERT INTO categories (id, category_name, category_parent_id) VALUES (2,'category',1);
+INSERT INTO categories (id, category_name, category_parent_id) VALUES (3,'other category',1);
+INSERT INTO manufacturers (id, manufacturer_name) VALUES (1,'first manufacturer');
+INSERT INTO manufacturers (id, manufacturer_name) VALUES (2,'second manufacturer');
+INSERT INTO manufacturers (id, manufacturer_name) VALUES (3,'third manufacturer (is not connected)');
+INSERT INTO manufacturers (id, manufacturer_name) VALUES (4,'fourth manufacturer');
+INSERT INTO products (id, product_name, product_price, product_available, product_description, product_category_id, product_manufacturer_id) VALUES (1,'first product', 2.0, TRUE, 'description', 2, 1);
+INSERT INTO products (id, product_name, product_price, product_available, product_description, product_category_id, product_manufacturer_id) VALUES (2,'second product', 3.0, FALSE, 'description', 2, 1);
+INSERT INTO products (id, product_name, product_price, product_available, product_description, product_category_id, product_manufacturer_id) VALUES (3,'third product', 4.0, TRUE, 'description', 2, 2);
+INSERT INTO products (id, product_name, product_price, product_available, product_description, product_category_id, product_manufacturer_id) VALUES (4,'fourth product', 5.0, FALSE, 'description', 1, 3);
+INSERT INTO users (id, user_name, user_password, user_email, user_state) VALUES (1, 'first user', 'password', 'firstmail@gmail.com', 1);
+INSERT INTO orders (id, order_user_id, order_address, order_date, order_payed, order_state, order_payment_conditions) VALUES (1,1,'address','2018-09-03 22:15:38.646',FALSE,0,0);
+INSERT INTO orders (id, order_user_id, order_address, order_date, order_payed, order_state, order_payment_conditions) VALUES (2,1,'address','2018-10-03 22:15:38.646',FALSE,0,0);
+INSERT INTO orders (id, order_user_id, order_address, order_date, order_payed, order_state, order_payment_conditions) VALUES (3,1,'address','2018-11-03 22:15:38.646',FALSE,0,0);
+INSERT INTO orders_products (order_id, product_id, order_product_quantity, order_product_unit_price) VALUES (1, 1, 2, 3.0);
+INSERT INTO orders_products (order_id, product_id, order_product_quantity, order_product_unit_price) VALUES (1, 2, 3, 4.0);
+INSERT INTO orders_products (order_id, product_id, order_product_quantity, order_product_unit_price) VALUES (2, 3, 4, 5.0);

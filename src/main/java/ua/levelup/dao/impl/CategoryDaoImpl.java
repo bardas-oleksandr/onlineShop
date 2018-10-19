@@ -55,7 +55,7 @@ public class CategoryDaoImpl extends AbstractDaoImpl implements CategoryDao, Sho
                     .getProperty("DATA_INTEGRITY_VIOLATION_FOR_CATEGORY"), e);
         } catch (DataAccessException e) {
             logError(e);
-            throw new ApplicationException(messagesProperties.getProperty("FAILED_INSERT_CATEGORY"), e);
+            throw new ApplicationException(messagesProperties.getProperty("FAILED_SAVE_CATEGORY"), e);
         }
     }
 
@@ -75,7 +75,7 @@ public class CategoryDaoImpl extends AbstractDaoImpl implements CategoryDao, Sho
         source.addValue("id", category.getId());
 
         try {
-            namedParameterJdbcTemplate.update(sql, source);
+            updateOrDelete(sql,source);
         } catch (DuplicateKeyException e) {
             logError(e);
             throw new ApplicationException(messagesProperties.getProperty("NOT_UNIQUE_CATEGORY"), e);
@@ -93,12 +93,10 @@ public class CategoryDaoImpl extends AbstractDaoImpl implements CategoryDao, Sho
     public void delete(int id) throws ApplicationException {
         String sql = "DELETE FROM categories WHERE id = :id";
 
+        MapSqlParameterSource source = new MapSqlParameterSource("id", id);
+
         try {
-            if (namedParameterJdbcTemplate.update(sql
-                    , new MapSqlParameterSource("id", id)) == 0) {
-                throw new ApplicationException(messagesProperties
-                        .getProperty("FAILED_DELETE_CATEGORY_NONEXISTENT"));
-            }
+            updateOrDelete(sql,source);
         } catch (DataIntegrityViolationException e) {
             logError(e);
             throw new ApplicationException(messagesProperties
@@ -113,7 +111,8 @@ public class CategoryDaoImpl extends AbstractDaoImpl implements CategoryDao, Sho
     @Override
     public Category getById(int id) throws ApplicationException {
         String sql = "SELECT cat1.id, cat1.category_name, cat1.category_parent_id, " +
-                "cat2.category_name, cat2.category_parent_id FROM categories cat1 " +
+                "cat2.category_name, cat2.category_parent_id " +
+                "FROM categories cat1 " +
                 "LEFT JOIN categories cat2 " +
                 "ON cat1.category_parent_id=cat2.id " +
                 "WHERE cat1.id=:id";
@@ -173,7 +172,8 @@ public class CategoryDaoImpl extends AbstractDaoImpl implements CategoryDao, Sho
             return namedParameterJdbcTemplate.query(sql, new CategoryRowMapper());
         } catch (DataAccessException e) {
             logError(e);
-            throw new ApplicationException(messagesProperties.getProperty("FAILED_GET_CATEGORIES_BY_LEVEL"), e);
+            throw new ApplicationException(messagesProperties
+                    .getProperty("FAILED_GET_CATEGORIES_BY_LEVEL"), e);
         }
     }
 
@@ -182,6 +182,12 @@ public class CategoryDaoImpl extends AbstractDaoImpl implements CategoryDao, Sho
         return logger;
     }
 
+    private void updateOrDelete(String sql, MapSqlParameterSource source){
+        if (namedParameterJdbcTemplate.update(sql, source) == 0) {
+            throw new ApplicationException(messagesProperties
+                    .getProperty("FAILED_UPDATE_CATEGORY_NONEXISTENT"));
+        }
+    }
 
     private String prepareQueryForCategoryLevel(int level) {
         String sql = "SELECT cat1.id, cat1.category_name, cat1.category_parent_id, " +

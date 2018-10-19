@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.context.annotation.Scope;
 import org.springframework.context.support.ConversionServiceFactoryBean;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -30,6 +31,9 @@ public class ApplicationConfig {
     private ConnectionFactory connectionFactory;
 
     @Autowired
+    private GenericObjectPool<Connection> connectionPool;
+
+    @Autowired
     private Set<Converter<?,?>> converterSet;
 
     @Resource(name = "dataSource")
@@ -49,17 +53,6 @@ public class ApplicationConfig {
         return new ConversionServiceFactoryBean();
     }
 
-    @Bean("dataSource")
-    @Profile("!test")
-    public DriverManagerDataSource driverManagerDataSource(){
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(applicationProperties.getProperty("driver"));
-        dataSource.setUrl(applicationProperties.getProperty("url"));
-        dataSource.setUsername(applicationProperties.getProperty("username"));
-        dataSource.setPassword(applicationProperties.getProperty("password"));
-        return dataSource;
-    }
-
     @Bean("messagesProperties")
     public Properties exceptionMessagesProperties(){
         String exceptionMessagesFileName = applicationProperties
@@ -77,6 +70,24 @@ public class ApplicationConfig {
     @Bean("validator")
     public LocalValidatorFactoryBean localValidatorFactoryBean(){
         return new LocalValidatorFactoryBean();
+    }
+
+    @Bean("connection")
+    @Scope("prototype")
+    @Profile("!test")
+    public Connection connection() throws Exception{
+        return connectionPool.borrowObject();
+    }
+
+    @Bean("dataSource")
+    @Profile("!test")
+    public DriverManagerDataSource driverManagerDataSource(){
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName(applicationProperties.getProperty("driver"));
+        dataSource.setUrl(applicationProperties.getProperty("url"));
+        dataSource.setUsername(applicationProperties.getProperty("username"));
+        dataSource.setPassword(applicationProperties.getProperty("password"));
+        return dataSource;
     }
 
     @Bean("namedParameterJdbcTemplate")

@@ -1,0 +1,11 @@
+INSERT INTO categories (id, category_name, category_parent_id) VALUES (1,'parent category',NULL);
+INSERT INTO categories (id, category_name, category_parent_id) VALUES (2,'category',1);
+INSERT INTO categories (id, category_name, category_parent_id) VALUES (3,'other category',1);
+INSERT INTO manufacturers (id, manufacturer_name) VALUES (1,'first manufacturer');
+INSERT INTO manufacturers (id, manufacturer_name) VALUES (2,'second manufacturer');
+INSERT INTO manufacturers (id, manufacturer_name) VALUES (3,'third manufacturer (is not connected)');
+INSERT INTO manufacturers (id, manufacturer_name) VALUES (4,'fourth manufacturer');
+INSERT INTO products (id, product_name, product_price, product_available, product_description, product_category_id, product_manufacturer_id) VALUES (1,'first product', 2.0, TRUE, 'description', 2, 1);
+INSERT INTO products (id, product_name, product_price, product_available, product_description, product_category_id, product_manufacturer_id) VALUES (2,'second product', 3.0, FALSE, 'description', 2, 1);
+INSERT INTO products (id, product_name, product_price, product_available, product_description, product_category_id, product_manufacturer_id) VALUES (3,'third product', 4.0, TRUE, 'description', 2, 2);
+INSERT INTO products (id, product_name, product_price, product_available, product_description, product_category_id, product_manufacturer_id) VALUES (4,'fourth product', 5.0, FALSE, 'description', 1, 3);

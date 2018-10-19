@@ -47,7 +47,7 @@ public class CategoryDaoImplTest {
     * Результат: категория товаров успешно добавлена в базу данных.
     * */
     @Test
-    @Sql({"classpath:schema_clean.sql", "classpath:schema_insert.sql"})
+    @Sql({"classpath:schema_clean.sql", "classpath:schema_insert_categoryTest.sql"})
     public void addTest_whenParentCategoryIsNotNullAndExistsInDb_thenOk() throws Exception {
         //GIVEN
         Category parent = new Category("parent category", null);
@@ -86,13 +86,15 @@ public class CategoryDaoImplTest {
     * */
     @Test
     @Sql({"classpath:schema_clean.sql"})
-    public void addTest_whenParentCategoryIsNotNullAndDoesNotExistInDb_thenException() throws Exception {
+    public void addTest_whenParentCategoryIsNotNullAndDoesNotExistInDb_thenException()
+            throws Exception {
         //GIVEN
         Category parent = new Category();
         parent.setId(1);
         category = new Category("new category", parent);
         expectedException.expect(ApplicationException.class);
-        expectedException.expectMessage(messagesProperties.getProperty("DATA_INTEGRITY_VIOLATION_FOR_CATEGORY"));
+        expectedException.expectMessage(messagesProperties
+                .getProperty("DATA_INTEGRITY_VIOLATION_FOR_CATEGORY"));
         //THEN
         categoryDao.add(category);
     }
@@ -107,7 +109,8 @@ public class CategoryDaoImplTest {
         //GIVEN
         category = new Category();
         expectedException.expect(ApplicationException.class);
-        expectedException.expectMessage(messagesProperties.getProperty("DATA_INTEGRITY_VIOLATION_FOR_CATEGORY"));
+        expectedException.expectMessage(messagesProperties
+                .getProperty("DATA_INTEGRITY_VIOLATION_FOR_CATEGORY"));
         //THEN
         categoryDao.add(category);
     }
@@ -117,7 +120,7 @@ public class CategoryDaoImplTest {
     * Результат: исключение ApplicationException.
     * */
     @Test
-    @Sql({"classpath:schema_clean.sql", "classpath:schema_insert.sql"})
+    @Sql({"classpath:schema_clean.sql", "classpath:schema_insert_categoryTest.sql"})
     public void addTest_whenCategoryNameIsNotUnique_thenException() throws Exception {
         //GIVEN
         category = new Category("category", null);
@@ -146,7 +149,7 @@ public class CategoryDaoImplTest {
     * Результат: операция успешна.
     * */
     @Test
-    @Sql({"classpath:schema_clean.sql", "classpath:schema_insert.sql"})
+    @Sql({"classpath:schema_clean.sql", "classpath:schema_insert_categoryTest.sql"})
     public void updateTest_whenCategoryExists_thenOk() throws Exception {
         //GIVEN
         category = new Category("new category name", null);
@@ -165,29 +168,29 @@ public class CategoryDaoImplTest {
     * */
     @Test
     @Sql({"classpath:schema_clean.sql"})
-    public void updateTest_whenCategoryDoesNotExist_thenOk() throws Exception {
+    public void updateTest_whenCategoryNonexistent_thenOk() throws Exception {
         //GIVEN
         category = new Category("new category name", null);
         category.setId(1);
+        expectedException.expect(ApplicationException.class);
+        expectedException.expectMessage(messagesProperties
+                .getProperty("FAILED_UPDATE_CATEGORY_NONEXISTENT"));
         //WHEN
         categoryDao.update(category);
-        //THEN
-        expectedException.expect(ApplicationException.class);
-        expectedException.expectMessage(messagesProperties.getProperty("EMPTY_RESULTSET"));
-        Category category = categoryDao.getById(1);
     }
 
     /*Сценарий: - модификация в базе данных информации о категории товаров;
     *           - категория товаров существует.
     *           - новое имя категории равно null
-    * Результат: операция успешна.
+    * Результат: исключение ApplicationException.
     * */
     @Test
-    @Sql({"classpath:schema_clean.sql", "classpath:schema_insert.sql"})
+    @Sql({"classpath:schema_clean.sql", "classpath:schema_insert_categoryTest.sql"})
     public void updateTest_whenNewNameEqualsNull_thenException() throws Exception {
         //GIVEN
         expectedException.expect(ApplicationException.class);
-        expectedException.expectMessage(messagesProperties.getProperty("DATA_INTEGRITY_VIOLATION_FOR_CATEGORY"));
+        expectedException.expectMessage(messagesProperties
+                .getProperty("DATA_INTEGRITY_VIOLATION_FOR_CATEGORY"));
         category = new Category();
         category.setId(2);
         //WHEN
@@ -200,7 +203,7 @@ public class CategoryDaoImplTest {
     * Результат: исключение ApplicationException.
     * */
     @Test
-    @Sql({"classpath:schema_clean.sql", "classpath:schema_insert.sql"})
+    @Sql({"classpath:schema_clean.sql", "classpath:schema_insert_categoryTest.sql"})
     public void updateTest_whenNewNameIsNotUnique_thenException() throws Exception {
         //GIVEN
         expectedException.expect(ApplicationException.class);
@@ -214,14 +217,15 @@ public class CategoryDaoImplTest {
     /*Сценарий: - модификация в базе данных информации о категории товаров;
     *           - категория товаров существует.
     *           - категория после апдейта ссылается на ID несуществующей родительской категории
-    * Результат: исключение ApplicationExceptio.
+    * Результат: исключение ApplicationException.
     * */
     @Test
-    @Sql({"classpath:schema_clean.sql", "classpath:schema_insert.sql"})
+    @Sql({"classpath:schema_clean.sql", "classpath:schema_insert_categoryTest.sql"})
     public void updateTest_whenNewParentCategoryDoesNotExist_thenException() throws Exception {
         //GIVEN
         expectedException.expect(ApplicationException.class);
-        expectedException.expectMessage(messagesProperties.getProperty("DATA_INTEGRITY_VIOLATION_FOR_CATEGORY"));
+        expectedException.expectMessage(messagesProperties
+                .getProperty("DATA_INTEGRITY_VIOLATION_FOR_CATEGORY"));
         Category parent = new Category();
         parent.setId(4);
         category = new Category("new category",parent);
@@ -250,13 +254,14 @@ public class CategoryDaoImplTest {
     * Результат: удаление выполнено успешно.
     * */
     @Test
-    @Sql({"classpath:schema_clean.sql", "classpath:schema_insert.sql"})
+    @Sql({"classpath:schema_clean.sql", "classpath:schema_insert_categoryTest.sql"})
     public void deleteTest_whenCategoryExistsAndIsNotParentCategory_thenOk() throws Exception {
         //WHEN
         categoryDao.delete(2);
         //THEN
         expectedException.expect(ApplicationException.class);
-        expectedException.expectMessage(messagesProperties.getProperty("EMPTY_RESULTSET"));
+        expectedException.expectMessage(messagesProperties
+                .getProperty("EMPTY_RESULTSET") + Category.class);
         Category category = categoryDao.getById(2);
     }
 
@@ -266,7 +271,7 @@ public class CategoryDaoImplTest {
     * Результат: исключение ApplicationException.
     * */
     @Test
-    @Sql({"classpath:schema_clean.sql", "classpath:schema_insert.sql"})
+    @Sql({"classpath:schema_clean.sql", "classpath:schema_insert_categoryTest.sql"})
     public void deleteTest_whenCategoryIsParentCategory_thenException() throws Exception {
         //GIVEN
         expectedException.expect(ApplicationException.class);
@@ -282,10 +287,11 @@ public class CategoryDaoImplTest {
     * */
     @Test
     @Sql({"classpath:schema_clean.sql"})
-    public void deleteTest_whenCategoryDoesNotExist_thenException() throws Exception {
+    public void deleteTest_whenCategoryNonexistent_thenException() throws Exception {
         //GIVEN
         expectedException.expect(ApplicationException.class);
-        expectedException.expectMessage(messagesProperties.getProperty("FAILED_DELETE_CATEGORY_NONEXISTENT"));
+        expectedException.expectMessage(messagesProperties
+                .getProperty("FAILED_UPDATE_CATEGORY_NONEXISTENT"));
         //THEN
         categoryDao.delete(1);
     }
@@ -296,7 +302,7 @@ public class CategoryDaoImplTest {
     * Результат: операция успешна, метод возвращает объект Category.
     * */
     @Test
-    @Sql({"classpath:schema_clean.sql", "classpath:schema_insert.sql"})
+    @Sql({"classpath:schema_clean.sql", "classpath:schema_insert_categoryTest.sql"})
     public void getByIdTest_whenCategoryExistsAndIsParentCategory_thenOk() throws Exception {
         //GIVEN
         category = new Category("parent category", null);
@@ -314,7 +320,7 @@ public class CategoryDaoImplTest {
     * Результат: операция успешна, метод возвращает объект Category.
     * */
     @Test
-    @Sql({"classpath:schema_clean.sql", "classpath:schema_insert.sql"})
+    @Sql({"classpath:schema_clean.sql", "classpath:schema_insert_categoryTest.sql"})
     public void getByIdTest_whenCategoryExistsAndIsNotParentCategory_thenOk() throws Exception {
         //GIVEN
         Category parent = new Category("parent category", null);
@@ -335,11 +341,11 @@ public class CategoryDaoImplTest {
     * */
     @Test
     @Sql({"classpath:schema_clean.sql"})
-    public void getByIdTest_whenCategoryDoesNotExist_thenOk() throws Exception {
+    public void getByIdTest_whenCategoryNonexistent_thenOk() throws Exception {
         //GIVEN
         expectedException.expect(ApplicationException.class);
-        expectedException.expectMessage(messagesProperties.getProperty("EMPTY_RESULTSET")
-                + Category.class);
+        expectedException.expectMessage(messagesProperties
+                .getProperty("EMPTY_RESULTSET") + Category.class);
         //WHEN
         Category extracted = categoryDao.getById(1);
     }
@@ -350,7 +356,7 @@ public class CategoryDaoImplTest {
     * Результат: операция успешна, метод возвращает количество удаленных объектов.
     * */
     @Test
-    @Sql({"classpath:schema_clean.sql", "classpath:schema_insert.sql"})
+    @Sql({"classpath:schema_clean.sql", "classpath:schema_insert_categoryTest.sql"})
     public void deleteAllByParentIdTest_whenSubcategoriesExist_thenOk() throws Exception {
         //GIVEN
         final int PARENT_ID = 1;
@@ -369,7 +375,7 @@ public class CategoryDaoImplTest {
     * Результат: операция успешна, метод возвращает 0.
     * */
     @Test
-    @Sql({"classpath:schema_clean.sql", "classpath:schema_insert.sql"})
+    @Sql({"classpath:schema_clean.sql", "classpath:schema_insert_categoryTest.sql"})
     public void deleteAllByParentIdTest_whenSubcategoriesDoNotExist_thenOk() throws Exception {
         //GIVEN
         final int PARENT_ID = 2;
@@ -389,7 +395,7 @@ public class CategoryDaoImplTest {
     * Результат: операция успешна, метод возвращает список подкатегорий.
     * */
     @Test
-    @Sql({"classpath:schema_clean.sql", "classpath:schema_insert.sql"})
+    @Sql({"classpath:schema_clean.sql", "classpath:schema_insert_categoryTest.sql"})
     public void getAllByParentIdTest_whenSubcategoriesExist_thenOk() throws Exception {
         //GIVEN
         List<Category> expected = new ArrayList<>();
@@ -408,7 +414,7 @@ public class CategoryDaoImplTest {
     * Результат: операция успешна, метод возвращает пустой список подкатегорий.
     * */
     @Test
-    @Sql({"classpath:schema_clean.sql", "classpath:schema_insert.sql"})
+    @Sql({"classpath:schema_clean.sql", "classpath:schema_insert_categoryTest.sql"})
     public void getAllByParentIdTest_whenSubcategoriesDoNotExist_thenOk() throws Exception {
         //WHEN
         List<Category> result = categoryDao.getAllByParentId(2);
@@ -424,7 +430,7 @@ public class CategoryDaoImplTest {
     * Результат: операция успешна, метод возвращает список родительских категорий.
     * */
     @Test
-    @Sql({"classpath:schema_clean.sql", "classpath:schema_insert.sql"})
+    @Sql({"classpath:schema_clean.sql", "classpath:schema_insert_categoryTest.sql"})
     public void getAllByLevelTest_whenParentCategoriesExist_thenOk() throws Exception {
         //GIVEN
         final int LEVEL = 0;
@@ -462,7 +468,7 @@ public class CategoryDaoImplTest {
     * Результат: операция успешна, метод возвращает список дочерних категорий.
     * */
     @Test
-    @Sql({"classpath:schema_clean.sql", "classpath:schema_insert.sql"})
+    @Sql({"classpath:schema_clean.sql", "classpath:schema_insert_categoryTest.sql"})
     public void getAllByLevelTest_whenLevelOneAndCategoriesExist_thenOk() throws Exception {
         //GIVEN
         final int LEVEL = 1;

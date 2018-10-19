@@ -9,6 +9,10 @@ public interface ShopLogger {
         getLogger().error("Message: " + e.getMessage() + "\tCause:" + e.getCause());
     }
 
+    default void logErrorMessage(String message) {
+        getLogger().error(message);
+    }
+
     default void logWarn(String warning) {
         getLogger().error("Warning: " + warning);
     }

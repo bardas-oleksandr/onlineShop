@@ -1,9 +1,9 @@
 package ua.levelup.dao.impl;
 
 import lombok.NonNull;
-import org.apache.commons.pool2.impl.GenericObjectPool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 import ua.levelup.dao.UserDao;
 import ua.levelup.exception.ApplicationException;
 import ua.levelup.logger.ShopLogger;
@@ -11,7 +11,6 @@ import ua.levelup.model.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.annotation.PostConstruct;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +20,7 @@ import java.util.Properties;
  * По заданию работу с одной из сущностей надо организовать на "чистом" JDBC
  * Класс UserDaoImpl реализует доступ к данным сущности "Пользователь"
  */
+@Repository("userDao")
 public class UserDaoImpl implements UserDao, ShopLogger {
 
     private static final Logger logger = LogManager.getLogger();
@@ -30,20 +30,7 @@ public class UserDaoImpl implements UserDao, ShopLogger {
     private Properties messagesProperties;
 
     @Autowired
-    private GenericObjectPool<Connection> connectionPool;
-
     private Connection connection;
-
-    @PostConstruct
-    public void init() {
-        try {
-            connection = connectionPool.borrowObject(MAX_WAIT);
-        } catch (Exception e) {
-            logError(e);
-            throw new ApplicationException(messagesProperties.
-                    getProperty("FAILED_RETRIEVE_CONNECTION"));
-        }
-    }
 
     @Override
     public void add(@NonNull User user) throws ApplicationException {
@@ -61,8 +48,7 @@ public class UserDaoImpl implements UserDao, ShopLogger {
             }
         } catch (SQLException e) {
             logError(e);
-            Throwable cause = e.getCause();
-            if (cause != null && cause.getMessage().startsWith("Duplicate entry")) {
+            if (e.getErrorCode() == 23505) {
                 throw new ApplicationException(messagesProperties
                         .getProperty("NOT_UNIQUE_USER"), e);
             }
@@ -86,8 +72,7 @@ public class UserDaoImpl implements UserDao, ShopLogger {
             statement.executeUpdate();
         } catch (SQLException e) {
             logError(e);
-            Throwable cause = e.getCause();
-            if (cause != null && cause.getMessage().startsWith("Duplicate entry")) {
+            if (e.getErrorCode() == 23505) {
                 throw new ApplicationException(messagesProperties
                         .getProperty("NOT_UNIQUE_USER"), e);
             }
@@ -120,11 +105,13 @@ public class UserDaoImpl implements UserDao, ShopLogger {
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
+            if(!resultSet.next()){
+                String message = messagesProperties
+                        .getProperty("EMPTY_RESULTSET") + User.class;
+                logErrorMessage(message);
+                throw new ApplicationException(message);
+            }
             return new UserRowMapper().mapRow(resultSet, 1);
-        } catch (ApplicationException e) {
-            logError(e);
-            throw new ApplicationException(messagesProperties
-                    .getProperty("EMPTY_RESULTSET") + User.class, e);
         } catch (SQLException e) {
             logError(e);
             throw new ApplicationException(messagesProperties
@@ -138,12 +125,14 @@ public class UserDaoImpl implements UserDao, ShopLogger {
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, email);
             ResultSet resultSet = statement.executeQuery();
+            if(!resultSet.next()){
+                String message = messagesProperties
+                        .getProperty("EMPTY_RESULTSET") + User.class;
+                logErrorMessage(message);
+                throw new ApplicationException(message);
+            }
             return new UserRowMapper().mapRow(resultSet, 1);
-        } catch (ApplicationException e) {
-            logError(e);
-            throw new ApplicationException(messagesProperties
-                    .getProperty("EMPTY_RESULTSET") + User.class, e);
-        } catch (SQLException e) {
+        }catch (SQLException e) {
             logError(e);
             throw new ApplicationException(messagesProperties
                     .getProperty("FAILED_GET_USER"), e);
@@ -185,10 +174,6 @@ public class UserDaoImpl implements UserDao, ShopLogger {
 
         @Override
         public User mapRow(ResultSet resultSet, int i) throws SQLException {
-            if (!resultSet.next()) {
-                throw new ApplicationException(messagesProperties
-                        .getProperty("EMPTY_RESULTSET") + User.class);
-            }
             User user = new User();
             user.setId(resultSet.getInt("id"));
             user.setUserName(resultSet.getString("user_name"));

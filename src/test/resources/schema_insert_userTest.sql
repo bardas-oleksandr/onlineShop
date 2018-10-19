@@ -1,0 +1,3 @@
+INSERT INTO users (id, user_name, user_password, user_email, user_state) VALUES (1, 'first user', 'password', 'firstmail@gmail.com', 0);
+INSERT INTO users (id, user_name, user_password, user_email, user_state) VALUES (2, 'second user', 'password', 'secondmail@gmail.com', 1);
+INSERT INTO users (id, user_name, user_password, user_email, user_state) VALUES (3, 'third user', 'password', 'thirdmail@gmail.com', 2);

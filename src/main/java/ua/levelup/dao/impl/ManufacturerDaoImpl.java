@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
 import ua.levelup.dao.ManufacturerDao;
 import ua.levelup.exception.ApplicationException;
 import ua.levelup.logger.ShopLogger;
@@ -19,6 +20,10 @@ import org.apache.logging.log4j.Logger;
 import java.sql.*;
 import java.util.List;
 
+/**
+ *
+ */
+@Repository("manufacturerDao")
 public class ManufacturerDaoImpl extends AbstractDaoImpl implements ManufacturerDao, ShopLogger {
 
     private static final Logger logger = LogManager.getLogger();
@@ -53,10 +58,12 @@ public class ManufacturerDaoImpl extends AbstractDaoImpl implements Manufacturer
     public void update(@NonNull Manufacturer manufacturer) throws ApplicationException {
         String sql = "UPDATE manufacturers SET manufacturer_name=:manufacturer_name WHERE id=:id";
 
+        MapSqlParameterSource source = new MapSqlParameterSource();
+        source.addValue("manufacturer_name", manufacturer.getName());
+        source.addValue("id", manufacturer.getId());
+
         try {
-            namedParameterJdbcTemplate.update(sql,
-                    new MapSqlParameterSource("manufacturer_name"
-                            , manufacturer.getName()));
+            updateOrDelete(sql, source);
         } catch (DuplicateKeyException e) {
             logError(e);
             throw new ApplicationException(messagesProperties
@@ -76,12 +83,10 @@ public class ManufacturerDaoImpl extends AbstractDaoImpl implements Manufacturer
     public void delete(int id) throws ApplicationException {
         String sql = "DELETE FROM manufacturers WHERE id=:id";
 
+        MapSqlParameterSource source = new MapSqlParameterSource("id", id);
+
         try {
-            if (namedParameterJdbcTemplate.update(sql
-                    , new MapSqlParameterSource("id", id)) == 0) {
-                throw new ApplicationException(messagesProperties
-                        .getProperty("FAILED_DELETE_MANUFACTURER_NONEXISTENT"));
-            }
+            updateOrDelete(sql, source);
         } catch (DataIntegrityViolationException e) {
             logError(e);
             throw new ApplicationException(messagesProperties.
@@ -113,22 +118,15 @@ public class ManufacturerDaoImpl extends AbstractDaoImpl implements Manufacturer
 
     @Override
     public List<Manufacturer> getAllByCategoryId(int categoryId) throws ApplicationException {
-        String sql1 = "SELECT * FROM manufacturers " +
-                "WHERE manufacturers.id " +
-                "IN (SELECT product_manufacturer_id FROM products " +
-                "WHERE product_category_id=:product_category_id) " +
-                "ORDER BY manufacturer_name";
-
         //Запрос для выборки всех производителей,
         //для которых в базе данных существуют связанные товары,
         //нахоядищееся в категории или подкатегории товаров с заданным id.
         String sql = "SELECT * FROM manufacturers " +
                 "WHERE manufacturers.id " +
-                "IN (SELECT product_manufacturer_id FROM products " +
-                "WHERE product_category_id=:product_category_id " +
-                "OR WHERE product_category_id " +
-                "IN (SELECT id FROM categories " +
-                "WHERE categories.category_parent_id:=product_category_id)) " +
+                "IN (SELECT product_manufacturer_id FROM products, categories " +
+                "WHERE products.product_category_id=:product_category_id " +
+                "OR (products.product_category_id=categories.id " +
+                "AND categories.category_parent_id=:product_category_id)) " +
                 "ORDER BY manufacturer_name";
 
         try {
@@ -160,6 +158,15 @@ public class ManufacturerDaoImpl extends AbstractDaoImpl implements Manufacturer
         return logger;
     }
 
+    private void updateOrDelete(String sql, MapSqlParameterSource source){
+        if(namedParameterJdbcTemplate.update(sql, source) == 0){
+            String message = messagesProperties
+                    .getProperty("FAILED_UPDATE_MANUFACTURER_NONEXISTENT");
+            logErrorMessage(message);
+            throw new ApplicationException(message);
+        }
+    }
+
     /**
      *
      */
@@ -170,7 +177,7 @@ public class ManufacturerDaoImpl extends AbstractDaoImpl implements Manufacturer
             Manufacturer manufacturer = new Manufacturer();
             manufacturer.setId(resultSet.getInt(1));
             manufacturer.setName(resultSet.getString(2));
-            return null;
+            return manufacturer;
         }
     }
 }
