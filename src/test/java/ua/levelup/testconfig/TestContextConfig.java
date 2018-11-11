@@ -1,26 +1,21 @@
 package ua.levelup.testconfig;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+import ua.levelup.config.ApplicationConfig;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Properties;
 
+//При xml-конфигурировании мы бы использовали аннотацию @ImportResource
+//@ImportResource({"classpath:context/app-context.xml"})
 @Configuration
-@ComponentScan("ua.levelup.converter.*")
-@ComponentScan("ua.levelup.validator.*")
-@ComponentScan("ua.levelup.dao.*")
-@ImportResource({"classpath:context/app-context.xml"})
+@Import(ApplicationConfig.class)
 @Profile("test")
 public class TestContextConfig {
-
-    @Autowired
-    private Properties applicationProperties;
 
     @Bean("namedParameterJdbcTemplate")
     public NamedParameterJdbcTemplate namedParameterJdbcTemplate()

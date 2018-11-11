@@ -6,6 +6,42 @@
          version="4.0"
          metadata-complete="false">
 
+    <!--Указываем местонахождение корневого контекста вебприложения WebApplicationContext-->
+    <!--Мы это делаем в классе WebAppInitializer, поэтому файл корневого контекста root-context.xml
+    нам не нужен. Корневой контекст хрнаится теперь в классе ApplicationConfig-->
+    <!--<context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/spring/root-context.xml</param-value>
+    </context-param>-->
+
+    <!--Добавляем прослушивателя событий для управления жизненным циклом корневого контекста веб-приложения-->
+    <!--Мы это делаем в классе WebAppInitializer, поэтому тут повторять нет необходимости-->
+    <!--<listener>
+      <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>-->
+
+    <!--Создание контекста для сервлета диспетчера-->
+    <!--Это действие уже выполнено в WebAppInitializer, поэтому файл контекста для сервлета диспетчера
+    servlet-context.xml нам уже не нужен. Контекст сервлета диспетчера хранится с классе WebMvcConfig-->
+    <!--<servlet>
+        <servlet-name>myServlet</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+            <init-param>
+                <param-name>contextConfigLocation</param-name>
+                <param-value>/WEB-INF/spring/servlet-context.xml</param-value>
+            </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>-->
+
+
+
+
+
+
+    <!--==========================================-->
+    <!--=========Из проекта на сервлетах==========-->
+    <!--==========================================-->
+    <!--
     <filter>
         <filter-name>securityFilter</filter-name>
         <filter-class>ua.levelup.web.filter.SecurityFilter</filter-class>
@@ -107,4 +143,5 @@
         <exception-type>java.lang.Exception</exception-type>
         <location>/error.jsp</location>
     </error-page>
+    -->
 </web-app>
