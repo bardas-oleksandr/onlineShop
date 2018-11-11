@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<%@ page contentType="text/html;charset=UTF-8" language="java" errorPage="/error.jsp" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="/WEB-INF/tag/errorMessage.tld" prefix="custom" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" errorPage="/error.jsp"%>
+<%@ taglib uri="/WEB-INF/tag/errorMessage.tld" prefix="custom"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
 <html>
 	<head>
@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
         <title>Online shop</title>
-        <link href="resources/css/index_styles.css" type="text/css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/css/index_styles.css" type="text/css" rel="stylesheet">
 	</head>
 	<body>
 
@@ -20,7 +20,7 @@
     	        <custom:errorMessage exception="${exception}" locale="${sessionScope.locale}"/>
                 <div>
                     <p><a href="index.jsp">
-                        <c:out value="${sessionScope.lang.getString('main_page_title')}"/>
+                        <spring:message code="main_page_title"/>
                     </a></p>
                 </div>
             </div>

@@ -1,7 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ page contentType="text/html;charset=UTF-8" language="java" errorPage="/error.jsp"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
 <html>
 	<head>
@@ -11,21 +12,32 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
         <title>Online shop</title>
-        <link href="resources/css/index_styles.css" type="text/css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/css/index_styles.css" type="text/css" rel="stylesheet">
 	</head>
 	<body>
 	    <!--NAVIGATION BAR-->
 	    <nav class="navbar navbar-light bg-light">
 	        <a class="navbar-brand">
-	            <c:out value="${sessionScope.lang.getString('online_shop_title')}"/>
+	            <spring:message code="online_shop_title"/>
 	        </a>
             <div class="btn-group" role="group" aria-label="Basic example">
                 <!--MAIN PAGE BUTTON-->
                 <a href="index.jsp">
                     <button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#modalCenter-MainPage">
-                        <c:out value="${sessionScope.lang.getString('main_page_title')}"/>
+                        <spring:message code="main_page_title"/>
                     </button>
                 </a>
+
+      	        <!--LANGUAGE BUTTONS-->
+      	        <div id="localizationFrame">
+      	            <span style="float: right">
+                        <a href="?lang=en">en</a>
+                        |
+                        <a href="?lang=ua">ua</a>
+                        |
+                        <a href="?lang=ru">ru</a>
+                    </span>
+                </div>
             </div>
         </nav>
 
@@ -34,14 +46,14 @@
 	        <div class="alert alert-warning" role="alert">
                 <div class="input-group mb-3">
                     <h4 class="modal-title">
-                        <c:out value="${sessionScope.lang.getString('personal_data_label')}"/>
+                        <spring:message code="personal_data_label"/>
                     </h5>
                 </div>
                 <div class="input-group mb-3">
-                    <h5><c:out value="${sessionScope.lang.getString('user_name_label')}"/>: ${user.userName}</h5>
+                    <h5><spring:message code="user_name_label"/>: ${user.userName}</h5>
                 </div>
                 <div class="input-group mb-3">
-                    <h5><c:out value="${sessionScope.lang.getString('email_address_label')}"/>: ${user.email}</h5>
+                    <h5><spring:message code="email_address_label"/>: ${user.email}</h5>
                 </div>
             </div>
 	    </div>
@@ -54,12 +66,12 @@
                         <c:choose>
                             <c:when test="${empty sessionScope.orderList}">
                                 <div class="input-group mb-3">
-                                    <h4><c:out value="${sessionScope.lang.getString('empty_order_list')}"/></h4>
+                                    <h4><spring:message code="empty_order_list"/></h4>
                                 </div>
                             </c:when>
                             <c:otherwise>
                                 <div class="input-group mb-3">
-                                    <h4><c:out value="${sessionScope.lang.getString('orders_list')}"/></h4>
+                                    <h4><spring:message code="orders_list"/></h4>
                                 </div>
                                 <div class="accordion" id="orderListWrapper">
                                     <c:forEach var="order" items="${sessionScope.orderList}">
@@ -69,25 +81,25 @@
                                                     <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseOne${order.id}" aria-expanded="true" aria-controls="collapseOne${order.id}">
                                                         <div class="input-group mb-3">
                                                             <div class="input-group-prepend">
-                                                                <span class="input-group-text"><c:out value="${sessionScope.lang.getString('order_label')}"/> # ${order.id}</span>
+                                                                <span class="input-group-text"><spring:message code="order_label"/> # ${order.id}</span>
                                                             </div>
                                                             <div class="input-group-prepend">
-                                                                <span class="input-group-text"><c:out value="${sessionScope.lang.getString('date_label')}"/>:</span>
+                                                                <span class="input-group-text"><spring:message code="date_label"/>:</span>
                                                             </div>
                                                             <input readonly type="text" value="${order.date}" class="form-control">
                                                             <div class="input-group-prepend">
-                                                                <span class="input-group-text"><c:out value="${sessionScope.lang.getString('status_label')}"/>:</span>
+                                                                <span class="input-group-text"><spring:message code="status_label"/>:</span>
                                                             </div>
                                                             <c:set var="status" scope="page">
                                                                 <c:choose>
                                                                     <c:when test="${order.state == 0}">
-                                                                        <c:out value="${sessionScope.lang.getString('status_registered')}"/>
+                                                                        <spring:message code="status_registered"/>
                                                                     </c:when>
                                                                     <c:when  test="${order.state == 1}">
-                                                                        <c:out value="${sessionScope.lang.getString('status_payed')}"/>
+                                                                        <spring:message code="status_payed"/>
                                                                     </c:when>
                                                                     <c:when  test="${order.state == 2}">
-                                                                        <c:out value="${sessionScope.lang.getString('status_canceled')}"/>
+                                                                        <spring:message code="status_canceled"/>
                                                                     </c:when>
                                                                 </c:choose>
                                                             </c:set>
@@ -108,7 +120,7 @@
                                                             </div>
                                                             <input readonly type="text" value="${orderPosition.unitPrice}" class="form-control">
                                                             <div class="input-group-prepend">
-                                                                <span class="input-group-text"><c:out value="${sessionScope.lang.getString('product_count')}"/>:</span>
+                                                                <span class="input-group-text"><spring:message code="product_count"/>:</span>
                                                             </div>
                                                             <input readonly type="text" value="${orderPosition.quantity}" class="form-control">
                                                         </div>
@@ -125,7 +137,7 @@
                 <c:otherwise>
                     <div class="message-style">
                         <div class="alert alert-success" role="alert">
-                            <c:out value="${sessionScope.lang.getString('admin_welcome')}"/>
+                            <spring:message code="admin_welcome"/>
                         </div>
                     </div>
                 </c:otherwise>

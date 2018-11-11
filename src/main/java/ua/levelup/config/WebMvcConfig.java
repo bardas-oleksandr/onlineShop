@@ -9,7 +9,6 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
-import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import java.util.List;
 import java.util.Locale;
@@ -58,9 +57,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         //URL ресурса = конекст приложения + /resources/css/**
-        //Искать эти ресрсы следует по адресу /WEB-INF/resources/css/
+        //Искать эти ресрсы следует по адресу /resources/css/
         registry.addResourceHandler("/resources/css/**")
-                .addResourceLocations("/WEB-INF/resources/css/").setCachePeriod(CASH_PERIOD);
+                .addResourceLocations("/resources/css/").setCachePeriod(CASH_PERIOD);
     }
 
     //с. 646 "Spring для профессионалов"
@@ -115,14 +114,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public CookieLocaleResolver cookieLocaleResolver() {
         CookieLocaleResolver cookieLocaleResolver = new CookieLocaleResolver();
         cookieLocaleResolver.setCookieName("locale");
-        cookieLocaleResolver.setDefaultLocale(new Locale("ru","UA"));
+        cookieLocaleResolver.setDefaultLocale(new Locale("ua","UA"));
+        cookieLocaleResolver.setCookieMaxAge(1440*31);  //срок жизни куки - 1 месяц
         return cookieLocaleResolver;
-    }
-
-    @Bean("handlerMapping")
-    public RequestMappingHandlerMapping requestMappingHandlerMapping(){
-        RequestMappingHandlerMapping handlerMapping = new RequestMappingHandlerMapping();
-        handlerMapping.setInterceptors(localeChangeInterceptor());
-        return handlerMapping;
     }
 }

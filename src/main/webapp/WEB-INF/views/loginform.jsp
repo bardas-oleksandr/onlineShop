@@ -1,6 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ page contentType="text/html;charset=UTF-8" language="java" errorPage="/error.jsp"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
 <html>
 	<head>
@@ -10,21 +11,32 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
         <title>Online shop</title>
-        <link href="resources/css/index_styles.css" type="text/css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/css/index_styles.css" type="text/css" rel="stylesheet">
 	</head>
 	<body>
 	    <!--Navigation bar-->
 	    <nav class="navbar navbar-light bg-light">
 	        <a class="navbar-brand">
-	            <c:out value="${sessionScope.lang.getString('online_shop_title')}"/>
+	            <spring:message code="online_shop_title"/>
 	        </a>
             <div class="btn-group" role="group" aria-label="Basic example">
                 <!--MAIN PAGE BUTTON-->
                 <a href="index.jsp">
                     <button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#modalCenter-MainPage">
-                        <c:out value="${sessionScope.lang.getString('main_page_title')}"/>
+                        <spring:message code="main_page_title"/>
                     </button>
                 </a>
+
+      	        <!--LANGUAGE BUTTONS-->
+      	        <div id="localizationFrame">
+      	            <span style="float: right">
+                        <a href="?lang=en">en</a>
+                        |
+                        <a href="?lang=ua">ua</a>
+                        |
+                        <a href="?lang=ru">ru</a>
+                    </span>
+                </div>
             </div>
         </nav>
 
@@ -37,30 +49,30 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title">
-                                    <c:out value="${sessionScope.lang.getString('sign_in_form')}"/>
+                                    <spring:message code="sign_in_form"/>
                                 </h5>
                             </div>
                             <form action="${pageContext.request.contextPath}/login" method="POST">
                                 <div class="modal-body">
                                     <div class="form-group">
                                         <label for="loginEmail">
-                                            <c:out value="${sessionScope.lang.getString('email_address_label')}"/>
+                                            <spring:message code="email_address_label"/>
                                         </label>
                                         <input type="text" name="user_email" class="form-control" id="loginEmail" aria-describedby="emailHelp" placeholder="Enter email">
                                         <small id="emailHelp" class="form-text text-muted">
-                                            <c:out value="${sessionScope.lang.getString('our_promise')}"/>
+                                            <spring:message code="our_promise"/>
                                         </small>
                                     </div>
                                     <div class="form-group">
                                         <label for="loginPassword">
-                                            <c:out value="${sessionScope.lang.getString('password_label')}"/>
+                                            <spring:message code="password_label"/>
                                         </label>
                                         <input type="password" name="user_password" class="form-control" id="loginPassword" placeholder="Password">
                                     </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="submit" class="btn btn-primary">
-                                        <c:out value="${sessionScope.lang.getString('sign_in')}"/>
+                                        <spring:message code="sign_in"/>
                                     </button>
                                 </div>
                             </form>
