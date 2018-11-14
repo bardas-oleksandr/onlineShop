@@ -21,7 +21,7 @@
 	        </a>
             <div class="btn-group" role="group" aria-label="Basic example">
                 <!--MAIN PAGE BUTTON-->
-                <a href="index.jsp">
+                <a href="${pageContext.request.contextPath}/">
                     <button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#modalCenter-MainPage">
                         <spring:message code="main_page_title"/>
                     </button>
@@ -62,7 +62,7 @@
                         </div>
                         <div class="accordion" id="orderListWrapper">
                             <c:forEach var="order" items="${sessionScope.orderList}">
-                                <form action="${pageContext.request.contextPath}/order/${order.id}" method="post">
+                                <form action="${pageContext.request.contextPath}/order/${order.id}" method="POST">
                                     <div class="card">
                                         <div class="card-header" id="headingOne${order.id}">
                                             <h5 class="mb-0">
@@ -137,7 +137,6 @@
                                             </select>
                                         </div>
                                         <div class="input-group mb-3>
-                                            <input type="hidden" name="orderId" value="${order.id}">
                                             <input type="hidden" name="_method" value="PUT">
                                             <button type="submit" class="btn btn-primary">
                                                 <spring:message code="save_changes"/>

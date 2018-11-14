@@ -28,30 +28,39 @@
                                 <spring:message code="sign_out"/>
                             </button>
                         </form>
+                   	    <!--LANGUAGE BUTTONS-->
+                   	    <div id="localizationFrame">
+                   	        <span style="float: right">
+                                <a href="?lang=en">en</a>
+                                |
+                                <a href="?lang=ua">ua</a>
+                                |
+                                <a href="?lang=ru">ru</a>
+                            </span>
+                        </div>
                     </div>
                 </c:when>
                 <c:otherwise>
                     <div class="btn-group" role="group" aria-label="Basic example">
                         <!--MAIN PAGE BUTTON-->
-                        <a href="index.jsp">
+                        <a href="${pageContext.request.contextPath}/">
                             <button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#modalCenter-MainPage">
                                 <spring:message code="main_page_title"/>
                             </button>
                         </a>
+                   	    <!--LANGUAGE BUTTONS-->
+                   	    <div id="localizationFrame">
+                   	        <span style="float: right">
+                                <a href="?lang=en">en</a>
+                                |
+                                <a href="?lang=ua">ua</a>
+                                |
+                                <a href="?lang=ru">ru</a>
+                            </span>
+                        </div>
                     </div>
                 </c:otherwise>
             </c:choose>
-
-      	    <!--LANGUAGE BUTTONS-->
-      	    <div id="localizationFrame">
-      	        <span style="float: right">
-                    <a href="?lang=en">en</a>
-                    |
-                    <a href="?lang=ua">ua</a>
-                    |
-                    <a href="?lang=ru">ru</a>
-                </span>
-            </div>
         </nav>
 
         <!--Left side bar-->

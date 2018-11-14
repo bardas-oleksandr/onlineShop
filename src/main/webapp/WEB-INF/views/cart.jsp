@@ -21,7 +21,7 @@
 	        </a>
             <div class="btn-group" role="group" aria-label="Basic example">
                 <!--MAIN PAGE BUTTON-->
-                <a href="index.jsp">
+                <a href="${pageContext.request.contextPath}/">
                     <button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#modalCenter-MainPage">
                         <spring:message code="main_page_title"/>
                     </button>

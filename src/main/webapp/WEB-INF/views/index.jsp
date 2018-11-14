@@ -246,7 +246,7 @@
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <form action="${pageContext.request.contextPath}/login" method="POST">
+                                    <form action="${pageContext.request.contextPath}/signIn" method="POST">
                                         <div class="modal-body">
                                             <div class="form-group">
                                                 <label for="loginEmail">
@@ -293,7 +293,7 @@
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <form action="${pageContext.request.contextPath}/register" method="POST">
+                                    <form action="${pageContext.request.contextPath}/user" method="POST">
                                         <div class="modal-body">
                                             <div class="form-group">
                                                 <label for="registerUserName">
@@ -338,7 +338,7 @@
                             </button>
                         </form>
                         <!--PROFILE BUTTON. Available for signed up users-->
-                        <form action="${pageContext.request.contextPath}/profile" method="get">
+                        <form action="${pageContext.request.contextPath}/user" method="GET">
                             <button type="submit" class="btn btn-outline-danger">
                                 <spring:message code="profile_label"/>
                             </button>
@@ -365,7 +365,7 @@
         	    <legend class="bar-legend">
         	        <spring:message code="search_products"/>
         	    </legend>
-        	    <form action="${pageContext.request.contextPath}/product" method="get">
+        	    <form action="${pageContext.request.contextPath}/product" method="GET">
         	        <label>
         	            <spring:message code="category_label"/>
         	        </label>
@@ -474,9 +474,8 @@
     				    </button>
     				</div>
     			</form>
-                <form action="${pageContext.request.contextPath}/product" method="get">
+                <form action="${pageContext.request.contextPath}/product/default" method="GET">
                     <div class="input-group mb-3">
-                        <input type="hidden" name="_method" value="RESET">
                         <button type="submit" id="buttonResetFilters" name="resetFilters" class="btn btn-outline-secondary btn-block">
                             <spring:message code="reset_filters"/>
                         </button>
@@ -491,7 +490,7 @@
                 <c:forEach var="product" items="${productList}">
                     <c:choose>
                         <c:when test="${empty sessionScope.user or sessionScope.user.state == 1}">
-                            <form action="${pageContext.request.contextPath}/cart" method="post">
+                            <form action="${pageContext.request.contextPath}/cart" method="POST">
                                 <div class="card">
                                     <div class="card-header" id="headingOne${product.id}">
                                         <h5 class="mb-0">
@@ -544,7 +543,7 @@
                         </c:when>
                         <c:when test="${not empty sessionScope.user and sessionScope.user.state == 0}">
                             <div class="alert alert-primary" role="alert">
-                        	    <form action="${pageContext.request.contextPath}/product/${product.id}" method="post">
+                        	    <form action="${pageContext.request.contextPath}/product/${product.id}" method="POST">
                     				<div class="input-group mb-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><spring:message code="product_label"/></span>
@@ -614,9 +613,8 @@
                     				    </button>
                     				</div>
                     			</form>
-                                <form action="${pageContext.request.contextPath}/product/${product.id}" method="post">
+                                <form action="${pageContext.request.contextPath}/product/delete/${product.id}" method="POST">
                                     <div class="input-group mb-3">
-                                        <input type="hidden" name="_method" value="DELETE">
                                         <button type="submit" id="buttonDeleteProduct" name="deleteProduct" class="btn btn-outline-secondary btn-block">
                                             <spring:message code="delete_label"/>
                                         </button>

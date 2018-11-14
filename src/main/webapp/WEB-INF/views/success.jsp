@@ -18,7 +18,7 @@
     	    <div class="alert alert-success" role="alert">
     	        <spring:message code="operation_successful"/>
                 <div>
-                    <p><a href="index.jsp">
+                    <p><a href="${pageContext.request.contextPath}/">
                         <spring:message code="main_page_title"/>
                     </a></p>
                 </div>

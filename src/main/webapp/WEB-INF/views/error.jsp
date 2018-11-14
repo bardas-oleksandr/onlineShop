@@ -19,7 +19,7 @@
     	    <div class="alert alert-danger" role="alert">
     	        <custom:errorMessage exception="${exception}" locale="${sessionScope.locale}"/>
                 <div>
-                    <p><a href="index.jsp">
+                    <p><a href="${pageContext.request.contextPath}/">
                         <spring:message code="main_page_title"/>
                     </a></p>
                 </div>
