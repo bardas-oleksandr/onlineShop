@@ -3,8 +3,10 @@ package ua.levelup.config;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.DispatcherServlet;
 
+import javax.servlet.FilterRegistration;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
@@ -63,6 +65,11 @@ public class WebAppInitializer implements WebApplicationInitializer {
         //    <param-value>true</param-value>
         //</context-param>
         servletContext.setInitParameter("defaultHtmlEscape","true");
+
+        //Конфигурирование Spring Security
+        FilterRegistration securityFilterReg = servletContext
+                .addFilter("securityFilterChain", DelegatingFilterProxy.class);
+        securityFilterReg.addMappingForUrlPatterns(null,false,"/*");
 
         //Регистрация других сервлетов и фильтров по необходимости
 
