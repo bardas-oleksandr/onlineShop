@@ -83,7 +83,7 @@ public class CredentialsValidatorServiceTest {
     @Test
     public void validateTest_whenPasswordIsTooShort_thenNotValidated() {
         //GIVEN
-        CredentialsCreateDto dto = new CredentialsCreateDto("12345", "mail@gmail.com");
+        CredentialsCreateDto dto = new CredentialsCreateDto("123", "mail@gmail.com");
         //WHEN
         Set<ConstraintViolation<CredentialsCreateDto>> violations = credentialsValidatorService
                 .validate(dto);

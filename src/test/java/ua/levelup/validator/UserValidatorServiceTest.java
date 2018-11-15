@@ -80,7 +80,7 @@ public class UserValidatorServiceTest {
     @Test
     public void validateTest_whenPasswordIsTooShort_thenNotValidated() {
         //GIVEN
-        UserCreateDto dto = new UserCreateDto("name", "12345", "mail@gmail.com");
+        UserCreateDto dto = new UserCreateDto("name", "123", "mail@gmail.com");
         //WHEN
         Set<ConstraintViolation<UserCreateDto>> violations = userValidatorService.validate(dto);
         //THEN

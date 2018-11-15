@@ -1,4 +1,4 @@
-package ua.levelup.config;
+package ua.levelup.dao.config;
 
 import org.apache.commons.pool2.BasePooledObjectFactory;
 import org.apache.commons.pool2.PooledObject;

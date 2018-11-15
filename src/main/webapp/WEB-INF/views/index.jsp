@@ -246,13 +246,13 @@
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <form action="${pageContext.request.contextPath}/signIn" method="POST">
+                                    <form action="${pageContext.request.contextPath}/signIn" modelAttribute="credentials" method="POST">
                                         <div class="modal-body">
                                             <div class="form-group">
                                                 <label for="loginEmail">
                                                     <spring:message code="email_address_label"/>
                                                 </label>
-                                                <input type="text" name="user_email" class="form-control" id="loginEmail" aria-describedby="emailHelp" placeholder="Enter email">
+                                                <input type="text" name="email" class="form-control" id="loginEmail" aria-describedby="emailHelp" placeholder="Enter email">
                                                 <small id="emailHelp" class="form-text text-muted">
                                                     <spring:message code="our_promise"/>
                                                 </small>
@@ -261,7 +261,7 @@
                                                 <label for="loginPassword">
                                                     <spring:message code="password_label"/>
                                                 </label>
-                                                <input type="password" name="user_password" class="form-control" id="loginPassword" placeholder="Password">
+                                                <input type="password" name="password" class="form-control" id="loginPassword" placeholder="Password">
                                             </div>
                                         </div>
                                         <div class="modal-footer">

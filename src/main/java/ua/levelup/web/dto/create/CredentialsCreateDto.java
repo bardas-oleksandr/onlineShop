@@ -17,7 +17,7 @@ public class CredentialsCreateDto implements Serializable {
 
     private static final long serialVersionUID = 3523935973502537231L;
 
-    @Size(min = 6,max = 20, message = "unacceptable_password_length")
+    @Size(min = 4,max = 20, message = "unacceptable_password_length")
     @NotNull(message = "empty_password")
     private String password;
 
