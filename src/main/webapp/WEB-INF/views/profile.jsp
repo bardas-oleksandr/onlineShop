@@ -22,10 +22,10 @@
 	        <c:choose>
                 <c:when test="${sessionScope.user.state == 2}">
                     <div class="btn-group" role="group" aria-label="Basic example">
-                        <!--SIGN OUT BUTTON-->
-                        <form action="${pageContext.request.contextPath}/signOut" method="POST">
+                        <!--LOGOUT BUTTON-->
+                        <form action="${pageContext.request.contextPath}/logout" method="POST">
                             <button type="submit" class="btn btn-outline-success" data-toggle="modal" data-target="#modalCenter-MainPage">
-                                <spring:message code="sign_out"/>
+                                <spring:message code="logout"/>
                             </button>
                         </form>
                    	    <!--LANGUAGE BUTTONS-->
@@ -91,10 +91,9 @@
                     </div>
                 </c:when>
                 <c:when test="${sessionScope.user.state == 1}">
-                    <form action="${pageContext.request.contextPath}/order" method="get">
+                    <form action="${pageContext.request.contextPath}/userOrders" method="get">
                         <!--SHOW ORDERS BUTTON-->
                         <div class="input-group mb-3">
-                            <input type="hidden" name="_method" value="GET_FOR_USER">
                             <button type="submit" class="btn btn-primary" data-dismiss="modal">
                                 <spring:message code="watch_orders_list"/>
                             </button>

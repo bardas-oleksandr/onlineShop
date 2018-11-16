@@ -40,52 +40,11 @@
                 <security:authorize access="!isAuthenticated()">
 
                     <!--LOGIN BUTTON-->
-                    <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#modalCenter-Login">
-                        <spring:message code="login"/>
-                    </button>
-                    <!-- Modal -->
-                    <div class="modal fade" id="modalCenter-Login" tabindex="-1" role="dialog" aria-labelledby="modalCenterTitle" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">
-                                        <spring:message code="login_form"/>
-                                    </h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <form action="${pageContext.request.contextPath}/login" modelAttribute="credentials" method="POST">
-                                    <div class="modal-body">
-                                        <div class="form-group">
-                                            <label for="loginEmail">
-                                                <spring:message code="email_address_label"/>
-                                            </label>
-                                            <input type="text" name="email" class="form-control" id="loginEmail" aria-describedby="emailHelp" placeholder="Enter email">
-                                            <small id="emailHelp" class="form-text text-muted">
-                                                <spring:message code="our_promise"/>
-                                            </small>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="loginPassword">
-                                                <spring:message code="password_label"/>
-                                            </label>
-                                            <input type="password" name="password" class="form-control" id="loginPassword" placeholder="Password">
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="submit" class="btn btn-primary">
-                                            <spring:message code="login"/>
-                                        </button>
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                            <spring:message code="close"/>
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+                    <form action="${pageContext.request.contextPath}/login" method="GET">
+                        <button type="submit" class="btn btn-outline-success" data-toggle="modal">
+                            <spring:message code="login"/>
+                        </button>
+                    </form>
 
                     <!--REGISTER BUTTON-->
                     <!-- Button trigger modal -->
