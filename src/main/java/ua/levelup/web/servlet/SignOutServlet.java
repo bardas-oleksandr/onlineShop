@@ -11,7 +11,7 @@
 //import javax.servlet.http.HttpSession;
 //import java.io.IOException;
 //
-//@WebServlet(name = "signOutServlet", urlPatterns = "/signOut")
+//@WebServlet(name = "signOutServlet", urlPatterns = "/logout")
 //public class SignOutServlet extends HttpServlet {
 //
 //    private static final Logger logger = LogManager.getLogger();

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<%@ page contentType="text/html;charset=UTF-8" language="java" errorPage="/error.jsp"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" errorPage="/error.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
 <html>
 	<head>
@@ -44,15 +44,15 @@
 		<div class="main-bar">
             <c:choose>
                 <c:when test="${empty sessionScope.user}">
-                    <!--SIGN IN FORM. Available only for unsigned users-->
+                    <!--LOGIN FORM. Available only for anonymous users-->
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title">
-                                    <spring:message code="sign_in_form"/>
+                                    <spring:message code="login_form"/>
                                 </h5>
                             </div>
-                            <form action="${pageContext.request.contextPath}/signIn" method="POST">
+                            <form action="${pageContext.request.contextPath}/login" method="POST">
                                 <div class="modal-body">
                                     <div class="form-group">
                                         <label for="loginEmail">
@@ -72,7 +72,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="submit" class="btn btn-primary">
-                                        <spring:message code="sign_in"/>
+                                        <spring:message code="login"/>
                                     </button>
                                 </div>
                             </form>

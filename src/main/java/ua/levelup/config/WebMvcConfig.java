@@ -1,14 +1,11 @@
 package ua.levelup.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.context.support.ConversionServiceFactoryBean;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.HandlerExceptionResolver;
@@ -17,10 +14,7 @@ import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import ua.levelup.converter.fromdto.*;
 import ua.levelup.converter.todto.*;
-import ua.levelup.model.Credentials;
-import ua.levelup.web.dto.create.CredentialsCreateDto;
 
-import javax.annotation.PostConstruct;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -40,7 +34,6 @@ import java.util.Set;
 @ComponentScan("ua.levelup.converter")
 @ComponentScan("ua.levelup.web.dto")
 @ComponentScan("ua.levelup.validator")
-@ComponentScan("ua.levelup.service")
 public class WebMvcConfig implements WebMvcConfigurer {
 
     //Продолжительность (в секундах) нахождения ресурсов в кеше

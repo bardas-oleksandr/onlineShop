@@ -29,6 +29,8 @@ public class WebAppInitializer implements WebApplicationInitializer {
         //Теперь же роль файла root-context.xml исполняет класс ApplicationConfig.class
         AnnotationConfigWebApplicationContext appRootContext = new AnnotationConfigWebApplicationContext();
         appRootContext.register(ApplicationConfig.class);
+        //Регистрация security-контекста
+        appRootContext.register(SecurityConfig.class);
 
         //Добавляем прослушивателя событий для управления жизненным циклом корневого контекста веб-приложения
         //Это также можно было выполнить в web.xml

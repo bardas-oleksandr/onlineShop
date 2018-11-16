@@ -21,6 +21,7 @@ import java.util.Properties;
  */
 @Configuration
 @ComponentScan("ua.levelup.dao")
+@ComponentScan("ua.levelup.service")
 public class ApplicationConfig {
 
     @Autowired
