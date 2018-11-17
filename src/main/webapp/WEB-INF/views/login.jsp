@@ -53,7 +53,7 @@
                                 </h5>
                             </div>
                             <c:url value="/j_spring_security_check" var="loginUrl"/>
-                            <form action="${pageContext.request.contextPath}/${loginUrl}" method="POST">
+                            <form action="${loginUrl}" method="POST">
                                 <div class="modal-body">
                                     <div class="form-group">
                                         <label for="loginEmail">

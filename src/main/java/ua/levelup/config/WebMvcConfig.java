@@ -1,24 +1,16 @@
 package ua.levelup.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.support.ConversionServiceFactoryBean;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import org.springframework.core.convert.converter.Converter;
-import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
-import ua.levelup.converter.fromdto.*;
-import ua.levelup.converter.todto.*;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
 /**
  * Конфигурация веб-контекста для сервлета диспетчера
@@ -31,16 +23,10 @@ import java.util.Set;
 @Configuration
 @EnableWebMvc
 @ComponentScan("ua.levelup.controller")
-@ComponentScan("ua.levelup.converter")
-@ComponentScan("ua.levelup.web.dto")
-@ComponentScan("ua.levelup.validator")
 public class WebMvcConfig implements WebMvcConfigurer {
 
     //Продолжительность (в секундах) нахождения ресурсов в кеше
     private static final int CASH_PERIOD = 86400; // 24*60*60
-
-    @Autowired
-    private Set<Converter<?,?>> converterSet;
 
     //Распознаватель представлений
     //Контроллеры возвращают имена представлений, распознаватель определяет какому именно файлу представления
@@ -81,46 +67,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
         configurer.enable();
-    }
-
-    //---------------Конфигурирование конвертеров--------------------------------
-    //Бин для получения конвертеров
-    //В Spring MVC уже есть встроенный бин mvcConversionService,
-    //поэтому нам не нужно создавать еще один.
-    @Bean("conversionService")
-    public ConversionServiceFactoryBean conversionServiceFactoryBean(){
-        ConversionServiceFactoryBean factoryBean = new ConversionServiceFactoryBean();
-        factoryBean.setConverters(converterSet);
-        return factoryBean;
-    }
-
-    @Bean("converterSet")
-    public Set<Converter<?,?>> converterSet(){
-        Set<Converter<?,?>> converterSet = new HashSet<>();
-        converterSet.add(new CategoryCreateDtoConverter());
-        converterSet.add(new CredentialsCreateDtoConverter());
-        converterSet.add(new ManufacturerCreateDtoConverter());
-        converterSet.add(new OrderCreateDtoConverter());
-        converterSet.add(new OrderPositionCreateDtoConverter());
-        converterSet.add(new ProductCreateDtoConverter());
-        converterSet.add(new ProductInCartCreateDtoConverter());
-        converterSet.add(new SearchParamsCreateDtoConverter());
-        converterSet.add(new UserCreateDtoConverter());
-        converterSet.add(new CartConverter());
-        converterSet.add(new CategoryConverter());
-        converterSet.add(new ManufacturerConverter());
-        converterSet.add(new OrderConverter());
-        converterSet.add(new OrderPositionConverter());
-        converterSet.add(new ProductConverter());
-        converterSet.add(new ProductInCartConverter());
-        converterSet.add(new UserConverter());
-        return converterSet;
-    }
-
-    //------------Конфигурирование валидаторов-------------------------------------
-    @Bean("validator")
-    public LocalValidatorFactoryBean localValidatorFactoryBean(){
-        return new LocalValidatorFactoryBean();
     }
 
     //-------------Настройка локализации------------------------------------------

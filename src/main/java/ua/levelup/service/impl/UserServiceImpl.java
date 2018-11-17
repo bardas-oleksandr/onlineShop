@@ -41,4 +41,9 @@ public class UserServiceImpl implements UserService {
             throw new ValidationException("wrong_password");
         }
     }
+
+    @Override
+    public User getUser(String email) {
+        return userDao.getByEmail(email);
+    }
 }

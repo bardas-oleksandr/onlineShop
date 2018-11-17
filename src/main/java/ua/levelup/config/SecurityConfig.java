@@ -7,19 +7,28 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter{
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserDetailsService userDetailsService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     //Регистрируем бин userDetailsService
     @Override
     @Autowired
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService);
+        auth.userDetailsService(userDetailsService)
+                .passwordEncoder(bCryptPasswordEncoder);
     }
 
     //Тут непосредственно конфигурируются ограничения для каждой из ролей
@@ -42,6 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/")
                 //Делаем не валидной текущую сессию
-                .invalidateHttpSession(true);
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID");
     }
 }

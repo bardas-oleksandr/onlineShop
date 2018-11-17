@@ -33,9 +33,7 @@
             <column name="category_name" type="varchar(50)">
                 <constraints nullable="false" unique="true"/>
             </column>
-            <column name="category_parent_id" type="int unsigned">
-                <constraints nullable="false"/>
-            </column>
+            <column name="category_parent_id" type="int unsigned" defaultValue="NULL"/>
         </createTable>
 
         <createTable tableName="manufacturers">
@@ -78,7 +76,7 @@
             <column name="user_name" type="varchar(20)">
                 <constraints nullable="false" unique="true"/>
             </column>
-            <column name="user_password" type="varchar(20)">
+            <column name="user_password" type="varchar(70)">
                 <constraints nullable="false"/>
             </column>
             <column name="user_email" type="varchar(320)">

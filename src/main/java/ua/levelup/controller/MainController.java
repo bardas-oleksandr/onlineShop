@@ -11,6 +11,8 @@ public class MainController {
 
     private static final String ROOT = "/";
     private static final String INDEX_PAGE = "index";
+    private static final String ERROR = "/error";
+    private static final String ERROR_PAGE = "error";
 
     @Autowired
     private FilterUtils filterUtils;
@@ -19,5 +21,11 @@ public class MainController {
     public String indexPage(ModelMap modelMap) {
         filterUtils.setDefaultAttributes(modelMap);
         return INDEX_PAGE;
+    }
+
+    @GetMapping(value = ERROR)
+    public String errorPage() {
+
+        return ERROR_PAGE;
     }
 }

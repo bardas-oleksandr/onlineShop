@@ -21,7 +21,7 @@
         <insert tableName="users">
             <column name="id" type="INT UNSIGNED">1</column>
             <column name="user_name" type="varchar(20)">Admin</column>
-            <column name="user_password" type="varchar(20)">admin</column>
+            <column name="user_password" type="varchar(70)">$2a$10$m0puVcm.XzTvSQ31uajEYumc73fIDaGJG3/RTFPpDMZ3BQYtmMnrG</column>
             <column name="user_email" type="varchar(320)">admin@gmail.com</column>
             <column name="user_state" type="smallint">0</column>
         </insert>
@@ -29,7 +29,7 @@
         <insert tableName="users">
             <column name="id" type="INT UNSIGNED">2</column>
             <column name="user_name" type="varchar(20)">John Doe</column>
-            <column name="user_password" type="varchar(20)">1234</column>
+            <column name="user_password" type="varchar(70)">1234</column>
             <column name="user_email" type="varchar(320)">active@gmail.com</column>
             <column name="user_state" type="smallint">1</column>
         </insert>
@@ -37,7 +37,7 @@
         <insert tableName="users">
             <column name="id" type="INT UNSIGNED">3</column>
             <column name="user_name" type="varchar(20)">Dr. Evil</column>
-            <column name="user_password" type="varchar(20)">1234</column>
+            <column name="user_password" type="varchar(70)">1234</column>
             <column name="user_email" type="varchar(320)">blocked@gmail.com</column>
             <column name="user_state" type="smallint">2</column>
         </insert>
@@ -49,31 +49,31 @@
         <insert tableName="categories">
             <column name="id" type="INT UNSIGNED">1</column>
             <column name="category_name" type="varchar(50)">Carp</column>
-            <column name="category_parent_id" type="INT UNSIGNED">0</column>
+            <column name="category_parent_id" type="INT UNSIGNED">NULL</column>
         </insert>
 
         <insert tableName="categories">
             <column name="id" type="INT UNSIGNED">2</column>
             <column name="category_name" type="varchar(50)">Predator</column>
-            <column name="category_parent_id" type="INT UNSIGNED">0</column>
+            <column name="category_parent_id" type="INT UNSIGNED">NULL</column>
         </insert>
 
         <insert tableName="categories">
             <column name="id" type="INT UNSIGNED">3</column>
             <column name="category_name" type="varchar(50)">Sea</column>
-            <column name="category_parent_id" type="INT UNSIGNED">0</column>
+            <column name="category_parent_id" type="INT UNSIGNED">NULL</column>
         </insert>
 
         <insert tableName="categories">
             <column name="id" type="INT UNSIGNED">4</column>
             <column name="category_name" type="varchar(50)">Reels</column>
-            <column name="category_parent_id" type="INT UNSIGNED">0</column>
+            <column name="category_parent_id" type="INT UNSIGNED">NULL</column>
         </insert>
 
         <insert tableName="categories">
             <column name="id" type="INT UNSIGNED">5</column>
             <column name="category_name" type="varchar(50)">Rods</column>
-            <column name="category_parent_id" type="INT UNSIGNED">0</column>
+            <column name="category_parent_id" type="INT UNSIGNED">NULL</column>
         </insert>
 
         <!--************************************************-->

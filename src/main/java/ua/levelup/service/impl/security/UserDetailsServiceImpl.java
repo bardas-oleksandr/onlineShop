@@ -6,9 +6,10 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ua.levelup.model.User;
-import ua.levelup.service.SecurityUserService;
+import ua.levelup.service.UserService;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -17,15 +18,22 @@ import java.util.Set;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    private SecurityUserService securityUserService;
+    private UserService userService;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = securityUserService.getUser(email);
+        User user = userService.getUser(email);
 
         //Создаем набор ролей для авторизованного пользователя
         Set<GrantedAuthority> roles = new HashSet<>();
-        roles.add(new SimpleGrantedAuthority(user.getUserState().name()));
+        roles.add(new SimpleGrantedAuthority("ROLE_" + user.getUserState().name()));
+
+        System.out.println("\n\n\n\n\n");
+        System.out.println(bCryptPasswordEncoder.encode("admin"));
+        System.out.println("\n\n\n\n\n");
 
         UserDetails userDetails = new org.springframework.security.core.userdetails.User(user.getEmail(),
                 user.getPassword(), roles);

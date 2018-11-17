@@ -23,7 +23,6 @@
 	        </a>
             <div class="btn-group" role="group" aria-label="Basic example">
 
-
                 <!--AVAILABLE FOR NOT AUTHENTICATED USERS AND USERS WITH ACTIVE STATE-->
                 <security:authorize access="hasRole('ACTIVE') or !isAuthenticated()">
 

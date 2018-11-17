@@ -6,13 +6,11 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.DispatcherServlet;
 
-import javax.servlet.FilterRegistration;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRegistration;
+import javax.servlet.*;
 
-/**Класс WebAppInitializer предназначен для инициализации веб приложения
- *Автор: Бардась А. А.
+/**
+ * Класс WebAppInitializer предназначен для инициализации веб приложения
+ * Автор: Бардась А. А.
  */
 public class WebAppInitializer implements WebApplicationInitializer {
 
@@ -42,13 +40,13 @@ public class WebAppInitializer implements WebApplicationInitializer {
         //Создание контекста для сервлета диспетчера
         //При xml-конфигурировании вместо этого шага мы должны были бы прописать в web.xml что-то типа
         //<servlet>
-	    //    <servlet-name>myServlet</servlet-name>
-	    //    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        //    <servlet-name>myServlet</servlet-name>
+        //    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         //        <init-param>
         //            <param-name>contextConfigLocation</param-name>
         //            <param-value>/WEB-INF/spring/servlet-context.xml</param-value>
         //        </init-param>
-	    //    <load-on-startup>1</load-on-startup>
+        //    <load-on-startup>1</load-on-startup>
         //</servlet>
         //Теперь же роль файла servlet-context.xml исполняет класс WebMvcConfig.class
         AnnotationConfigWebApplicationContext dispatcherServletContext = new AnnotationConfigWebApplicationContext();
@@ -58,7 +56,7 @@ public class WebAppInitializer implements WebApplicationInitializer {
         ServletRegistration.Dynamic dispatcherServlet = servletContext.addServlet("dispatcher"
                 , new DispatcherServlet(dispatcherServletContext));
         dispatcherServlet.setLoadOnStartup(1);
-        dispatcherServlet.addMapping("/","/index");
+        dispatcherServlet.addMapping("/", "/index");
 
         //Установка параметров контекста (контейнера)
         //То же самое можно задавать в xml-конфигурации
@@ -66,12 +64,15 @@ public class WebAppInitializer implements WebApplicationInitializer {
         //    <param-name>defaultHtmlEscape</param-name>
         //    <param-value>true</param-value>
         //</context-param>
-        servletContext.setInitParameter("defaultHtmlEscape","true");
+        servletContext.setInitParameter("defaultHtmlEscape", "true");
 
         //Конфигурирование Spring Security
-        FilterRegistration securityFilterReg = servletContext
-                .addFilter("securityFilterChain", DelegatingFilterProxy.class);
-        securityFilterReg.addMappingForUrlPatterns(null,false,"/*");
+        //Фильтр должен называться именно springSecurityFilterChain и никак иначе
+        //Понять это стоило четырех незабываемых часов
+        FilterRegistration.Dynamic securityFilterReg = servletContext
+                .addFilter("springSecurityFilterChain", DelegatingFilterProxy.class);
+
+        securityFilterReg.addMappingForUrlPatterns(null, false, "/*");
 
         //Регистрация других сервлетов и фильтров по необходимости
 

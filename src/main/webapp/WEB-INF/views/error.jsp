@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ page contentType="text/html;charset=UTF-8" language="java" errorPage="/error.jsp" %>
-<%@ taglib uri="/WEB-INF/tag/errorMessage.tld" prefix="custom" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
 <html>
@@ -17,7 +16,6 @@
 
 	    <div class="message-style">
     	    <div class="alert alert-danger" role="alert">
-    	        <custom:errorMessage exception="${exception}" locale="${sessionScope.locale}"/>
                 <div>
                     <p><a href="${pageContext.request.contextPath}/">
                         <spring:message code="main_page_title"/>
