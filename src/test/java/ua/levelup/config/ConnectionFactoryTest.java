@@ -2,10 +2,8 @@ package ua.levelup.config;
 
 import org.apache.commons.pool2.PooledObject;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
@@ -14,52 +12,34 @@ import ua.levelup.dao.config.ConnectionFactory;
 import ua.levelup.testconfig.TestContextConfig;
 
 import java.sql.Connection;
-import java.util.Properties;
 
+/*Класс ConnectionFactoryTest содержит интеграционные тесты для проверки
+* работы методов класса ConnectionFactory
+*
+* Автор: Бардась А.А.
+* */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestContextConfig.class})
 @ActiveProfiles("test")
 public class ConnectionFactoryTest {
 
     @Autowired
-    private Properties applicationProperties;
-
-    @Mock
-    private Properties applicationProps;
-
-    @InjectMocks
     private ConnectionFactory connectionFactory;
 
-    @Before
-    public void init() {
-        MockitoAnnotations.initMocks(this);
-        Mockito.when(applicationProps.getProperty("driver"))
-                .thenReturn(applicationProperties.getProperty("test.driver"));
-        Mockito.when(applicationProps.getProperty("url"))
-                .thenReturn(applicationProperties.getProperty("test.url"));
-        Mockito.when(applicationProps.getProperty("username"))
-                .thenReturn(applicationProperties.getProperty("test.username"));
-        Mockito.when(applicationProps.getProperty("password"))
-                .thenReturn(applicationProperties.getProperty("test.password"));
-    }
-
+    /*Сценарий: Получение объекта класса Connection;
+    * Результат: Метод возвращает объект класса Connection.
+    * */
     @Test
     public void createTest() throws Exception {
         //WHEN
         Connection connection = connectionFactory.create();
         //THEN
         Assert.assertNotNull(connection);
-        Mockito.verify(applicationProps, Mockito.times(1))
-                .getProperty("driver");
-        Mockito.verify(applicationProps, Mockito.times(1))
-                .getProperty("url");
-        Mockito.verify(applicationProps, Mockito.times(1))
-                .getProperty("username");
-        Mockito.verify(applicationProps, Mockito.times(1))
-                .getProperty("password");
-        Mockito.verifyNoMoreInteractions(applicationProps);
     }
 
+    /*Сценарий: Получение объекта класса PooledObject<Connection>;
+    * Результат: Метод возвращает объект класса PooledObject<Connection>.
+    * */
     @Test
     public void wrapTest() throws Exception {
         //GIVEN
@@ -72,6 +52,9 @@ public class ConnectionFactoryTest {
         Assert.assertSame(connection, otherReference);
     }
 
+    /*Сценарий: Закрытие объекта класса Connection;
+    * Результат: Метод закрывает (close()) объект класса Connection.
+    * */
     @Test
     public void destroyObjectTest() throws Exception {
         //GIVEN

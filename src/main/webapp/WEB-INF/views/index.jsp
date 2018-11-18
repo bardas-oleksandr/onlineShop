@@ -225,19 +225,19 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <form action="${pageContext.request.contextPath}/category" method="POST">
+                                <form action="${pageContext.request.contextPath}/category" modelAttribute="categoryCreateDto" method="POST">
                                     <div class="modal-body">
                                         <label>
                                             <spring:message code="category_name_label"/>
                                         </label>
                                         <div class="input-group mb-3">
-                                            <input name="categoryName" type="text" class="form-control">
+                                            <input name="name" type="text" class="form-control">
                                         </div>
                                         <label>
                                             <spring:message code="parent_category_label"/>
                                         </label>
                                         <div class="input-group mb-3">
-                                            <select name="categoryId" class="custom-select">
+                                            <select name="parentCategoryId" class="custom-select">
                                                 <option value="0"><spring:message code="no_parent_label"/></option>
                                                 <c:forEach var="category" items="${categoryList}">
                                                 <option value=${category.id}>${category.name}</option>
@@ -275,13 +275,13 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <form action="${pageContext.request.contextPath}/manufacturer" method="POST">
+                                <form action="${pageContext.request.contextPath}/manufacturer"  modelAttribute="manufacturerCreateDto" method="POST">
                                     <div class="modal-body">
                                         <label>
                                             <spring:message code="manufacturer_name_label"/>
                                         </label>
                                         <div class="input-group mb-3">
-                                            <input name="manufacturerName" type="text" class="form-control">
+                                            <input name="name" type="text" class="form-control">
                                         </div>
                                     </div>
                                     <div class="modal-footer">

@@ -7,6 +7,6 @@ import javax.validation.Valid;
 import java.util.List;
 
 public interface ManufacturerService {
-    void createNewManufacturer(@Valid ManufacturerCreateDto manufacturerCreateDto);
+    ManufacturerViewDto createNewManufacturer(@Valid ManufacturerCreateDto manufacturerCreateDto);
     List<ManufacturerViewDto> getAllManufacturers();
 }

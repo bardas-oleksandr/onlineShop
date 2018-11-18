@@ -1,8 +1,6 @@
 package ua.levelup.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,10 +20,6 @@ public class UserController {
     private static final String USERS_PAGE = "users";
     private static final String ERROR_PAGE = "error";
     private static final String REDIRECT_USER = "redirect:/user/";
-
-    @Autowired
-    @Qualifier("conversionService")
-    private ConversionService conversionService;
 
     @Autowired
     private UserDao userDao;

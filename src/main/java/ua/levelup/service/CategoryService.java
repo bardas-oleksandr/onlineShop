@@ -7,6 +7,6 @@ import javax.validation.Valid;
 import java.util.List;
 
 public interface CategoryService {
-    void createNewCategory(@Valid CategoryCreateDto categoryCreateDto);
+    CategoryViewDto createNewCategory(@Valid CategoryCreateDto categoryCreateDto);
     List<CategoryViewDto> getCategoriesByLevel(int categoryLevel);
 }

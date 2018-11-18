@@ -37,7 +37,7 @@ public class CategoryDaoImpl extends AbstractDaoImpl implements CategoryDao, Sho
         MapSqlParameterSource source = new MapSqlParameterSource();
         source.addValue("category_name", category.getName());
         Integer parentId = null;
-        if (category.getParentCategory() != null) {
+        if (category.getParentCategory() != null && category.getParentCategory().getId() != 0) {
             parentId = category.getParentCategory().getId();
         }
         source.addValue("category_parent_id", parentId);
@@ -75,7 +75,7 @@ public class CategoryDaoImpl extends AbstractDaoImpl implements CategoryDao, Sho
         source.addValue("id", category.getId());
 
         try {
-            updateOrDelete(sql,source);
+            updateOrDelete(sql, source);
         } catch (DuplicateKeyException e) {
             logError(e);
             throw new ApplicationException(messagesProperties.getProperty("NOT_UNIQUE_CATEGORY"), e);
@@ -96,7 +96,7 @@ public class CategoryDaoImpl extends AbstractDaoImpl implements CategoryDao, Sho
         MapSqlParameterSource source = new MapSqlParameterSource("id", id);
 
         try {
-            updateOrDelete(sql,source);
+            updateOrDelete(sql, source);
         } catch (DataIntegrityViolationException e) {
             logError(e);
             throw new ApplicationException(messagesProperties
@@ -182,7 +182,7 @@ public class CategoryDaoImpl extends AbstractDaoImpl implements CategoryDao, Sho
         return logger;
     }
 
-    private void updateOrDelete(String sql, MapSqlParameterSource source){
+    private void updateOrDelete(String sql, MapSqlParameterSource source) {
         if (namedParameterJdbcTemplate.update(sql, source) == 0) {
             throw new ApplicationException(messagesProperties
                     .getProperty("FAILED_UPDATE_CATEGORY_NONEXISTENT"));

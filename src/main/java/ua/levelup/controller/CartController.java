@@ -1,7 +1,6 @@
 package ua.levelup.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.convert.ConversionService;
 import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -34,9 +33,6 @@ public class CartController {
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private ConversionService conversionService;
 
     @PostMapping(value = ID)
     public String putIntoCart(HttpServletRequest request, @PathVariable("id") int productId

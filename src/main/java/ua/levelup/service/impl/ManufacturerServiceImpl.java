@@ -24,9 +24,10 @@ public class ManufacturerServiceImpl implements ManufacturerService {
     private ConversionService conversionService;
 
     @Override
-    public void createNewManufacturer(ManufacturerCreateDto manufacturerCreateDto) {
+    public ManufacturerViewDto createNewManufacturer(ManufacturerCreateDto manufacturerCreateDto) {
         Manufacturer manufacturer = conversionService.convert(manufacturerCreateDto, Manufacturer.class);
         manufacturerDao.add(manufacturer);
+        return conversionService.convert(manufacturer, ManufacturerViewDto.class);
     }
 
     @Override

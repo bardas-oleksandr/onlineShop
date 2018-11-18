@@ -232,7 +232,7 @@
             <column name="product_name" type="varchar(50)">Fox Bait and Glug Tubs LARGE</column>
             <column name="product_price" type="FLOAT">13.99</column>
             <column name="product_available" type="boolean" valueBoolean="true"/>
-            <column name="product_description" type="varchar(100)">Designed for secure storage of all hook baits.</column>
+            <column name="product_description" type="varchar(100)">Designed for secure storage of all hook baits</column>
             <column name="product_category_id" type="INT UNSIGNED">6</column>
             <column name="product_manufacturer_id" type="INT UNSIGNED">9</column>
         </insert>
@@ -282,7 +282,7 @@
             <column name="product_name" type="varchar(50)">Drennan Carp BARBLESS Spade HOOKS</column>
             <column name="product_price" type="FLOAT">1.19</column>
             <column name="product_available" type="boolean" valueBoolean="true"/>
-            <column name="product_description" type="varchar(100)">Each pack contains 10 Barbless Carp Spade Hooks.</column>
+            <column name="product_description" type="varchar(100)">Each pack contains 10 Barbless Carp Spade Hooks</column>
             <column name="product_category_id" type="INT UNSIGNED">8</column>
             <column name="product_manufacturer_id" type="INT UNSIGNED">7</column>
         </insert>
@@ -292,7 +292,7 @@
             <column name="product_name" type="varchar(50)">Drennan Carp Feeder BARBLESS Spade HOOKS</column>
             <column name="product_price" type="FLOAT">1.19</column>
             <column name="product_available" type="boolean" valueBoolean="false"/>
-            <column name="product_description" type="varchar(100)">Each pack contains 10 Barbless Spade Carp Feeder Hooks.</column>
+            <column name="product_description" type="varchar(100)">Each pack contains 10 Barbless Spade Carp Feeder Hooks</column>
             <column name="product_category_id" type="INT UNSIGNED">8</column>
             <column name="product_manufacturer_id" type="INT UNSIGNED">7</column>
         </insert>
@@ -352,7 +352,7 @@
             <column name="product_name" type="varchar(50)">Salmo Powerbait Sandeels 12cm</column>
             <column name="product_price" type="FLOAT">4.49</column>
             <column name="product_available" type="boolean" valueBoolean="true"/>
-            <column name="product_description" type="varchar(100)">Available in three different colours.</column>
+            <column name="product_description" type="varchar(100)">Available in three different colours</column>
             <column name="product_category_id" type="INT UNSIGNED">10</column>
             <column name="product_manufacturer_id" type="INT UNSIGNED">3</column>
         </insert>
@@ -362,7 +362,7 @@
             <column name="product_name" type="varchar(50)">Yo-Zuri Kick-S Weedless Minnows</column>
             <column name="product_price" type="FLOAT">5.99</column>
             <column name="product_available" type="boolean" valueBoolean="true"/>
-            <column name="product_description" type="varchar(100)">Two different types are available.</column>
+            <column name="product_description" type="varchar(100)">Two different types are available</column>
             <column name="product_category_id" type="INT UNSIGNED">10</column>
             <column name="product_manufacturer_id" type="INT UNSIGNED">2</column>
         </insert>
@@ -372,7 +372,7 @@
             <column name="product_name" type="varchar(50)">Lucky John Jell-Ignite Soft Shads</column>
             <column name="product_price" type="FLOAT">3.95</column>
             <column name="product_available" type="boolean" valueBoolean="true"/>
-            <column name="product_description" type="varchar(100)">Each pack has 3 different colours inside.</column>
+            <column name="product_description" type="varchar(100)">Each pack has 3 different colours inside</column>
             <column name="product_category_id" type="INT UNSIGNED">10</column>
             <column name="product_manufacturer_id" type="INT UNSIGNED">4</column>
         </insert>
@@ -412,7 +412,7 @@
             <column name="product_name" type="varchar(50)">Yo-zuri Rage Micro Fry 4cm</column>
             <column name="product_price" type="FLOAT">4.49</column>
             <column name="product_available" type="boolean" valueBoolean="false"/>
-            <column name="product_description" type="varchar(100)">10 per pack.</column>
+            <column name="product_description" type="varchar(100)">10 per pack</column>
             <column name="product_category_id" type="INT UNSIGNED">10</column>
             <column name="product_manufacturer_id" type="INT UNSIGNED">2</column>
         </insert>
@@ -450,7 +450,7 @@
         <insert tableName="products">
             <column name="id" type="INT UNSIGNED">24</column>
             <column name="product_name" type="varchar(50)">British Inshore Fish Guide Chart</column>
-            <column name="product_price" type="FLOAT">2.5</column>
+            <column name="product_price" type="FLOAT">2.50</column>
             <column name="product_available" type="boolean" valueBoolean="true"/>
             <column name="product_description" type="varchar(100)">A laminated illustrated guide to the sea fish found</column>
             <column name="product_category_id" type="INT UNSIGNED">12</column>
@@ -460,7 +460,7 @@
         <insert tableName="products">
             <column name="id" type="INT UNSIGNED">25</column>
             <column name="product_name" type="varchar(50)">Drennan Meat Hooks</column>
-            <column name="product_price" type="FLOAT">2.5</column>
+            <column name="product_price" type="FLOAT">2.50</column>
             <column name="product_available" type="boolean" valueBoolean="true"/>
             <column name="product_description" type="varchar(100)">Sharpened to perfection to provide a clean yet precise pierce</column>
             <column name="product_category_id" type="INT UNSIGNED">13</column>
@@ -470,7 +470,7 @@
         <insert tableName="products">
             <column name="id" type="INT UNSIGNED">26</column>
             <column name="product_name" type="varchar(50)">Drennan Uptide Extra Hooks</column>
-            <column name="product_price" type="FLOAT">2.0</column>
+            <column name="product_price" type="FLOAT">2.00</column>
             <column name="product_available" type="boolean" valueBoolean="true"/>
             <column name="product_description" type="varchar(100)"></column>
             <column name="product_category_id" type="INT UNSIGNED">13</column>
@@ -485,6 +485,16 @@
             <column name="product_description" type="varchar(100)">Specifically designed for soft peeler crab</column>
             <column name="product_category_id" type="INT UNSIGNED">13</column>
             <column name="product_manufacturer_id" type="INT UNSIGNED">7</column>
+        </insert>
+
+        <insert tableName="products">
+            <column name="id" type="INT UNSIGNED">28</column>
+            <column name="product_name" type="varchar(50)">Daiwa Sea Hunter Z Boat Rods</column>
+            <column name="product_price" type="FLOAT">52.99</column>
+            <column name="product_available" type="boolean" valueBoolean="true"/>
+            <column name="product_description" type="varchar(100)">IFGA Rating: 12-20lb - Length: 7ft 6in - Guides: A/O</column>
+            <column name="product_category_id" type="INT UNSIGNED">19</column>
+            <column name="product_manufacturer_id" type="INT UNSIGNED">1</column>
         </insert>
 
         <insert tableName="products">
@@ -742,17 +752,7 @@
             <column name="product_name" type="varchar(50)">Daiwa Saltist Braid Special</column>
             <column name="product_price" type="FLOAT">148.99</column>
             <column name="product_available" type="boolean" valueBoolean="true"/>
-            <column name="product_description" type="varchar(100)">Premium carbon blanks using high grade carbon.</column>
-            <column name="product_category_id" type="INT UNSIGNED">19</column>
-            <column name="product_manufacturer_id" type="INT UNSIGNED">1</column>
-        </insert>
-
-        <insert tableName="products">
-            <column name="id" type="INT UNSIGNED">55</column>
-            <column name="product_name" type="varchar(50)">Daiwa Sea Hunter Z Boat Rods</column>
-            <column name="product_price" type="FLOAT">52.99</column>
-            <column name="product_available" type="boolean" valueBoolean="true"/>
-            <column name="product_description" type="varchar(100)">IFGA Rating: 12-20lb - Length: 7ft 6in - Guides: A/O</column>
+            <column name="product_description" type="varchar(100)">Premium carbon blanks using high grade carbon</column>
             <column name="product_category_id" type="INT UNSIGNED">19</column>
             <column name="product_manufacturer_id" type="INT UNSIGNED">1</column>
         </insert>

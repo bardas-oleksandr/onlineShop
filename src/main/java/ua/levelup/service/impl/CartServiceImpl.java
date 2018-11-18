@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import ua.levelup.dao.ProductDao;
 import ua.levelup.model.Product;
 import ua.levelup.service.CartService;
-import ua.levelup.web.dto.create.ProductCreateDto;
 import ua.levelup.web.dto.create.ProductInCartCreateDto;
 import ua.levelup.web.dto.view.CartViewDto;
 import ua.levelup.web.dto.view.ProductInCartViewDto;

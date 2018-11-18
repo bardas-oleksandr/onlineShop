@@ -11,7 +11,7 @@ import ua.levelup.web.dto.view.ManufacturerViewDto;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-@Component("filterUtils")
+@Component("searchUtils")
 public class SearchUtils {
 
     private static final int DEFAULT_CATEGORY_ID = 0;

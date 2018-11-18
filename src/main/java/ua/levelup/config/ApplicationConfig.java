@@ -7,7 +7,8 @@ import org.springframework.context.annotation.*;
 import org.springframework.context.support.ConversionServiceFactoryBean;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,7 +28,8 @@ import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
 
-/**Корневая конфигурация веб-контекста
+/**
+ * Корневая конфигурация веб-контекста
  * Автор: Бардась А. А.
  */
 @Configuration
@@ -46,7 +48,7 @@ public class ApplicationConfig {
     private GenericObjectPool<Connection> connectionPool;
 
     @Autowired
-    private Set<Converter<?,?>> converterSet;
+    private Set<Converter<?, ?>> converterSet;
 
     @Resource(name = "dataSource")
     private DataSource dataSource;
@@ -57,7 +59,7 @@ public class ApplicationConfig {
     }
 
     @Bean("bCryptPasswordEncoder")
-    public BCryptPasswordEncoder bCryptPasswordEncoder(){
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -66,15 +68,15 @@ public class ApplicationConfig {
     //В Spring MVC уже есть встроенный бин mvcConversionService,
     //поэтому нам не нужно создавать еще один.
     @Bean("conversionService")
-    public ConversionServiceFactoryBean conversionServiceFactoryBean(){
+    public ConversionServiceFactoryBean conversionServiceFactoryBean() {
         ConversionServiceFactoryBean factoryBean = new ConversionServiceFactoryBean();
         factoryBean.setConverters(converterSet);
         return factoryBean;
     }
 
     @Bean("converterSet")
-    public Set<Converter<?,?>> converterSet(){
-        Set<Converter<?,?>> converterSet = new HashSet<>();
+    public Set<Converter<?, ?>> converterSet() {
+        Set<Converter<?, ?>> converterSet = new HashSet<>();
         converterSet.add(new CategoryCreateDtoConverter());
         converterSet.add(new CredentialsCreateDtoConverter());
         converterSet.add(new ManufacturerCreateDtoConverter());
@@ -94,51 +96,58 @@ public class ApplicationConfig {
 
     //------------Конфигурирование валидаторов-------------------------------------
     @Bean("validator")
-    public LocalValidatorFactoryBean localValidatorFactoryBean(){
+    public LocalValidatorFactoryBean localValidatorFactoryBean() {
         return new LocalValidatorFactoryBean();
     }
 
     @Bean("applicationProperties")
-    public Properties applicationProperties(){
+    public Properties applicationProperties() {
         return loadProperties("application.properties");
     }
 
     @Bean("messagesProperties")
-    public Properties exceptionMessagesProperties(){
+    public Properties exceptionMessagesProperties() {
         return loadProperties(applicationProperties()
                 .getProperty("exception.messages.properties"));
     }
 
-    @Bean(name="connectionPool")
-    public GenericObjectPool<Connection> genericObjectPool(){
+    @Bean(name = "connectionPool")
+    public GenericObjectPool<Connection> genericObjectPool() {
         return new GenericObjectPool<Connection>(connectionFactory);
     }
 
     @Bean("connection")
     @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
     @Profile("!test")
-    public Connection connection() throws Exception{
+    public Connection connection() throws Exception {
         return connectionPool.borrowObject();
     }
 
+//    @Profile("!test")
+//    public DriverManagerDataSource driverManagerDataSource(){
+//        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+//        dataSource.setDriverClassName(applicationProperties().getProperty("driver"));
+//        dataSource.setUrl(applicationProperties().getProperty("url"));
+//        dataSource.setUsername(applicationProperties().getProperty("username"));
+//        dataSource.setPassword(applicationProperties().getProperty("password"));
+//        return dataSource;
+//    }
+
     @Bean("dataSource")
     @Profile("!test")
-    public DriverManagerDataSource driverManagerDataSource(){
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(applicationProperties().getProperty("driver"));
-        dataSource.setUrl(applicationProperties().getProperty("url"));
-        dataSource.setUsername(applicationProperties().getProperty("username"));
-        dataSource.setPassword(applicationProperties().getProperty("password"));
-        return dataSource;
+    public DataSource dataSource() {
+        return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2)
+                .addScripts(applicationProperties().getProperty("create.script")
+                        , applicationProperties().getProperty("insert.script")).build();
     }
 
     @Bean("namedParameterJdbcTemplate")
     @Profile("!test")
-    public NamedParameterJdbcTemplate namedParameterJdbcTemplate(){
+    public NamedParameterJdbcTemplate namedParameterJdbcTemplate() {
         return new NamedParameterJdbcTemplate(dataSource);
     }
 
-    private Properties loadProperties(String fileName){
+    private Properties loadProperties(String fileName) {
         Properties properties = new Properties();
         try (InputStream input = Thread.currentThread().getContextClassLoader()
                 .getResourceAsStream(fileName)) {
