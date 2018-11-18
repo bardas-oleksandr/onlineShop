@@ -15,4 +15,9 @@ public class ProductInCartViewDto implements Serializable {
 
     private ProductViewDto productViewDto;
     private int count;
+
+    public ProductInCartViewDto(ProductViewDto productViewDto, int count) {
+        this.productViewDto = productViewDto;
+        this.count = count;
+    }
 }

@@ -8,7 +8,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ua.levelup.testconfig.TestContextConfig;
-import ua.levelup.web.dto.create.SearchParamsCreateDto;
+import ua.levelup.web.dto.SearchParamsDto;
 
 import javax.validation.ConstraintViolation;
 import java.util.Set;
@@ -34,10 +34,10 @@ public class SearchParamsValidatorServiceTest {
     @Test
     public void validateTest_SearchParamsValidated() {
         //GIVEN
-        SearchParamsCreateDto dto = new SearchParamsCreateDto(1, 2,
+        SearchParamsDto dto = new SearchParamsDto(1, 2,
                 3, true, 4.0f, 5.0f, 1);
         //WHEN
-        Set<ConstraintViolation<SearchParamsCreateDto>> violations = searchParamsValidatorService
+        Set<ConstraintViolation<SearchParamsDto>> violations = searchParamsValidatorService
                 .validate(dto);
         //THEN
         Assert.assertEquals(0, violations.size());
@@ -50,10 +50,10 @@ public class SearchParamsValidatorServiceTest {
     @Test
     public void validateTest_whenCategoryIdIsNegative_thenNotValidated() {
         //GIVEN
-        SearchParamsCreateDto dto = new SearchParamsCreateDto(-1, 1,
+        SearchParamsDto dto = new SearchParamsDto(-1, 1,
                 2, true, 3.0f, 4.0f, 1);
         //WHEN
-        Set<ConstraintViolation<SearchParamsCreateDto>> violations = searchParamsValidatorService
+        Set<ConstraintViolation<SearchParamsDto>> violations = searchParamsValidatorService
                 .validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
@@ -68,10 +68,10 @@ public class SearchParamsValidatorServiceTest {
     @Test
     public void validateTest_whenSubcategoryIdIsNegative_thenNotValidated() {
         //GIVEN
-        SearchParamsCreateDto dto = new SearchParamsCreateDto(1, -1,
+        SearchParamsDto dto = new SearchParamsDto(1, -1,
                 2, true, 3.0f, 4.0f, 1);
         //WHEN
-        Set<ConstraintViolation<SearchParamsCreateDto>> violations = searchParamsValidatorService
+        Set<ConstraintViolation<SearchParamsDto>> violations = searchParamsValidatorService
                 .validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
@@ -86,10 +86,10 @@ public class SearchParamsValidatorServiceTest {
     @Test
     public void validateTest_whenManufacturerIdIsNegative_thenNotValidated() {
         //GIVEN
-        SearchParamsCreateDto dto = new SearchParamsCreateDto(1, 2,
+        SearchParamsDto dto = new SearchParamsDto(1, 2,
                 -1, true, 3.0f, 4.0f, 1);
         //WHEN
-        Set<ConstraintViolation<SearchParamsCreateDto>> violations = searchParamsValidatorService
+        Set<ConstraintViolation<SearchParamsDto>> violations = searchParamsValidatorService
                 .validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
@@ -104,10 +104,10 @@ public class SearchParamsValidatorServiceTest {
     @Test
     public void validateTest_whenMinPriceIsNegative_thenNotValidated() {
         //GIVEN
-        SearchParamsCreateDto dto = new SearchParamsCreateDto(0, 1,
+        SearchParamsDto dto = new SearchParamsDto(0, 1,
                 2, true, -0.1f, 4.0f, 1);
         //WHEN
-        Set<ConstraintViolation<SearchParamsCreateDto>> violations = searchParamsValidatorService
+        Set<ConstraintViolation<SearchParamsDto>> violations = searchParamsValidatorService
                 .validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
@@ -122,10 +122,10 @@ public class SearchParamsValidatorServiceTest {
     @Test
     public void validateTest_whenMinPriceBiggerThenMaxPrice_thenNotValidated() {
         //GIVEN
-        SearchParamsCreateDto dto = new SearchParamsCreateDto(0, 1,
+        SearchParamsDto dto = new SearchParamsDto(0, 1,
                 2, true, 5.0f, 4.0f, 1);
         //WHEN
-        Set<ConstraintViolation<SearchParamsCreateDto>> violations = searchParamsValidatorService
+        Set<ConstraintViolation<SearchParamsDto>> violations = searchParamsValidatorService
                 .validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
@@ -140,10 +140,10 @@ public class SearchParamsValidatorServiceTest {
     @Test
     public void validateTest_whenOrderMethodIsNegative_thenNotValidated() {
         //GIVEN
-        SearchParamsCreateDto dto = new SearchParamsCreateDto(0, 1,
+        SearchParamsDto dto = new SearchParamsDto(0, 1,
                 2, true, 3.0f, 4.0f, -1);
         //WHEN
-        Set<ConstraintViolation<SearchParamsCreateDto>> violations = searchParamsValidatorService
+        Set<ConstraintViolation<SearchParamsDto>> violations = searchParamsValidatorService
                 .validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
@@ -158,10 +158,10 @@ public class SearchParamsValidatorServiceTest {
     @Test
     public void validateTest_whenOrderMethodBiggerThenTwo_thenNotValidated() {
         //GIVEN
-        SearchParamsCreateDto dto = new SearchParamsCreateDto(0, 1,
+        SearchParamsDto dto = new SearchParamsDto(0, 1,
                 2, true, 3.0f, 4.0f, 3);
         //WHEN
-        Set<ConstraintViolation<SearchParamsCreateDto>> violations = searchParamsValidatorService
+        Set<ConstraintViolation<SearchParamsDto>> violations = searchParamsValidatorService
                 .validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());

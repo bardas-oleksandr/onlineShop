@@ -338,7 +338,7 @@
         	    <legend class="bar-legend">
         	        <spring:message code="search_products"/>
         	    </legend>
-        	    <form action="${pageContext.request.contextPath}/product" method="GET">
+        	    <form action="${pageContext.request.contextPath}/product" modelAttribute="searchParams" method="GET">
         	        <label>
         	            <spring:message code="category_label"/>
         	        </label>
@@ -383,13 +383,13 @@
                     <div class="input-group mb-3">
                         <select id="searchManufacturerId" name="manufacturerId" class="custom-select">
                             <option
-                                <c:if test="${sessionScope.searchParams.product.manufacturerId == 0}">
+                                <c:if test="${sessionScope.searchParams.manufacturerId == 0}">
                                     selected
                                 </c:if>
                             value="0"><spring:message code="all"/></option>
                             <c:forEach var="manufacturer" items="${manufacturerList}">
                                 <option
-                                    <c:if test="${sessionScope.searchParams.product.manufacturerId == manufacturer.id}">
+                                    <c:if test="${sessionScope.searchParams.manufacturerId == manufacturer.id}">
                                         selected
                                     </c:if>
                                 value=${manufacturer.id}>${manufacturer.name}</option>
@@ -400,19 +400,19 @@
                         <spring:message code="sort_by_label"/>
                     </label>
     				<div class="input-group mb-3">
-    					<select id="searchSortByParam" name="sortByParam" class="custom-select">
+    					<select id="searchSortByParam" name="orderMethodIndex" class="custom-select">
     						<option
-                                <c:if test="${sessionScope.searchParams.orderMethod == 'CHEAP_FIRST'}">
+                                <c:if test="${sessionScope.searchParams.orderMethodIndex == 0}">
                                     selected
                                 </c:if>
     						value="0"><spring:message code="cheap_first"/></option>
     						<option
-                                <c:if test="${sessionScope.searchParams.orderMethod == 'CHEAP_LAST'}">
+                                <c:if test="${sessionScope.searchParams.orderMethodIndex == 1}">
                                     selected
                                 </c:if>
     						value="1"><spring:message code="expensive_first"/></option>
     						<option
-                                <c:if test="${sessionScope.searchParams.orderMethod == 'PRODUCT_NAME'}">
+                                <c:if test="${sessionScope.searchParams.orderMethodIndex == 2}">
                                     selected
                                 </c:if>
     						value="2"><spring:message code="alphabetical_order"/></option>
@@ -434,10 +434,10 @@
     				<div class="input-group mb-3">
     					<label>
     						<input
-    						    <c:if test="${sessionScope.searchParams.product.available == true}">
+    						    <c:if test="${sessionScope.searchParams.availableOnly == true}">
     						        checked
     						    </c:if>
-    						 name="available" type="checkbox">
+    						 name="availableOnly" type="checkbox">
     						<spring:message code="only_available"/>
     					</label>
     				</div>
@@ -464,7 +464,7 @@
 
                     <!--AVAILABLE FOR NOT AUTHENTICATED USERS AND USERS WITH ACTIVE STATE-->
                     <security:authorize access="!isAuthenticated() or hasRole('ACTIVE')">
-                        <form action="${pageContext.request.contextPath}/cart/${product.id}" method="POST">
+                        <form action="${pageContext.request.contextPath}/cart/${product.id}" modelAttribute="productInCartCreateDto" method="POST">
                             <div class="card">
                                 <div class="card-header" id="headingOne${product.id}">
                                     <h5 class="mb-0">
@@ -494,8 +494,8 @@
                                 <div id="collapseOne${product.id}" class="collapse" aria-labelledby="headingOne${product.id}" data-parent="#productListWrapper">
                                     <div class="card-body">
                                         <h6><b><spring:message code="description_label"/>:</b> ${product.description}</h6>
-                                        <h6><b><spring:message code="category_label"/>:</b> ${product.categoryName}</h6>
-                                        <h6><b><spring:message code="manufacturer_label"/>:</b> ${product.manufacturerName}</h6>
+                                        <h6><b><spring:message code="category_label"/>:</b> ${product.categoryViewDto.name}</h6>
+                                        <h6><b><spring:message code="manufacturer_label"/>:</b> ${product.manufacturerViewDto.name}</h6>
                                         <div class="form-group">
                                             <label for="exampleFormControlSelect1">
                                                 <spring:message code="product_count"/>
@@ -507,6 +507,7 @@
                                                 <option value="4">4</option>
                                                 <option value="5">5</option>
                                             </select>
+                                            <input type="hidden" name="productId" value="${product.id}"/>
                                         </div>
                                     </div>
                                 </div>
@@ -531,7 +532,7 @@
                                     <select id="editCategoryId" name="categoryId" class="custom-select">
                                         <c:forEach var="category" items="${subcategoryList}">
                                             <option
-                                                <c:if test="${product.categoryId == category.id}">
+                                                <c:if test="${product.categoryViewDto.id == category.id}">
                                                     selected
                                                 </c:if>
                                             value=${category.id}>${category.name}</option>
@@ -545,7 +546,7 @@
                                     <select id="editManufacturerId" name="manufacturerId" class="custom-select">
                                         <c:forEach var="manufacturer" items="${manufacturerList}">
                                             <option
-                                                <c:if test="${product.manufacturerId == manufacturer.id}">
+                                                <c:if test="${product.manufacturerViewDto.id == manufacturer.id}">
                                                     selected
                                                 </c:if>
                                             value=${manufacturer.id}>${manufacturer.name}</option>

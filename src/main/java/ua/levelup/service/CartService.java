@@ -1,12 +1,13 @@
 package ua.levelup.service;
 
-import ua.levelup.model.Cart;
+import ua.levelup.web.dto.create.ProductInCartCreateDto;
 import ua.levelup.web.dto.view.CartViewDto;
 import ua.levelup.web.dto.view.ProductViewDto;
 
+import javax.validation.Valid;
 import java.util.Map;
 
 public interface CartService {
-    void putIntoCart(Cart cart, Integer productId, Integer count);
+    void putIntoCart(CartViewDto cart, @Valid ProductInCartCreateDto productInCartCreateDto);
     Map<Integer, ProductViewDto> retrieveCartProducts(CartViewDto cartDto);
 }

@@ -68,15 +68,15 @@
 		    <!--LIST OF PRODUCTS IN THE CART-->
             <div class="modal-body">
                 <c:choose>
-                    <c:when test="${empty sessionScope.cart or sessionScope.cart.size == 0}">
+                    <c:when test="${empty sessionScope.cart or sessionScope.cart.productInCartViewDtoList.size() == 0}">
                         <div class="form-group">
                             <h6><spring:message code="empty_purchase_list"/></h6>
                         </div>
                     </c:when>
                     <c:otherwise>
-                        <c:forEach var="productId" items="${sessionScope.cart.productCountMap.keySet()}">
-                            <c:set var="product" scope="page" value="${sessionScope.cart.productViewDtoMap.get(productId)}"/>
-                            <c:set var="count" scope="page" value="${sessionScope.cart.productCountMap.get(productId)}"/>
+                        <c:forEach var="productInCart" items="${sessionScope.cart.productInCartViewDtoList}">
+                            <c:set var="product" scope="page" value="${productInCart.productViewDto}"/>
+                            <c:set var="count" scope="page" value="${productInCart.count}"/>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">${product.name}</span>
@@ -84,28 +84,30 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">$</span>
                                 </div>
-                                <input id="priceFor${productId}" name="priceFor${productId}" readonly type="text" value="${product.price}" class="form-control">
+                                <input id="priceFor${product.id}" name="priceFor${product.id}" readonly type="text" value="${product.price}" class="form-control">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><spring:message code="product_count"/>:</span>
                                 </div>
-                                <input id="countFor${productId}" name="countFor${productId}" readonly type="text" value="${count}" class="form-control">
+                                <input id="countFor${product.id}" name="countFor${product.id}" readonly type="text" value="${count}" class="form-control">
                             </div>
                         </c:forEach>
                     </c:otherwise>
                 </c:choose>
             </div>
 
-            <c:choose>
-                <c:when test="${not empty sessionScope.cart and sessionScope.cart.size > 0}">
-                    <div class="modal-body">
-                        <form action="${pageContext.request.contextPath}/order" method="post">
+            <c:if test="${not empty sessionScope.cart and sessionScope.cart.productInCartViewDtoList.size() > 0}">
+                <div class="modal-body">
+
+                    <!--AVAILABLE FOR ACTIVE STATE USER-->
+	                <security:authorize access="hasRole('ACTIVE')">
+                        <form action="${pageContext.request.contextPath}/order" method="POST">
 
                             <!--DELIVERY ADDRESS-->
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text" id="deliveryAddresLabel"><spring:message code="address_label"/></span>
+                                    <span class="input-group-text" id="deliveryAddressLabel"><spring:message code="address_label"/></span>
                                 </div>
-                                <input id="address" name="address" type="text" class="form-control" aria-describedby=="deliveryAddresLabel">
+                                <input id="address" name="address" type="text" class="form-control" aria-describedby=="deliveryAddressLabel">
                             </div
 
                             <!--PAYMENT CONDITIONS-->
@@ -113,7 +115,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="paymentConditionsLabel"><spring:message code="payment_conditions"/></span>
                                 </div>
-    					        <select id="paymentConditions" name="paymentConditions" class="custom-select" aria-describedby=="paymentConditionsLabel">
+    					        <select id="paymentConditions" name="paymentConditionsIndex" class="custom-select" aria-describedby=="paymentConditionsLabel">
     						        <option selected value="0">
     						            <spring:message code="cash_payment"/>
     						        </option>
@@ -125,26 +127,36 @@
 
     				        <!--CONFIRM PURCHASE BUTTON-->
     				        <div class="input-group mb-3">
-                                <input type="hidden" name="_method" value="POST">
                                 <button type="submit" class="btn btn-primary">
                                     <spring:message code="complete_purchase"/>
                                 </button>
                             </div>
 
                         </form>
-                        <form action="${pageContext.request.contextPath}/cart" method="post">
+                    </security:authorize>
 
-                            <!--FLUSH CART BUTTON-->
+                    <!--LOGIN BUTTON-->
+                    <security:authorize access="!isAuthenticated()">
+                        <form action="${pageContext.request.contextPath}/login" method="GET">
                             <div class="input-group mb-3">
-                                <button type="submit" class="btn btn-secondary" data-dismiss="modal">
-                                    <spring:message code="flush_cart"/>
+                                <button type="submit" class="btn btn-outline-success" data-toggle="modal">
+                                    <spring:message code="login"/>
                                 </button>
                             </div>
-
                         </form>
-                    </div>
-                </c:when>
-            </c:choose>
+                    </security:authorize>
+
+                    <!--FLUSH CART BUTTON-->
+                    <form action="${pageContext.request.contextPath}/cart/flush" method="post">
+                        <div class="input-group mb-3">
+                            <button type="submit" class="btn btn-secondary" data-dismiss="modal">
+                                <spring:message code="flush_cart"/>
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </c:if>
         </div>
 
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

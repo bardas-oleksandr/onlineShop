@@ -5,6 +5,7 @@ import lombok.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Setter
 @Getter
@@ -18,5 +19,18 @@ public class CartViewDto implements Serializable {
 
     public CartViewDto(){
         this.productInCartViewDtoList = new ArrayList<>();
+    }
+
+    public void putIntoCart(@NonNull ProductInCartViewDto productInCartViewDto) {
+        ProductViewDto productViewDto = productInCartViewDto.getProductViewDto();
+        int productCount = productInCartViewDto.getCount();
+        Optional<ProductInCartViewDto> productInCartOptional = productInCartViewDtoList.stream()
+                .filter((item) -> item.getProductViewDto().getId() == productViewDto.getId()).findFirst();
+        if (productInCartOptional.isPresent()){
+            ProductInCartViewDto productInCart = productInCartOptional.get();
+            productInCart.setCount(productInCart.getCount() + productCount);
+        }else{
+            productInCartViewDtoList.add(productInCartViewDto);
+        }
     }
 }

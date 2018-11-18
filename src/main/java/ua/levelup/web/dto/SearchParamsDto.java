@@ -1,4 +1,4 @@
-package ua.levelup.web.dto.create;
+package ua.levelup.web.dto;
 
 import lombok.*;
 
@@ -11,7 +11,7 @@ import javax.validation.constraints.Min;
 @ToString
 @EqualsAndHashCode
 @NoArgsConstructor
-public class SearchParamsCreateDto {
+public class SearchParamsDto {
 
     @Min(value = 0, message = "negative_search_category_id")
     private int categoryId;
@@ -32,9 +32,9 @@ public class SearchParamsCreateDto {
     @Max(value = 2, message = "unacceptable_order_method")
     private int orderMethodIndex;
 
-    public SearchParamsCreateDto(int categoryId, int subcategoryId, int manufacturerId,
-                                 boolean availableOnly, float minPrice, float maxPrice,
-                                 int orderMethodIndex) {
+    public SearchParamsDto(int categoryId, int subcategoryId, int manufacturerId,
+                           boolean availableOnly, float minPrice, float maxPrice,
+                           int orderMethodIndex) {
         this.categoryId = categoryId;
         this.subcategoryId = subcategoryId;
         this.manufacturerId = manufacturerId;

@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import ua.levelup.converter.SearchParamsDtoConverter;
 import ua.levelup.converter.fromdto.*;
 import ua.levelup.converter.todto.*;
 import ua.levelup.dao.config.ConnectionFactory;
@@ -80,16 +81,13 @@ public class ApplicationConfig {
         converterSet.add(new OrderCreateDtoConverter());
         converterSet.add(new OrderPositionCreateDtoConverter());
         converterSet.add(new ProductCreateDtoConverter());
-        converterSet.add(new ProductInCartCreateDtoConverter());
-        converterSet.add(new SearchParamsCreateDtoConverter());
+        converterSet.add(new SearchParamsDtoConverter());
         converterSet.add(new UserCreateDtoConverter());
-        converterSet.add(new CartConverter());
         converterSet.add(new CategoryConverter());
         converterSet.add(new ManufacturerConverter());
         converterSet.add(new OrderConverter());
         converterSet.add(new OrderPositionConverter());
         converterSet.add(new ProductConverter());
-        converterSet.add(new ProductInCartConverter());
         converterSet.add(new UserConverter());
         return converterSet;
     }

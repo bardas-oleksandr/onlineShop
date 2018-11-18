@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import ua.levelup.controller.support.FilterUtils;
+import ua.levelup.controller.support.SearchUtils;
 import ua.levelup.service.UserService;
 import ua.levelup.web.dto.view.UserViewDto;
 
@@ -22,16 +22,17 @@ public class MainController {
     private static final String PROFILE_PAGE = "profile";
     private static final String ERROR_PAGE = "error";
     private static final String SPRING_SECURITY_CONTEXT = "SPRING_SECURITY_CONTEXT";
+    private static final String USER_ATTRIBUTE = "user";
 
     @Autowired
-    private FilterUtils filterUtils;
+    private SearchUtils filterUtils;
 
     @Autowired
     private UserService userService;
 
     @GetMapping(value = ROOT)
-    public String indexPage(ModelMap modelMap) {
-        filterUtils.setDefaultAttributes(modelMap);
+    public String indexPage(HttpServletRequest request) {
+        filterUtils.setDefaultAttributes(request.getSession(true));
         return INDEX_PAGE;
     }
 
@@ -43,7 +44,7 @@ public class MainController {
         String email = user.getUsername();
 
         UserViewDto viewDto = userService.getUserViewDto(email);
-        modelMap.addAttribute("user", viewDto);
+        modelMap.addAttribute(USER_ATTRIBUTE, viewDto);
 
         return PROFILE_PAGE;
     }
