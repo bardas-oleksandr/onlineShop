@@ -2,6 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" errorPage="/error.jsp" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
 
 <html>
 	<head>
@@ -14,12 +15,13 @@
         <link href="${pageContext.request.contextPath}/resources/css/index_styles.css" type="text/css" rel="stylesheet">
 	</head>
 	<body>
-	    <!--Navigation bar-->
+	    <!--TOP SIDE BAR-->
 	    <nav class="navbar navbar-light bg-light">
 	        <a class="navbar-brand">
 	            <spring:message code="online_shop_title"/>
 	        </a>
             <div class="btn-group" role="group" aria-label="Basic example">
+
                 <!--MAIN PAGE BUTTON-->
                 <a href="${pageContext.request.contextPath}/">
                     <button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#modalCenter-MainPage">
@@ -37,50 +39,52 @@
                         <a href="?lang=ru">ru</a>
                     </span>
                 </div>
+
             </div>
         </nav>
 
-	    <!--Central bar-->
+	    <!--CENTRAL BAR-->
 		<div class="main-bar">
-            <c:choose>
-                <c:when test="${empty sessionScope.user}">
-                    <!--LOGIN FORM. Available only for anonymous users-->
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">
-                                    <spring:message code="login_form"/>
-                                </h5>
-                            </div>
-                            <c:url value="/j_spring_security_check" var="loginUrl"/>
-                            <form action="${loginUrl}" method="POST">
-                                <div class="modal-body">
-                                    <div class="form-group">
-                                        <label for="loginEmail">
-                                            <spring:message code="email_address_label"/>
-                                        </label>
-                                        <input type="text" name="email" class="form-control" id="loginEmail" aria-describedby="emailHelp" placeholder="Enter email">
-                                        <small id="emailHelp" class="form-text text-muted">
-                                            <spring:message code="our_promise"/>
-                                        </small>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="loginPassword">
-                                            <spring:message code="password_label"/>
-                                        </label>
-                                        <input type="password" name="password" class="form-control" id="loginPassword" placeholder="Password">
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary">
-                                        <spring:message code="login"/>
-                                    </button>
-                                </div>
-                            </form>
+
+		    <!--LOGIN FORM-->
+            <!--AVAILABLE FOR NOT AUTHENTICATED USERS-->
+            <security:authorize access="!isAuthenticated()">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">
+                                <spring:message code="login_form"/>
+                            </h5>
                         </div>
+                        <c:url value="/j_spring_security_check" var="loginUrl"/>
+                        <form action="${loginUrl}" method="POST">
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="loginEmail">
+                                        <spring:message code="email_address_label"/>
+                                    </label>
+                                    <input type="text" name="email" class="form-control" id="loginEmail" aria-describedby="emailHelp" placeholder="Enter email">
+                                    <small id="emailHelp" class="form-text text-muted">
+                                        <spring:message code="our_promise"/>
+                                    </small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="loginPassword">
+                                        <spring:message code="password_label"/>
+                                    </label>
+                                    <input type="password" name="password" class="form-control" id="loginPassword" placeholder="Password">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">
+                                    <spring:message code="login"/>
+                                </button>
+                            </div>
+                        </form>
                     </div>
-                </c:when>
-            </c:choose>
+                </div>
+            </security:authorize>
+
         </div>
 
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

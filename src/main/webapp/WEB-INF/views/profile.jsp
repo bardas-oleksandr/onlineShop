@@ -2,6 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" errorPage="/error.jsp" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
 
 <html>
 	<head>
@@ -19,51 +20,36 @@
 	        <a class="navbar-brand">
 	            <spring:message code="online_shop_title"/>
 	        </a>
-	        <c:choose>
-                <c:when test="${sessionScope.user.state == 2}">
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                        <!--LOGOUT BUTTON-->
-                        <form action="${pageContext.request.contextPath}/logout" method="POST">
-                            <button type="submit" class="btn btn-outline-success" data-toggle="modal" data-target="#modalCenter-MainPage">
-                                <spring:message code="logout"/>
-                            </button>
-                        </form>
-                   	    <!--LANGUAGE BUTTONS-->
-                   	    <div id="localizationFrame">
-                   	        <span style="float: right">
-                                <a href="?lang=en">en</a>
-                                |
-                                <a href="?lang=ua">ua</a>
-                                |
-                                <a href="?lang=ru">ru</a>
-                            </span>
-                        </div>
-                    </div>
-                </c:when>
-                <c:otherwise>
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                        <!--MAIN PAGE BUTTON-->
-                        <a href="${pageContext.request.contextPath}/">
-                            <button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#modalCenter-MainPage">
-                                <spring:message code="main_page_title"/>
-                            </button>
-                        </a>
-                   	    <!--LANGUAGE BUTTONS-->
-                   	    <div id="localizationFrame">
-                   	        <span style="float: right">
-                                <a href="?lang=en">en</a>
-                                |
-                                <a href="?lang=ua">ua</a>
-                                |
-                                <a href="?lang=ru">ru</a>
-                            </span>
-                        </div>
-                    </div>
-                </c:otherwise>
-            </c:choose>
+            <div class="btn-group" role="group" aria-label="Basic example">
+
+            <!--MAIN PAGE BUTTON-->
+            <a href="${pageContext.request.contextPath}/">
+                <button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#modalCenter-MainPage">
+                    <spring:message code="main_page_title"/>
+                </button>
+            </a>
+
+            <!--LOGOUT BUTTON-->
+            <form action="${pageContext.request.contextPath}/logout" method="POST">
+                <button type="submit" class="btn btn-outline-success" data-toggle="modal" data-target="#modalCenter-MainPage">
+                    <spring:message code="logout"/>
+                </button>
+            </form>
+
+            <!--LANGUAGE BUTTONS-->
+            <div id="localizationFrame">
+                <span style="float: right">
+                    <a href="?lang=en">en</a>
+                    |
+                    <a href="?lang=ua">ua</a>
+                    |
+                    <a href="?lang=ru">ru</a>
+                </span>
+            </div>
+
         </nav>
 
-        <!--Left side bar-->
+        <!--LEFT SIDE BAR-->
 	    <div class="left-side-bar">
 	        <div class="alert alert-warning" role="alert">
                 <div class="input-group mb-3">
@@ -80,34 +66,39 @@
             </div>
 	    </div>
 
-	    <!--Central bar-->
+	    <!--CENTRAL BAR-->
 		<div class="main-bar">
-            <c:choose>
-                <c:when test="${sessionScope.user.state == 2}">
-                    <div class="message-style">
-                        <div class="alert alert-danger" role="alert">
-                            <spring:message code="blocked_message"/>
-                        </div>
+
+            <!--SHOW ORDERS BUTTON-->
+            <!--AVAILABLE FOR ACTIVE USERS-->
+            <security:authorize access="hasRole('ACTIVE')">
+                <form action="${pageContext.request.contextPath}/userOrders" method="get">
+                    <div class="input-group mb-3">
+                        <button type="submit" class="btn btn-primary" data-dismiss="modal">
+                            <spring:message code="watch_orders_list"/>
+                        </button>
                     </div>
-                </c:when>
-                <c:when test="${sessionScope.user.state == 1}">
-                    <form action="${pageContext.request.contextPath}/userOrders" method="get">
-                        <!--SHOW ORDERS BUTTON-->
-                        <div class="input-group mb-3">
-                            <button type="submit" class="btn btn-primary" data-dismiss="modal">
-                                <spring:message code="watch_orders_list"/>
-                            </button>
-                        </div>
-                    </form>
-                </c:when>
-                <c:otherwise>
-                    <div class="message-style">
-                        <div class="alert alert-success" role="alert">
-                            <spring:message code="admin_welcome"/>
-                        </div>
+                </form>
+            </security:authorize>
+
+            <!--AVAILABLE FOR ADMINISTRATORS-->
+            <security:authorize access="hasRole('ADMIN')">
+                <div class="message-style">
+                    <div class="alert alert-success" role="alert">
+                        <spring:message code="admin_welcome"/>
                     </div>
-                </c:otherwise>
-            </c:choose>
+                </div>
+            </security:authorize>
+
+            <!--AVAILABLE FOR BLOCKED USERS-->
+            <security:authorize access="hasRole('BLOCKED')">
+                <div class="message-style">
+                    <div class="alert alert-danger" role="alert">
+                        <spring:message code="blocked_message"/>
+                    </div>
+                </div>
+            </security:authorize>
+
         </div>
 
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
 
 <html>
 	<head>
@@ -21,6 +22,7 @@
 	            <spring:message code="online_shop_title"/>
 	        </a>
             <div class="btn-group" role="group" aria-label="Basic example">
+
                 <!--MAIN PAGE BUTTON-->
                 <a href="${pageContext.request.contextPath}/">
                     <button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#modalCenter-MainPage">
@@ -38,10 +40,11 @@
                         <a href="?lang=ru">ru</a>
                     </span>
                 </div>
+
             </div>
         </nav>
 
-        <!--Left side bar-->
+        <!--LEFT SIDE BAR-->
 	    <div class="left-side-bar">
 	        <div class="alert alert-warning" role="alert">
                 <div class="input-group mb-3">
@@ -58,90 +61,83 @@
             </div>
 	    </div>
 
-	    <!--Central bar-->
+	    <!--CENTRAL BAR-->
 		<div class="order-bar">
-            <c:choose>
-                <c:when test="${sessionScope.user.state == 1}">
-                    <div class="alert alert-warning" role="alert">
-                        <c:choose>
-                            <c:when test="${empty sessionScope.orderList}">
-                                <div class="input-group mb-3">
-                                    <h4><spring:message code="empty_order_list"/></h4>
-                                </div>
-                            </c:when>
-                            <c:otherwise>
-                                <div class="input-group mb-3">
-                                    <h4><spring:message code="orders_list"/></h4>
-                                </div>
-                                <div class="accordion" id="orderListWrapper">
-                                    <c:forEach var="order" items="${sessionScope.orderList}">
-                                        <div class="card">
-                                            <div class="card-header" id="headingOne${order.id}">
-                                                <h5 class="mb-0">
-                                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseOne${order.id}" aria-expanded="true" aria-controls="collapseOne${order.id}">
-                                                        <div class="input-group mb-3">
-                                                            <div class="input-group-prepend">
-                                                                <span class="input-group-text"><spring:message code="order_label"/> # ${order.id}</span>
-                                                            </div>
-                                                            <div class="input-group-prepend">
-                                                                <span class="input-group-text"><spring:message code="date_label"/>:</span>
-                                                            </div>
-                                                            <input readonly type="text" value="${order.date}" class="form-control">
-                                                            <div class="input-group-prepend">
-                                                                <span class="input-group-text"><spring:message code="status_label"/>:</span>
-                                                            </div>
-                                                            <c:set var="status" scope="page">
-                                                                <c:choose>
-                                                                    <c:when test="${order.state == 0}">
-                                                                        <spring:message code="status_registered"/>
-                                                                    </c:when>
-                                                                    <c:when  test="${order.state == 1}">
-                                                                        <spring:message code="status_payed"/>
-                                                                    </c:when>
-                                                                    <c:when  test="${order.state == 2}">
-                                                                        <spring:message code="status_canceled"/>
-                                                                    </c:when>
-                                                                </c:choose>
-                                                            </c:set>
-                                                            <input readonly type="text" value="${pageScope.status}" class="form-control">
+
+            <!--AVAILABLE FOR ACTIVE STATE USERS-->
+            <security:authorize access="hasRole('ACTIVE')">
+                <div class="alert alert-warning" role="alert">
+                    <c:choose>
+                        <c:when test="${empty sessionScope.orderList}">
+                            <div class="input-group mb-3">
+                                <h4><spring:message code="empty_order_list"/></h4>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            <div class="input-group mb-3">
+                                <h4><spring:message code="orders_list"/></h4>
+                            </div>
+                            <div class="accordion" id="orderListWrapper">
+                                <c:forEach var="order" items="${sessionScope.orderList}">
+                                    <div class="card">
+                                        <div class="card-header" id="headingOne${order.id}">
+                                            <h5 class="mb-0">
+                                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseOne${order.id}" aria-expanded="true" aria-controls="collapseOne${order.id}">
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><spring:message code="order_label"/> # ${order.id}</span>
                                                         </div>
-                                                    </button>
-                                                </h5>
-                                            </div>
-                                            <div id="collapseOne${order.id}" class="collapse" aria-labelledby="headingOne${order.id}" data-parent="#orderListWrapper">
-                                                <div class="card-body">
-                                                    <c:forEach var="orderPosition" items="${order.orderPositionList}">
-                                                        <div class="input-group mb-3">
-                                                            <div class="input-group-prepend">
-                                                                <span class="input-group-text">${orderPosition.productName}</span>
-                                                            </div>
-                                                            <div class="input-group-prepend">
-                                                                <span class="input-group-text">$</span>
-                                                            </div>
-                                                            <input readonly type="text" value="${orderPosition.unitPrice}" class="form-control">
-                                                            <div class="input-group-prepend">
-                                                                <span class="input-group-text"><spring:message code="product_count"/>:</span>
-                                                            </div>
-                                                            <input readonly type="text" value="${orderPosition.quantity}" class="form-control">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><spring:message code="date_label"/>:</span>
                                                         </div>
-                                                    </c:forEach>
-                                                </div>
+                                                        <input readonly type="text" value="${order.date}" class="form-control">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><spring:message code="status_label"/>:</span>
+                                                        </div>
+                                                        <c:set var="status" scope="page">
+                                                            <c:choose>
+                                                                <c:when test="${order.state == 0}">
+                                                                    <spring:message code="status_registered"/>
+                                                                </c:when>
+                                                                <c:when  test="${order.state == 1}">
+                                                                    <spring:message code="status_payed"/>
+                                                                </c:when>
+                                                                <c:when  test="${order.state == 2}">
+                                                                    <spring:message code="status_canceled"/>
+                                                                </c:when>
+                                                            </c:choose>
+                                                        </c:set>
+                                                        <input readonly type="text" value="${pageScope.status}" class="form-control">
+                                                    </div>
+                                                </button>
+                                            </h5>
+                                        </div>
+                                        <div id="collapseOne${order.id}" class="collapse" aria-labelledby="headingOne${order.id}" data-parent="#orderListWrapper">
+                                            <div class="card-body">
+                                                <c:forEach var="orderPosition" items="${order.orderPositionList}">
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">${orderPosition.productName}</span>
+                                                        </div>
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">$</span>
+                                                        </div>
+                                                        <input readonly type="text" value="${orderPosition.unitPrice}" class="form-control">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><spring:message code="product_count"/>:</span>
+                                                        </div>
+                                                        <input readonly type="text" value="${orderPosition.quantity}" class="form-control">
+                                                    </div>
+                                                </c:forEach>
                                             </div>
-                                        <!--</div>-->
-                                    </c:forEach>
-                                </div>
-                            </c:otherwise>
-                        </c:choose>
-                    </div>
-                </c:when>
-                <c:otherwise>
-                    <div class="message-style">
-                        <div class="alert alert-success" role="alert">
-                            <spring:message code="admin_welcome"/>
-                        </div>
-                    </div>
-                </c:otherwise>
-            </c:choose>
+                                        </div>
+                                    <!--</div>-->
+                                </c:forEach>
+                            </div>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+            </security:authorize>
         </div>
 
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

@@ -2,6 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" errorPage="/error.jsp" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
 
 <html>
 	<head>
@@ -14,12 +15,13 @@
         <link href="${pageContext.request.contextPath}/resources/css/index_styles.css" type="text/css" rel="stylesheet">
 	</head>
 	<body>
-	    <!--Navigation bar-->
+	    <!--TOP SIDE BAR-->
 	    <nav class="navbar navbar-light bg-light">
 	        <a class="navbar-brand">
 	            <spring:message code="online_shop_title"/>
 	        </a>
             <div class="btn-group" role="group" aria-label="Basic example">
+
                 <!--MAIN PAGE BUTTON-->
                 <a href="${pageContext.request.contextPath}/">
                     <button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#modalCenter-MainPage">
@@ -37,32 +39,33 @@
                         <a href="?lang=ru">ru</a>
                     </span>
                 </div>
+
             </div>
         </nav>
 
-        <!--Left side bar-->
+        <!--LEFT SIDE BAR-->
 	    <div class="left-side-bar">
-	        <c:choose>
-                <c:when test="${sessionScope.user.state == 1}">
-	                <div class="alert alert-warning" role="alert">
-                        <div class="input-group mb-3">
-                            <h4 class="modal-title">
-                                <spring:message code="personal_data_label"/>
-                            </h5>
-                        </div>
-                        <div class="input-group mb-3">
-                            <h5><spring:message code="user_name_label"/>: ${user.userName}</h5>
-                        </div>
-                        <div class="input-group mb-3">
-                            <h5><spring:message code="email_address_label"/>: ${user.email}</h5>
-                        </div>
+	        <security:authorize access="hasRole('ACTIVE')">
+	            <div class="alert alert-warning" role="alert">
+                    <div class="input-group mb-3">
+                        <h4 class="modal-title">
+                            <spring:message code="personal_data_label"/>
+                        </h4>
                     </div>
-                </c:when>
-            </c:choose>
+                    <div class="input-group mb-3">
+                        <h5><spring:message code="user_name_label"/>: ${user.userName}</h5>
+                    </div>
+                    <div class="input-group mb-3">
+                        <h5><spring:message code="email_address_label"/>: ${user.email}</h5>
+                    </div>
+                </div>
+            </security:authorize>
 	    </div>
 
-	    <!--Central bar-->
+	    <!--CENTRAL BAR-->
 		<div class="main-bar">
+
+		    <!--LIST OF PRODUCTS IN THE CART-->
             <div class="modal-body">
                 <c:choose>
                     <c:when test="${empty sessionScope.cart or sessionScope.cart.size == 0}">
@@ -92,18 +95,19 @@
                 </c:choose>
             </div>
 
-
             <c:choose>
                 <c:when test="${not empty sessionScope.cart and sessionScope.cart.size > 0}">
                     <div class="modal-body">
                         <form action="${pageContext.request.contextPath}/order" method="post">
+
                             <!--DELIVERY ADDRESS-->
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="deliveryAddresLabel"><spring:message code="address_label"/></span>
                                 </div>
                                 <input id="address" name="address" type="text" class="form-control" aria-describedby=="deliveryAddresLabel">
-                            </div>
+                            </div
+
                             <!--PAYMENT CONDITIONS-->
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
@@ -118,6 +122,7 @@
     						        </option>
     					        </select>
     				        </div>
+
     				        <!--CONFIRM PURCHASE BUTTON-->
     				        <div class="input-group mb-3">
                                 <input type="hidden" name="_method" value="POST">
@@ -125,15 +130,17 @@
                                     <spring:message code="complete_purchase"/>
                                 </button>
                             </div>
+
                         </form>
                         <form action="${pageContext.request.contextPath}/cart" method="post">
+
                             <!--FLUSH CART BUTTON-->
                             <div class="input-group mb-3">
-                                <input type="hidden" name="_method" value="DELETE">
                                 <button type="submit" class="btn btn-secondary" data-dismiss="modal">
                                     <spring:message code="flush_cart"/>
                                 </button>
                             </div>
+
                         </form>
                     </div>
                 </c:when>

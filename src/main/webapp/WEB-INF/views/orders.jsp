@@ -20,6 +20,7 @@
 	            <spring:message code="online_shop_title"/>
 	        </a>
             <div class="btn-group" role="group" aria-label="Basic example">
+
                 <!--MAIN PAGE BUTTON-->
                 <a href="${pageContext.request.contextPath}/">
                     <button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#modalCenter-MainPage">
@@ -37,17 +38,18 @@
                         <a href="?lang=ru">ru</a>
                     </span>
                 </div>
+
             </div>
         </nav>
 
-        <!--Left side bar-->
+        <!--LEFT SIDE BAR-->
 	    <div class="left-side-bar">
 	        <div class="alert alert-warning" role="alert">
 
             </div>
 	    </div>
 
-	    <!--Central bar-->
+	    <!--CENTRAL BAR-->
 		<div class="main-bar">
             <div class="alert alert-warning" role="alert">
                 <c:choose>
@@ -137,7 +139,6 @@
                                             </select>
                                         </div>
                                         <div class="input-group mb-3>
-                                            <input type="hidden" name="_method" value="PUT">
                                             <button type="submit" class="btn btn-primary">
                                                 <spring:message code="save_changes"/>
                                             </button>

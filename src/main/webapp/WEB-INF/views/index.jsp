@@ -311,7 +311,7 @@
                     </form>
 
                     <!--PROFILE BUTTON-->
-                    <form action="${pageContext.request.contextPath}/user/${user.id}" method="GET">
+                    <form action="${pageContext.request.contextPath}/profile" method="GET">
                         <button type="submit" class="btn btn-outline-danger">
                             <spring:message code="profile_label"/>
                         </button>
@@ -500,7 +500,7 @@
                                             <label for="exampleFormControlSelect1">
                                                 <spring:message code="product_count"/>
                                             </label>
-                                            <select class="form-control" name="productCount">
+                                            <select class="form-control" name="count">
                                                 <option value="1">1</option>
                                                 <option value="2">2</option>
                                                 <option value="3">3</option>

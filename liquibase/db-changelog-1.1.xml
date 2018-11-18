@@ -29,7 +29,7 @@
         <insert tableName="users">
             <column name="id" type="INT UNSIGNED">2</column>
             <column name="user_name" type="varchar(20)">John Doe</column>
-            <column name="user_password" type="varchar(70)">1234</column>
+            <column name="user_password" type="varchar(70)">$2a$10$gPCFfSC7vYvN1.NOIyI7deMU1QOL6kPICmzKU4O75EJK0Akr.nBEe</column>
             <column name="user_email" type="varchar(320)">active@gmail.com</column>
             <column name="user_state" type="smallint">1</column>
         </insert>
@@ -37,7 +37,7 @@
         <insert tableName="users">
             <column name="id" type="INT UNSIGNED">3</column>
             <column name="user_name" type="varchar(20)">Dr. Evil</column>
-            <column name="user_password" type="varchar(70)">1234</column>
+            <column name="user_password" type="varchar(70)">$2a$10$gPCFfSC7vYvN1.NOIyI7deMU1QOL6kPICmzKU4O75EJK0Akr.nBEe</column>
             <column name="user_email" type="varchar(320)">blocked@gmail.com</column>
             <column name="user_state" type="smallint">2</column>
         </insert>
