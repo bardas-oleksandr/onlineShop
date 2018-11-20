@@ -72,7 +72,7 @@
             <!--SHOW ORDERS BUTTON-->
             <!--AVAILABLE FOR ACTIVE USERS-->
             <security:authorize access="hasRole('ACTIVE')">
-                <form action="${pageContext.request.contextPath}/userOrders" method="get">
+                <form action="${pageContext.request.contextPath}/profile/order/${user.id}" method="get">
                     <div class="input-group mb-3">
                         <button type="submit" class="btn btn-primary" data-dismiss="modal">
                             <spring:message code="watch_orders_list"/>

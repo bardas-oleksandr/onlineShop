@@ -27,10 +27,6 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryViewDto createNewCategory(@Valid CategoryCreateDto categoryCreateDto) {
         Category category = conversionService.convert(categoryCreateDto, Category.class);
-
-        System.out.println("Parent category: " + category.getParentCategory());
-        System.out.println("Category name: " + category.getName());
-
         categoryDao.add(category);
         return conversionService.convert(category, CategoryViewDto.class);
     }

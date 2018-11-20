@@ -100,7 +100,10 @@
 
                     <!--AVAILABLE FOR ACTIVE STATE USER-->
 	                <security:authorize access="hasRole('ACTIVE')">
-                        <form action="${pageContext.request.contextPath}/order" method="POST">
+                        <form action="${pageContext.request.contextPath}/profile/order" modelAttribute="order" method="POST">
+
+                            <!--USER ID-->
+                            <input type="hidden" name="userId" value="${user.id}"/>
 
                             <!--DELIVERY ADDRESS-->
                             <div class="input-group mb-3">

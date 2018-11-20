@@ -9,6 +9,8 @@ import ua.levelup.web.dto.view.ManufacturerViewDto;
 /**
  *
  */
+//Если пометить класс каждого конвертера как @Component, тогда Spring
+//сам соберет все конвертеры в Set<Converter<?,?>> и вручную собирать уже не нужно
 @Component("manufacturerConverter")
 public class ManufacturerConverter implements Converter<Manufacturer, ManufacturerViewDto> {
 

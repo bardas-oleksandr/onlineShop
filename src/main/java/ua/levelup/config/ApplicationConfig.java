@@ -13,9 +13,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
-import ua.levelup.converter.SearchParamsDtoConverter;
-import ua.levelup.converter.fromdto.*;
-import ua.levelup.converter.todto.*;
 import ua.levelup.dao.factory.ConnectionFactory;
 import ua.levelup.exception.ApplicationException;
 
@@ -24,7 +21,6 @@ import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
-import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
 
@@ -33,9 +29,9 @@ import java.util.Set;
  * Автор: Бардась А. А.
  */
 @Configuration
+@ComponentScan("ua.levelup.converter")
 @ComponentScan("ua.levelup.dao")
 @ComponentScan("ua.levelup.service")
-@ComponentScan("ua.levelup.converter")
 @ComponentScan("ua.levelup.web.dto")
 @ComponentScan("ua.levelup.validator")
 @Import(SecurityConfig.class)
@@ -47,6 +43,8 @@ public class ApplicationConfig {
     @Autowired
     private GenericObjectPool<Connection> connectionPool;
 
+    //Если пометить класс каждого конвертера как @Component, тогда Spring
+    //сам соберет все конвертеры в Set<Converter<?,?>> и вручную собирать уже не нужно
     @Autowired
     private Set<Converter<?, ?>> converterSet;
 
@@ -74,25 +72,28 @@ public class ApplicationConfig {
         return factoryBean;
     }
 
-    @Bean("converterSet")
-    public Set<Converter<?, ?>> converterSet() {
-        Set<Converter<?, ?>> converterSet = new HashSet<>();
-        converterSet.add(new CategoryCreateDtoConverter());
-        converterSet.add(new CredentialsCreateDtoConverter());
-        converterSet.add(new ManufacturerCreateDtoConverter());
-        converterSet.add(new OrderCreateDtoConverter());
-        converterSet.add(new OrderPositionCreateDtoConverter());
-        converterSet.add(new ProductCreateDtoConverter());
-        converterSet.add(new SearchParamsDtoConverter());
-        converterSet.add(new UserCreateDtoConverter());
-        converterSet.add(new CategoryConverter());
-        converterSet.add(new ManufacturerConverter());
-        converterSet.add(new OrderConverter());
-        converterSet.add(new OrderPositionConverter());
-        converterSet.add(new ProductConverter());
-        converterSet.add(new UserConverter());
-        return converterSet;
-    }
+    //Так как класс каждого конвертера помечен как @Component, то Spring
+    //сам собирает все конвертеры в Set<Converter<?,?>> и вручную собирать уже не нужно
+//    @Bean("converterSet")
+//    public Set<Converter<?, ?>> converterSet() {
+//        Set<Converter<?, ?>> converterSet = new HashSet<>();
+//        converterSet.add(new CategoryCreateDtoConverter());
+//        converterSet.add(new CredentialsCreateDtoConverter());
+//        converterSet.add(new ManufacturerCreateDtoConverter());
+//        converterSet.add(new OrderCreateDtoConverter());
+//        converterSet.add(new OrderPositionCreateDtoConverter());
+//        converterSet.add(new ProductCreateDtoConverter());
+//        converterSet.add(new SearchParamsDtoConverter());
+//        converterSet.add(new UserCreateDtoConverter());
+//        converterSet.add(new CategoryConverter());
+//        converterSet.add(new ManufacturerConverter());
+//        converterSet.add(new OrderConverter());
+//        converterSet.add(new OrderPositionConverter());
+//        converterSet.add(new ProductConverter());
+//        converterSet.add(new UserConverter());
+//        converterSet.add(new ProductInCartToOrderPositionConverter());
+//        return converterSet;
+//    }
 
     //------------Конфигурирование валидаторов-------------------------------------
     @Bean("validator")

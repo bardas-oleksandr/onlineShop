@@ -10,6 +10,8 @@ import ua.levelup.web.dto.create.OrderCreateDto;
 /**
  *
  */
+//Если пометить класс каждого конвертера как @Component, тогда Spring
+//сам соберет все конвертеры в Set<Converter<?,?>> и вручную собирать уже не нужно
 @Component("orderCreateDtoConverter")
 public class OrderCreateDtoConverter implements Converter<OrderCreateDto, Order> {
 

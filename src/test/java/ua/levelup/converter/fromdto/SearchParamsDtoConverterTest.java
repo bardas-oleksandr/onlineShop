@@ -1,4 +1,4 @@
-package ua.levelup.converter;
+package ua.levelup.converter.fromdto;
 
 import org.junit.Assert;
 import org.junit.Rule;
@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import ua.levelup.converter.fromdto.SearchParamsDtoConverter;
 import ua.levelup.testconfig.TestContextConfig;
 import ua.levelup.model.SearchParams;
 import ua.levelup.web.dto.SearchParamsDto;

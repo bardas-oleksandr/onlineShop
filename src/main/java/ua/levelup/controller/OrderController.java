@@ -17,20 +17,13 @@ public class OrderController {
     private static final String ID = "/{id}";
     private static final String ORDERS_PAGE = "orders";
     private static final String REDIRECT_ORDERS = "redirect:/order/";
-    private static final String USER_ORDERS_PAGE = "userorders";
     private static final String ORDER_LIST_ATTRIBUTE = "orderList";
 
     @Autowired
     private OrderService orderService;
 
-    @PostMapping
-    public String createOrder(ModelMap modelMap) {
-
-        return USER_ORDERS_PAGE;
-    }
-
     @PostMapping(value = ID)
-    public String modifyOrder(ModelMap modelMap, @PathVariable("id") int orderId
+    public String modifyOrder(@PathVariable("id") int orderId
             , @ModelAttribute("orderCreateDto") OrderCreateDto orderCreateDto) {
         orderService.updateOrder(orderCreateDto, orderId);
         return REDIRECT_ORDERS;

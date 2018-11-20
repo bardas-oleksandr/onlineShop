@@ -16,9 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 public class UserController {
 
     private static final String ID = "/{id}";
-
     private static final String USERS_PAGE = "users";
-    private static final String ERROR_PAGE = "error";
     private static final String REDIRECT_USER = "redirect:/user/";
 
     @Autowired

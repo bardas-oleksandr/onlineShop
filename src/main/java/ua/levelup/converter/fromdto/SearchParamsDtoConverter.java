@@ -1,4 +1,4 @@
-package ua.levelup.converter;
+package ua.levelup.converter.fromdto;
 
 import lombok.NonNull;
 import org.springframework.core.convert.converter.Converter;
@@ -9,6 +9,8 @@ import ua.levelup.web.dto.SearchParamsDto;
 /**
  *
  */
+//Если пометить класс каждого конвертера как @Component, тогда Spring
+//сам соберет все конвертеры в Set<Converter<?,?>> и вручную собирать уже не нужно
 @Component("searchParamsDtoConverter")
 public class SearchParamsDtoConverter
         implements Converter<SearchParamsDto, SearchParams> {
