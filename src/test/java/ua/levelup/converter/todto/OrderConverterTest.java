@@ -58,11 +58,10 @@ public class OrderConverterTest {
         user = new User("name", "password",
                 "email@gmail.com", User.UserState.ACTIVE);
         user.setId(1);
-        order = new Order(user, "address", new Timestamp(1),
-                Order.PaymentConditions.get(1));
+        order = new Order(user, "address", new Timestamp(1), false
+                , Order.OrderState.REGISTERED, Order.PaymentConditions.CARD);
         order.setId(1);
-        order.setOrderState(Order.OrderState.REGISTERED);
-        orderPosition = new OrderPosition(order.getId(),2,3,4.0f);
+        orderPosition = new OrderPosition(order.getId(), 2, 3, 4.0f);
         orderPosition.setProductName("product");
 
         UserViewDto userViewDto = new UserViewDto();
@@ -108,9 +107,9 @@ public class OrderConverterTest {
         //THEN
         Assert.assertNotNull(orderViewDto);
         Assert.assertEquals(expected, orderViewDto);
-        Mockito.verify(userConverter,Mockito.times(1))
+        Mockito.verify(userConverter, Mockito.times(1))
                 .convert(user);
-        Mockito.verify(orderPositionConverter,Mockito.times(1))
+        Mockito.verify(orderPositionConverter, Mockito.times(1))
                 .convert(orderPosition);
         Mockito.verifyNoMoreInteractions(userConverter);
         Mockito.verifyNoMoreInteractions(orderPositionConverter);
@@ -128,7 +127,7 @@ public class OrderConverterTest {
         //THEN
         Assert.assertNotNull(orderViewDto);
         Assert.assertEquals(expected, orderViewDto);
-        Mockito.verify(userConverter,Mockito.times(1))
+        Mockito.verify(userConverter, Mockito.times(1))
                 .convert(user);
         Mockito.verifyNoMoreInteractions(userConverter);
         Mockito.verifyNoMoreInteractions(orderPositionConverter);

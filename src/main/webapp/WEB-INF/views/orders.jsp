@@ -53,7 +53,7 @@
 		<div class="main-bar">
             <div class="alert alert-warning" role="alert">
                 <c:choose>
-                    <c:when test="${empty sessionScope.orderList}">
+                    <c:when test="${empty orderList}">
                         <div class="input-group mb-3">
                             <h4><spring:message code="empty_order_list"/></h4>
                         </div>
@@ -63,8 +63,8 @@
                             <h4><spring:message code="orders_list"/></h4>
                         </div>
                         <div class="accordion" id="orderListWrapper">
-                            <c:forEach var="order" items="${sessionScope.orderList}">
-                                <form action="${pageContext.request.contextPath}/order/${order.id}" method="POST">
+                            <c:forEach var="order" items="${orderList}">
+                                <form action="${pageContext.request.contextPath}/order/${order.id}" modelAttribute="orderCreateDto" method="POST">
                                     <div class="card">
                                         <div class="card-header" id="headingOne${order.id}">
                                             <h5 class="mb-0">
@@ -76,14 +76,14 @@
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"><spring:message code="date_label"/>:</span>
                                                         </div>
-                                                        <input readonly name="orderDate" type="text" value="${order.date}" class="form-control">
+                                                        <input readonly name="date" type="text" value="${order.date}" class="form-control">
                                                     </div>
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"><spring:message code="user_name_label"/>:</span>
                                                         </div>
-                                                        <input hidden name="userId" type="text" value="${order.userId}" class="form-control">
-                                                        <input readonly name="userName" type="text" value="${order.userName}" class="form-control">
+                                                        <input readonly name="userName" type="text" value="${order.userDto.userName}" class="form-control">
+                                                        <input hidden name="userId" type="text" value="${order.userDto.id}">
                                                     </div>
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
@@ -91,13 +91,13 @@
                                                         </div>
                                                         <input readonly type="text" name="address" value="${order.address}" class="form-control">
                                                     </div>
-                                                    <input hidden name="paymentConditions" type="text" value="${order.conditions}" class="form-control">
+                                                    <input hidden name="paymentConditionsIndex" type="text" value="${order.conditions}">
                                                 </button>
                                             </h5>
                                         </div>
                                         <div id="collapseOne${order.id}" class="collapse" aria-labelledby="headingOne${order.id}" data-parent="#orderListWrapper">
                                             <div class="card-body">
-                                                <c:forEach var="orderPosition" items="${order.orderPositionList}">
+                                                <c:forEach var="orderPosition" items="${order.orderPositionViewDtoList}">
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text">${orderPosition.productName}</span>
@@ -114,32 +114,38 @@
                                                 </c:forEach>
                                             </div>
                                         </div>
-                                    <!--</div>-->
+                                    </div>
                                     <div class="alert alert-success" role="alert">
                                         <div class="input-group mb-3">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text"><spring:message code="status_label"/>:</span>
+                                                <span class="input-group-text"><spring:message code="state_label"/>:</span>
                                             </div>
-                                            <select name="orderStatus" class="custom-select">
+                                            <select name="orderStateIndex" class="custom-select">
                                                 <option
-                                                    <c:if test="${order.state == 0}">
+                                                    <c:if test="${order.orderState == 0}">
                                                         selected
                                                     </c:if>
-                                                value="0"><spring:message code="status_registered"/></option>
+                                                value="0"><spring:message code="state_registered"/></option>
                                                 <option
-                                                    <c:if test="${order.state == 1}">
+                                                    <c:if test="${order.orderState == 1}">
                                                         selected
                                                     </c:if>
-                                                value="1"><spring:message code="status_payed"/></option>
+                                                value="1"><spring:message code="state_executed"/></option>
                                                 <option
-                                                    <c:if test="${order.state == 2}">
+                                                    <c:if test="${order.orderState == 2}">
                                                         selected
                                                     </c:if>
-                                                value="2"><spring:message code="status_canceled"/></option>
+                                                value="2"><spring:message code="state_canceled"/></option>
                                             </select>
                                         </div>
-                                        <div class="input-group mb-3>
-                                            <button type="submit" class="btn btn-primary">
+                                        <div class="input-group mb-3">
+                                            <label>
+                                                <input name="payed" <c:if test="${order.payed == true}"> checked </c:if> type="checkbox">
+                                                <spring:message code="state_payed"/>
+                                            </label>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <button type="submit" class="btn btn-primary" data-dismiss="modal">
                                                 <spring:message code="save_changes"/>
                                             </button>
                                         </div>

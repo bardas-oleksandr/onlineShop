@@ -57,9 +57,8 @@ public class OrderDaoImplTest {
         //GIVEN
         User user = userDao.getById(1);
         user.setPassword(null);
-        order = new Order(user, "address", new Timestamp(1), Order.PaymentConditions.CARD);
-        order.setPayed(false);
-        order.setOrderState(Order.OrderState.REGISTERED);
+        order = new Order(user, "address", new Timestamp(1), false
+                , Order.OrderState.REGISTERED, Order.PaymentConditions.CARD);
         //WHEN
         orderDao.add(order);
         Order extracted = orderDao.getById(order.getId());
@@ -76,9 +75,8 @@ public class OrderDaoImplTest {
     @Sql({"classpath:schema_clean.sql", "classpath:schema_insert_orderTest.sql"})
     public void addTest_whenUserEqualsNull_thenException() throws Exception {
         //GIVEN
-        order = new Order(null, "address", new Timestamp(1), Order.PaymentConditions.CARD);
-        order.setPayed(false);
-        order.setOrderState(Order.OrderState.REGISTERED);
+        order = new Order(null, "address", new Timestamp(1), false
+                , Order.OrderState.REGISTERED, Order.PaymentConditions.CARD);
         expectedException.expect(ApplicationException.class);
         expectedException.expectMessage(messagesProperties
                 .getProperty("DATA_INTEGRITY_VIOLATION_FOR_ORDER"));
@@ -96,9 +94,8 @@ public class OrderDaoImplTest {
         //GIVEN
         User user = new User();
         user.setId(10);
-        order = new Order(user, "address", new Timestamp(1), Order.PaymentConditions.CARD);
-        order.setPayed(false);
-        order.setOrderState(Order.OrderState.REGISTERED);
+        order = new Order(user, "address", new Timestamp(1), false
+                , Order.OrderState.REGISTERED, Order.PaymentConditions.CARD);
         expectedException.expect(ApplicationException.class);
         expectedException.expectMessage(messagesProperties
                 .getProperty("DATA_INTEGRITY_VIOLATION_FOR_ORDER"));
@@ -116,8 +113,8 @@ public class OrderDaoImplTest {
         //GIVEN
         User user = new User();
         user.setId(1);
-        order = new Order(user, "address", new Timestamp(1), Order.PaymentConditions.CARD);
-        order.setPayed(false);
+        order = new Order(user, "address", new Timestamp(1), false
+                , null, Order.PaymentConditions.CARD);
         expectedException.expect(ApplicationException.class);
         expectedException.expectMessage(messagesProperties
                 .getProperty("DATA_INTEGRITY_VIOLATION_FOR_ORDER"));
@@ -135,10 +132,8 @@ public class OrderDaoImplTest {
         //GIVEN
         User user = new User();
         user.setId(1);
-        order = new Order(user, "address", new Timestamp(1), Order.PaymentConditions.CARD);
-        order.setPayed(false);
-        order.setOrderState(Order.OrderState.REGISTERED);
-        order.setPaymentConditions(null);
+        order = new Order(user, "address", new Timestamp(1), false
+                , Order.OrderState.REGISTERED, null);
         expectedException.expect(ApplicationException.class);
         expectedException.expectMessage(messagesProperties
                 .getProperty("DATA_INTEGRITY_VIOLATION_FOR_ORDER"));
@@ -156,10 +151,8 @@ public class OrderDaoImplTest {
         //GIVEN
         User user = new User();
         user.setId(1);
-        order = new Order(user, "address", new Timestamp(1), Order.PaymentConditions.CARD);
-        order.setPayed(false);
-        order.setOrderState(Order.OrderState.REGISTERED);
-        order.setAddress(null);
+        order = new Order(user, null, new Timestamp(1), false
+                , Order.OrderState.REGISTERED, Order.PaymentConditions.CARD);
         expectedException.expect(ApplicationException.class);
         expectedException.expectMessage(messagesProperties
                 .getProperty("DATA_INTEGRITY_VIOLATION_FOR_ORDER"));
@@ -177,10 +170,8 @@ public class OrderDaoImplTest {
         //GIVEN
         User user = new User();
         user.setId(1);
-        order = new Order(user, "address", new Timestamp(1), Order.PaymentConditions.CARD);
-        order.setPayed(false);
-        order.setOrderState(Order.OrderState.REGISTERED);
-        order.setDate(null);
+        order = new Order(user, "address", null,false
+                , Order.OrderState.REGISTERED, Order.PaymentConditions.CARD);
         expectedException.expect(ApplicationException.class);
         expectedException.expectMessage(messagesProperties
                 .getProperty("DATA_INTEGRITY_VIOLATION_FOR_ORDER"));
@@ -222,7 +213,7 @@ public class OrderDaoImplTest {
         orderDao.update(order);
         //THEN
         Order extracted = orderDao.getById(1);
-        Assert.assertEquals(order,extracted);
+        Assert.assertEquals(order, extracted);
     }
 
     /*Сценарий: - модификация в базе данных информации о заказе товаров;
@@ -444,7 +435,8 @@ public class OrderDaoImplTest {
         expectedException.expectMessage(messagesProperties
                 .getProperty("EMPTY_RESULTSET") + Order.class);
         //WHEN-THEN
-        order = orderDao.getById(10);;
+        order = orderDao.getById(10);
+        ;
     }
 
     /*Сценарий: - получение из базы данных информации о всех заказах

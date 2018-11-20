@@ -307,10 +307,20 @@ VALUES (54,'Daiwa Saltist Braid Special', 148.99, TRUE
 
 INSERT INTO orders (id, order_user_id, order_address, order_date, order_payed
 , order_state, order_payment_conditions)
-VALUES (1,2,'15, Yemen road, Yemen','2018-09-03 22:15:38.646',FALSE,0,1);
+VALUES (1,2,'15, Yemen road, Yemen','2018-08-04 22:15:38.646',TRUE,1,1);
 
 INSERT INTO orders_products (order_id, product_id, order_product_quantity, order_product_unit_price)
-VALUES (1, 50, 1, 56.99);
+VALUES (1, 39, 1, 43.99);
 
 INSERT INTO orders_products (order_id, product_id, order_product_quantity, order_product_unit_price)
-VALUES (1, 15, 2, 5.99);
+VALUES (1, 27, 3, 2.75);
+
+INSERT INTO orders (id, order_user_id, order_address, order_date, order_payed
+, order_state, order_payment_conditions)
+VALUES (2,2,'15, Yemen road, Yemen','2018-09-03 22:15:38.646',FALSE,0,1);
+
+INSERT INTO orders_products (order_id, product_id, order_product_quantity, order_product_unit_price)
+VALUES (2, 50, 1, 56.99);
+
+INSERT INTO orders_products (order_id, product_id, order_product_quantity, order_product_unit_price)
+VALUES (2, 15, 2, 5.99);

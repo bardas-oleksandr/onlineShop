@@ -16,7 +16,7 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import ua.levelup.converter.SearchParamsDtoConverter;
 import ua.levelup.converter.fromdto.*;
 import ua.levelup.converter.todto.*;
-import ua.levelup.dao.config.ConnectionFactory;
+import ua.levelup.dao.factory.ConnectionFactory;
 import ua.levelup.exception.ApplicationException;
 
 import javax.annotation.Resource;

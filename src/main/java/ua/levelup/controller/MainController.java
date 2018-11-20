@@ -16,9 +16,11 @@ import javax.servlet.http.HttpServletRequest;
 public class MainController {
 
     private static final String ROOT = "/";
+    private static final String LOGIN = "/login";
     private static final String PROFILE = "/profile";
     private static final String ERROR = "/error";
     private static final String INDEX_PAGE = "index";
+    private static final String LOGIN_PAGE = "login";
     private static final String PROFILE_PAGE = "profile";
     private static final String ERROR_PAGE = "error";
     private static final String SPRING_SECURITY_CONTEXT = "SPRING_SECURITY_CONTEXT";
@@ -34,6 +36,11 @@ public class MainController {
     public String indexPage(HttpServletRequest request) {
         filterUtils.setDefaultAttributes(request.getSession(true));
         return INDEX_PAGE;
+    }
+
+    @GetMapping(value = LOGIN)
+    public String loginPage(){
+        return LOGIN_PAGE;
     }
 
     @GetMapping(value = PROFILE)

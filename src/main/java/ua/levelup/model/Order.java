@@ -24,14 +24,17 @@ public class Order implements Serializable {
     private PaymentConditions paymentConditions;
     private List<OrderPosition> orderPositionList;
 
-    public Order(){
+    public Order() {
         this.orderPositionList = new ArrayList<>();
     }
 
-    public Order(User user, String address, Timestamp date, PaymentConditions paymentConditions) {
+    public Order(User user, String address, Timestamp date, boolean payed
+            , OrderState orderState, PaymentConditions paymentConditions) {
         this.user = user;
         this.address = address;
         this.date = date;
+        this.payed = payed;
+        this.orderState = orderState;
         this.paymentConditions = paymentConditions;
         this.orderPositionList = new ArrayList<>();
     }
@@ -39,8 +42,8 @@ public class Order implements Serializable {
     public enum OrderState {
         REGISTERED, EXECUTED, CANCELED;
 
-        public static OrderState get(int stateIndex){
-            switch(stateIndex){
+        public static OrderState get(int stateIndex) {
+            switch (stateIndex) {
                 case 0:
                     return REGISTERED;
                 case 1:
@@ -53,15 +56,15 @@ public class Order implements Serializable {
         }
     }
 
-    public void addOrderPosition(OrderPosition orderPosition){
+    public void addOrderPosition(OrderPosition orderPosition) {
         this.orderPositionList.add(orderPosition);
     }
 
     public enum PaymentConditions {
         CASH, CARD;
 
-        public static PaymentConditions get(int conditionsIndex){
-            switch(conditionsIndex){
+        public static PaymentConditions get(int conditionsIndex) {
+            switch (conditionsIndex) {
                 case 0:
                     return CASH;
                 case 1:

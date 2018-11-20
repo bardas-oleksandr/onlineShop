@@ -39,12 +39,13 @@ public class OrderCreateDtoConverterTest {
     @Test
     public void convertTest_whenOrderCreateDtoNotEqualsNull_thenOk() throws Exception {
         //GIVEN
-        OrderCreateDto dto = new OrderCreateDto(1, "address",
-                new Timestamp(1), 1);
+        OrderCreateDto dto = new OrderCreateDto(1, "address"
+                , new Timestamp(1), false, 0, 0);
         User user = new User();
         user.setId(dto.getUserId());
-        Order expected = new Order(user, dto.getAddress(), dto.getDate(),
-                Order.PaymentConditions.get(dto.getPaymentConditionsIndex()));
+        Order expected = new Order(user, dto.getAddress(), dto.getDate(), dto.isPayed()
+                , Order.OrderState.get(dto.getOrderStateIndex())
+                , Order.PaymentConditions.get(dto.getPaymentConditionsIndex()));
         //WHEN
         Order order = orderCreateDtoConverter.convert(dto);
         //THEN
