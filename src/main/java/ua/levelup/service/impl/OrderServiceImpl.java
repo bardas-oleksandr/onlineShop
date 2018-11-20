@@ -71,10 +71,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void updateOrder(@Valid OrderCreateDto orderCreateDto, int orderId) {
+    public OrderViewDto updateOrder(@Valid OrderCreateDto orderCreateDto, int orderId) {
         Order order = conversionService.convert(orderCreateDto, Order.class);
         order.setId(orderId);
         orderDao.update(order);
+        return conversionService.convert(order, OrderViewDto.class);
     }
 
     private List<OrderViewDto> getOrderViewDtoList(List<Order> orderList) {

@@ -9,5 +9,4 @@ import java.util.Map;
 
 public interface CartService {
     void putIntoCart(CartViewDto cart, @Valid ProductInCartCreateDto productInCartCreateDto);
-    Map<Integer, ProductViewDto> retrieveCartProducts(CartViewDto cartDto);
 }

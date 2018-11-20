@@ -11,6 +11,6 @@ import java.util.List;
 public interface OrderService {
     OrderViewDto createOrder(@Valid OrderCreateDto orderCreateDto, CartViewDto cartViewDto);
     List<OrderViewDto> getUsersOrders(int userId);
-    void updateOrder(@Valid OrderCreateDto orderCreateDto, int orderId);
+    OrderViewDto updateOrder(@Valid OrderCreateDto orderCreateDto, int orderId);
     List<OrderViewDto> getAllOrders();
 }

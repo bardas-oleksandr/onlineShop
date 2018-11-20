@@ -31,13 +31,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUser(String email) {
-        return userDao.getByEmail(email);
-    }
-
-    @Override
     public UserViewDto getUserViewDto(String email) {
         User user = userDao.getByEmail(email);
         return conversionService.convert(user, UserViewDto.class);
+    }
+
+    @Override
+    public User getUser(String email) {
+        return userDao.getByEmail(email);
     }
 }

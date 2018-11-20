@@ -15,8 +15,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.Map;
 
 @Setter
 @Service("cartService")
@@ -38,18 +36,5 @@ public class CartServiceImpl implements CartService {
         ProductInCartViewDto productInCartViewDto = new ProductInCartViewDto(productViewDto, count);
 
         cart.putIntoCart(productInCartViewDto);
-    }
-
-    @Override
-    public Map<Integer, ProductViewDto> retrieveCartProducts(CartViewDto cartDto) {
-        Map<Integer, ProductViewDto> map = new HashMap<>();
-
-//        Set<Integer> productIdSet = cartDto.getProductCountMap().keySet();
-//        for (Integer productId : productIdSet) {
-//            Product product = productDao.getById(productId);
-//            map.put(productId, conversionService.convert(product,ProductViewDto.class));
-//        }
-
-        return map;
     }
 }

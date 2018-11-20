@@ -9,6 +9,7 @@ import ua.levelup.model.Product;
 import ua.levelup.model.SearchParams;
 import ua.levelup.service.ProductService;
 import ua.levelup.web.dto.SearchParamsDto;
+import ua.levelup.web.dto.create.ProductCreateDto;
 import ua.levelup.web.dto.view.ProductViewDto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -41,16 +42,21 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void deleteProduct(int productId) {
-
+        productDao.delete(productId);
     }
 
     @Override
-    public void updateProduct(Product product, int productId) {
-
+    public ProductViewDto updateProduct(@Valid ProductCreateDto productCreateDto, int productId) {
+        Product product = conversionService.convert(productCreateDto, Product.class);
+        product.setId(productId);
+        productDao.update(product);
+        return conversionService.convert(product, ProductViewDto.class);
     }
 
     @Override
-    public void createNewProduct(Product product) {
-
+    public ProductViewDto createProduct(@Valid ProductCreateDto productCreateDto) {
+        Product product = conversionService.convert(productCreateDto, Product.class);
+        productDao.add(product);
+        return conversionService.convert(product, ProductViewDto.class);
     }
 }

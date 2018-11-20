@@ -135,13 +135,13 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <form action="${pageContext.request.contextPath}/product" method="POST">
+                                <form action="${pageContext.request.contextPath}/product" modelAttribute="product" method="POST">
                                     <div class="modal-body">
                                         <label>
                                             <spring:message code="product_label"/>
                                         </label>
                                         <div class="input-group mb-3">
-                                            <input name="productName" type="text" class="form-control">
+                                            <input name="name" type="text" class="form-control">
                                         </div>
                                         <label>
                                             <spring:message code="category_label"/>
@@ -186,7 +186,7 @@
                                             <spring:message code="description_label"/>
                                         </label>
                                         <div class="input-group mb-3">
-                                            <input name="productDescription" type="text" class="form-control">
+                                            <input name="description" type="text" class="form-control">
                                         </div>
                                         <div class="input-group mb-3">
                                             <label>
@@ -515,15 +515,15 @@
                         </form>
                     </security:authorize>
 
-                    <!--AVAILABLE FOR USERS WITH STATE ADMIN-->
+                    <!--AVAILABLE FOR ADMIN STATE USERS-->
                     <security:authorize access="hasRole('ADMIN')">
                         <div class="alert alert-primary" role="alert">
-                            <form action="${pageContext.request.contextPath}/product/${product.id}" method="POST">
+                            <form action="${pageContext.request.contextPath}/product/${product.id}" modelAttribute="product" method="POST">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><spring:message code="product_label"/></span>
                                     </div>
-                                    <input id="editProductName" name="productName" type="text" value="${product.name}" class="form-control">
+                                    <input id="editProductName" name="name" type="text" value="${product.name}" class="form-control">
                                 </div>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
@@ -566,18 +566,15 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><spring:message code="description_label"/></span>
                                     </div>
-                                    <input id="editProductDescription" name="productDescription" type="text" value="${product.description}" class="form-control">
+                                    <input id="editProductDescription" name="description" type="text" value="${product.description}" class="form-control">
                                 </div>
                                 <div class="input-group mb-3">
                                     <label>
-                                        <c:choose>
-                                            <c:when test="${product.available}">
-                                                <input checked name="available" type="checkbox">
-                                            </c:when>
-                                            <c:otherwise>
-                                                <input name="available" type="checkbox">
-                                            </c:otherwise>
-                                        </c:choose>
+                                        <input
+                                            <c:if test="${product.available}">
+                                                checked
+                                            </c:if>
+                                        name="available" type="checkbox">
                                         <spring:message code="available_label"/>
                                     </label>
                                 </div>
