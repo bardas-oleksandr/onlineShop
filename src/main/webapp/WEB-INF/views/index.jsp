@@ -62,19 +62,19 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <form action="${pageContext.request.contextPath}/user" method="POST">
+                                <form action="${pageContext.request.contextPath}/user" modelAttribute="userCreateDto" method="POST">
                                     <div class="modal-body">
                                         <div class="form-group">
                                             <label for="registerUserName">
                                                 <spring:message code="user_name_label"/>
                                             </label>
-                                            <input type="text" name="user_name" class="form-control" id="registerUserName" placeholder="Enter user name">
+                                            <input type="text" name="userName" class="form-control" id="registerUserName" placeholder="Enter user name">
                                         </div>
                                         <div class="form-group">
                                             <label for="registerEmail">
                                                 <spring:message code="email_address_label"/>
                                             </label>
-                                            <input type="text" name="user_email" class="form-control" id="registerEmail" aria-describedby="emailHelp" placeholder="Enter email">
+                                            <input type="text" name="email" class="form-control" id="registerEmail" aria-describedby="emailHelp" placeholder="Enter email">
                                             <small id="emailHelp" class="form-text text-muted">
                                                 <spring:message code="our_promise"/>
                                             </small>
@@ -83,7 +83,7 @@
                                             <label for="registerPassword">
                                                 <spring:message code="password_label"/>
                                             </label>
-                                            <input type="password" name="user_password" class="form-control" id="registerPassword" placeholder="Password">
+                                            <input type="password" name="password" class="form-control" id="registerPassword" placeholder="Password">
                                         </div>
                                     </div>
                                     <div class="modal-footer">

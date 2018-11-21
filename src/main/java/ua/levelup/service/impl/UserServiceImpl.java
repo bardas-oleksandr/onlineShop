@@ -27,11 +27,12 @@ public class UserServiceImpl implements UserService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    public UserViewDto registerUser(@Valid UserCreateDto createDto) {
+    public User registerUser(@Valid UserCreateDto createDto) {
+        createDto.setPassword(bCryptPasswordEncoder.encode(createDto.getPassword()));
         User user = conversionService.convert(createDto, User.class);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userDao.add(user);
-        return conversionService.convert(user, UserViewDto.class);
+        return user;
     }
 
     @Override

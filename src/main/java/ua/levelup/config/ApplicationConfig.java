@@ -51,11 +51,6 @@ public class ApplicationConfig {
     @Resource(name = "dataSource")
     private DataSource dataSource;
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-    }
-
     @Bean("bCryptPasswordEncoder")
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();

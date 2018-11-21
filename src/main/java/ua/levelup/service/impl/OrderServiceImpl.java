@@ -63,6 +63,8 @@ public class OrderServiceImpl implements OrderService {
         Order order = conversionService.convert(orderCreateDto, Order.class);
         order.setId(orderId);
         orderDao.update(order);
+        User user = userDao.getById(order.getUser().getId());
+        order.setUser(user);
         return conversionService.convert(order, OrderViewDto.class);
     }
 

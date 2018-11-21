@@ -24,6 +24,8 @@ public class ProductController {
     private static final String REDIRECT_SEARCH = "redirect:/product/search/";
     private static final String SUCCESS_PAGE = "success";
     private static final String INDEX_PAGE = "index";
+    private static final String ID_ATTRIBUTE = "id";
+    private static final String PRODUCT_ATTRIBUTE = "product";
     private static final String PRODUCT_LIST_ATTRIBUTE = "productList";
     private static final String SEARCH_PARAMS_ATTRIBUTE = "searchParams";
 
@@ -49,14 +51,14 @@ public class ProductController {
     }
 
     @PostMapping(value = ID)
-    public String updateProduct(@PathVariable("id") int productId
-            , @ModelAttribute("product") ProductCreateDto productCreateDto) {
+    public String updateProduct(@PathVariable(ID_ATTRIBUTE) int productId
+            , @ModelAttribute(PRODUCT_ATTRIBUTE) ProductCreateDto productCreateDto) {
         productService.updateProduct(productCreateDto, productId);
         return REDIRECT_SEARCH;
     }
 
     @PostMapping(value = DELETE + ID)
-    public String deleteProduct(@PathVariable("id") int productId) {
+    public String deleteProduct(@PathVariable(ID_ATTRIBUTE) int productId) {
         productService.deleteProduct(productId);
         return REDIRECT_SEARCH;
     }
@@ -64,7 +66,8 @@ public class ProductController {
     @GetMapping(value = SEARCH)
     public String searchProducts(HttpServletRequest request){
         HttpSession session = request.getSession(true);
-        SearchParamsDto searchParamsDto = (SearchParamsDto) session.getAttribute(SEARCH_PARAMS_ATTRIBUTE);
+        SearchParamsDto searchParamsDto = (SearchParamsDto) session
+                .getAttribute(SEARCH_PARAMS_ATTRIBUTE);
         if(searchParamsDto != null){
             List<ProductViewDto> productViewDtos = productService.searchProducts(searchParamsDto);
             session.setAttribute(PRODUCT_LIST_ATTRIBUTE, productViewDtos);
@@ -73,7 +76,7 @@ public class ProductController {
     }
 
     @PostMapping
-    public String createProduct(@ModelAttribute("product") ProductCreateDto productCreateDto) {
+    public String createProduct(@ModelAttribute(PRODUCT_ATTRIBUTE) ProductCreateDto productCreateDto) {
         productService.createProduct(productCreateDto);
         return SUCCESS_PAGE;
     }

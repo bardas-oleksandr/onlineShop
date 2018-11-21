@@ -23,7 +23,7 @@ public class OrderController {
     private OrderService orderService;
 
     @PostMapping(value = ID)
-    public String modifyOrder(@PathVariable("id") int orderId
+    public String updateOrder(@PathVariable("id") int orderId
             , @ModelAttribute("orderCreateDto") OrderCreateDto orderCreateDto) {
         orderService.updateOrder(orderCreateDto, orderId);
         return REDIRECT_ORDERS;

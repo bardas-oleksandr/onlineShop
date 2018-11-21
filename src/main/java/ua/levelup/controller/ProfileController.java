@@ -28,6 +28,7 @@ public class ProfileController {
     private static final String USER_ORDERS_PAGE = "userorders";
     private static final String REDIRECT_PROFILE_ORDER = "redirect:/profile/order/";
     private static final String SPRING_SECURITY_CONTEXT = "SPRING_SECURITY_CONTEXT";
+    private static final String ID_ATTRIBUTE = "id";
     private static final String USER_ATTRIBUTE = "user";
     private static final String CART_ATTRIBUTE = "cart";
     private static final String ORDER_LIST_ATTRIBUTE = "orderList";
@@ -44,16 +45,14 @@ public class ProfileController {
                 .getSession(true).getAttribute(SPRING_SECURITY_CONTEXT);
         User user = (User) securityContext.getAuthentication().getPrincipal();
         String email = user.getUsername();
-
         UserViewDto viewDto = userService.getUserViewDto(email);
         modelMap.addAttribute(USER_ATTRIBUTE, viewDto);
-
         return PROFILE_PAGE;
     }
 
     @PostMapping(value = ORDER)
     public String createOrder(HttpServletRequest request
-            , @ModelAttribute("order") OrderCreateDto orderCreateDto) {
+            , @ModelAttribute OrderCreateDto orderCreateDto) {
         HttpSession session = request.getSession(true);
         CartViewDto cart = (CartViewDto) session.getAttribute(CART_ATTRIBUTE);
         orderService.createOrder(orderCreateDto, cart);
@@ -62,9 +61,20 @@ public class ProfileController {
     }
 
     @GetMapping(value = ORDER + ID)
-    public String userOrdersPage(ModelMap modelMap, @PathVariable("id") int userId) {
+    public String userOrdersPage(HttpServletRequest request, ModelMap modelMap
+            , @PathVariable(ID_ATTRIBUTE) int userId) {
         List<OrderViewDto> orderViewDtoList = orderService.getUsersOrders(userId);
         modelMap.addAttribute(ORDER_LIST_ATTRIBUTE, orderViewDtoList);
+
+        SecurityContextImpl securityContext = (SecurityContextImpl) request
+                .getSession(true).getAttribute(SPRING_SECURITY_CONTEXT);
+        if (securityContext != null) {
+            User user = (User) securityContext.getAuthentication().getPrincipal();
+            String email = user.getUsername();
+            UserViewDto viewDto = userService.getUserViewDto(email);
+            modelMap.addAttribute(USER_ATTRIBUTE, viewDto);
+        }
+
         return USER_ORDERS_PAGE;
     }
 }

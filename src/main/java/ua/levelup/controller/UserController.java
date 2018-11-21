@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import ua.levelup.dao.UserDao;
+import ua.levelup.model.User;
 import ua.levelup.service.UserService;
 import ua.levelup.web.dto.create.UserCreateDto;
 import ua.levelup.web.dto.view.UserViewDto;
@@ -17,9 +17,13 @@ import java.util.List;
 public class UserController {
 
     private static final String ID = "/{id}";
+    private static final String REDIRECT_SECURITY_CHECK = "redirect:/j_spring_security_check/";
     private static final String REDIRECT_USER = "redirect:/user/";
     private static final String USERS_PAGE = "users";
+    private static final String ID_ATTRIBUTE = "id";
     private static final String USER_LIST_ATTRIBUTE = "userList";
+    private static final String EMAIL_ATTRIBUTE = "email";
+    private static final String PASSWORD_ATTRIBUTE = "password";
 
     @Autowired
     private UserService userService;
@@ -32,15 +36,19 @@ public class UserController {
     }
 
     @PostMapping
-    public String register(ModelMap modelMap) {
-
-        int userId = 1;
-        return REDIRECT_USER + userId;
+    public String register(@ModelAttribute UserCreateDto userCreateDto,
+                           HttpServletRequest request) {
+        userCreateDto.setUserStateIndex(User.UserState.ACTIVE.ordinal());
+        String password = userCreateDto.getPassword();
+        User user = userService.registerUser(userCreateDto);
+        request.setAttribute(EMAIL_ATTRIBUTE, user.getEmail());
+        request.setAttribute(PASSWORD_ATTRIBUTE, password);
+        return REDIRECT_SECURITY_CHECK;
     }
 
     @PostMapping(value = ID)
-    public String modifyUser(ModelMap modelMap, @PathVariable("id") int userId
-            , @ModelAttribute("userCreateDto") UserCreateDto userCreateDto) {
+    public String updateUser(ModelMap modelMap, @PathVariable(ID_ATTRIBUTE) int userId
+            , @ModelAttribute UserCreateDto userCreateDto) {
         userService.updateUser(userCreateDto, userId);
         return REDIRECT_USER;
     }

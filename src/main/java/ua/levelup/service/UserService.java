@@ -8,7 +8,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 public interface UserService {
-    UserViewDto registerUser(@Valid UserCreateDto createDto);
+    User registerUser(@Valid UserCreateDto createDto);
     UserViewDto updateUser(@Valid UserCreateDto userCreateDto, int userId);
     UserViewDto getUserViewDto(String email);
     User getUser(String email);
