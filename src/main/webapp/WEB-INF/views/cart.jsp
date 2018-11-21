@@ -150,7 +150,7 @@
                     </security:authorize>
 
                     <!--FLUSH CART BUTTON-->
-                    <form action="${pageContext.request.contextPath}/cart/flush" method="post">
+                    <form action="${pageContext.request.contextPath}/cart" method="post">
                         <div class="input-group mb-3">
                             <button type="submit" class="btn btn-secondary" data-dismiss="modal">
                                 <spring:message code="flush_cart"/>

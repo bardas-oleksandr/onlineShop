@@ -13,8 +13,6 @@ import ua.levelup.web.dto.view.ProductViewDto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.validation.Valid;
-
 @Service("cartService")
 public class CartServiceImpl implements CartService {
 
@@ -27,7 +25,7 @@ public class CartServiceImpl implements CartService {
     private ConversionService conversionService;
 
     @Override
-    public void putIntoCart(CartViewDto cart, @Valid ProductInCartCreateDto productInCartCreateDto) {
+    public void putIntoCart(CartViewDto cart, ProductInCartCreateDto productInCartCreateDto) {
         Product product = productDao.getById(productInCartCreateDto.getProductId());
         ProductViewDto productViewDto = conversionService.convert(product, ProductViewDto.class);
         int count = productInCartCreateDto.getCount();

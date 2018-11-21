@@ -17,8 +17,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.levelup.web.dto.view.ProductInCartViewDto;
 
-import javax.validation.Valid;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,11 +38,10 @@ public class OrderServiceImpl implements OrderService {
     private ConversionService conversionService;
 
     @Override
-    public OrderViewDto createOrder(@Valid OrderCreateDto orderCreateDto, CartViewDto cartViewDto) {
+    public OrderViewDto createOrder(OrderCreateDto orderCreateDto, CartViewDto cartViewDto) {
         Order order = conversionService.convert(orderCreateDto, Order.class);
         User user = userDao.getById(order.getUser().getId());
         order.setUser(user);
-        order.setDate(new Timestamp(System.currentTimeMillis()));
         orderDao.add(order);
 
         List<ProductInCartViewDto> productInCartViewDtoList = cartViewDto.getProductInCartViewDtoList();
@@ -59,7 +56,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderViewDto updateOrder(@Valid OrderCreateDto orderCreateDto, int orderId) {
+    public OrderViewDto updateOrder(OrderCreateDto orderCreateDto, int orderId) {
         Order order = conversionService.convert(orderCreateDto, Order.class);
         order.setId(orderId);
         orderDao.update(order);

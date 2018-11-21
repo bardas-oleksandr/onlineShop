@@ -6,6 +6,8 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import ua.levelup.controller.support.ControllerUtils;
+import ua.levelup.model.Order;
 import ua.levelup.service.OrderService;
 import ua.levelup.service.UserService;
 import ua.levelup.web.dto.create.OrderCreateDto;
@@ -15,8 +17,12 @@ import ua.levelup.web.dto.view.UserViewDto;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping(value = "/profile")
@@ -26,18 +32,52 @@ public class ProfileController {
     private static final String ORDER = "/order";
     private static final String PROFILE_PAGE = "profile";
     private static final String USER_ORDERS_PAGE = "userorders";
+    private static final String VALIDATION_ERROR_PAGE = "validationerror";
     private static final String REDIRECT_PROFILE_ORDER = "redirect:/profile/order/";
     private static final String SPRING_SECURITY_CONTEXT = "SPRING_SECURITY_CONTEXT";
     private static final String ID_ATTRIBUTE = "id";
     private static final String USER_ATTRIBUTE = "user";
     private static final String CART_ATTRIBUTE = "cart";
     private static final String ORDER_LIST_ATTRIBUTE = "orderList";
+    private static final String MESSAGE_CODES_ATTRIBUTE = "messageCodes";
 
     @Autowired
     private UserService userService;
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private ControllerUtils controllerUtils;
+
+    @Autowired
+    private Validator validator;
+
+    @PostMapping(value = ORDER)
+    public String createOrder(@ModelAttribute OrderCreateDto orderCreateDto
+            , HttpServletRequest request, ModelMap modelMap) {
+
+        orderCreateDto.setDate(new Timestamp(System.currentTimeMillis()));
+        orderCreateDto.setPayed(false);
+        orderCreateDto.setOrderStateIndex(Order.OrderState.REGISTERED.ordinal());
+
+        Set<ConstraintViolation<OrderCreateDto>> violations = validator.validate(orderCreateDto);
+        if(violations.size() > 0){
+            List<String> messageCodes = new ArrayList<>();
+            violations.stream().forEach((violation) -> messageCodes
+                    .add(violation.getMessage()));
+
+            System.out.println(messageCodes);
+            modelMap.addAttribute(MESSAGE_CODES_ATTRIBUTE, messageCodes);
+            return VALIDATION_ERROR_PAGE;
+        }
+
+        HttpSession session = request.getSession(true);
+        CartViewDto cart = (CartViewDto) session.getAttribute(CART_ATTRIBUTE);
+        orderService.createOrder(orderCreateDto, cart);
+        cart.setProductInCartViewDtoList(new ArrayList<>());
+        return REDIRECT_PROFILE_ORDER + orderCreateDto.getUserId();
+    }
 
     @GetMapping
     public String profilePage(ModelMap modelMap, HttpServletRequest request) {
@@ -50,14 +90,9 @@ public class ProfileController {
         return PROFILE_PAGE;
     }
 
-    @PostMapping(value = ORDER)
-    public String createOrder(HttpServletRequest request
-            , @ModelAttribute OrderCreateDto orderCreateDto) {
-        HttpSession session = request.getSession(true);
-        CartViewDto cart = (CartViewDto) session.getAttribute(CART_ATTRIBUTE);
-        orderService.createOrder(orderCreateDto, cart);
-        cart.setProductInCartViewDtoList(new ArrayList<>());
-        return REDIRECT_PROFILE_ORDER + orderCreateDto.getUserId();
+    @GetMapping(value = ORDER)
+    public String userOrdersPage(){
+        return PROFILE_PAGE;
     }
 
     @GetMapping(value = ORDER + ID)

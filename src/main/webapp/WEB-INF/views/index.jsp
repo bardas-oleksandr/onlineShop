@@ -85,6 +85,7 @@
                                             </label>
                                             <input type="password" name="password" class="form-control" id="registerPassword" placeholder="Password">
                                         </div>
+                                        <input type="hidden" name="userStateIndex" value="1">
                                     </div>
                                     <div class="modal-footer">
                                         <button type="submit" class="btn btn-primary">
@@ -135,7 +136,7 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <form action="${pageContext.request.contextPath}/product" modelAttribute="product" method="POST">
+                                <form action="${pageContext.request.contextPath}/product" modelAttribute="productCreateDto" method="POST">
                                     <div class="modal-body">
                                         <label>
                                             <spring:message code="product_label"/>
@@ -338,7 +339,7 @@
         	    <legend class="bar-legend">
         	        <spring:message code="search_products"/>
         	    </legend>
-        	    <form action="${pageContext.request.contextPath}/product" modelAttribute="searchParams" method="GET">
+        	    <form action="${pageContext.request.contextPath}/product" modelAttribute="searchParamsDto" method="GET">
         	        <label>
         	            <spring:message code="category_label"/>
         	        </label>
@@ -518,7 +519,7 @@
                     <!--AVAILABLE FOR ADMIN STATE USERS-->
                     <security:authorize access="hasRole('ADMIN')">
                         <div class="alert alert-primary" role="alert">
-                            <form action="${pageContext.request.contextPath}/product/${product.id}" modelAttribute="product" method="POST">
+                            <form action="${pageContext.request.contextPath}/product/${product.id}" modelAttribute="productCreateDto" method="POST">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><spring:message code="product_label"/></span>

@@ -129,7 +129,7 @@ public class SearchParamsValidatorServiceTest {
                 .validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
-        Assert.assertEquals("max_price_bigger_then_min_price", violations.stream()
+        Assert.assertEquals("min_price_bigger_then_max_price", violations.stream()
                 .findFirst().get().getMessage());
     }
 

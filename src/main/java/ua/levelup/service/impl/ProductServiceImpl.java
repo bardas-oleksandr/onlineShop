@@ -13,7 +13,6 @@ import ua.levelup.web.dto.view.ProductViewDto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,14 +28,14 @@ public class ProductServiceImpl implements ProductService {
     private ConversionService conversionService;
 
     @Override
-    public ProductViewDto createProduct(@Valid ProductCreateDto productCreateDto) {
+    public ProductViewDto createProduct(ProductCreateDto productCreateDto) {
         Product product = conversionService.convert(productCreateDto, Product.class);
         productDao.add(product);
         return conversionService.convert(product, ProductViewDto.class);
     }
 
     @Override
-    public ProductViewDto updateProduct(@Valid ProductCreateDto productCreateDto, int productId) {
+    public ProductViewDto updateProduct(ProductCreateDto productCreateDto, int productId) {
         Product product = conversionService.convert(productCreateDto, Product.class);
         product.setId(productId);
         productDao.update(product);
@@ -49,7 +48,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductViewDto> searchProducts(@Valid SearchParamsDto createDto) {
+    public List<ProductViewDto> searchProducts(SearchParamsDto createDto) {
         SearchParams searchParams = conversionService.convert(createDto, SearchParams.class);
         List<Product> products = productDao.getFilteredProducts(searchParams);
         List<ProductViewDto> viewDtos = new ArrayList<>();

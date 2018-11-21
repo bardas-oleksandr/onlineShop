@@ -21,7 +21,9 @@ public class ProductCreateDto implements Serializable {
     @NotEmpty(message = "empty_product_name")
     private String name;
 
-    private float price;
+    //Используется ссылочный тип Float а не примитивный float на случай
+    //если пользователь вообще не введет цену товара
+    private Float price;
 
     private boolean available;
 
@@ -34,7 +36,7 @@ public class ProductCreateDto implements Serializable {
     @Min(value = 1, message = "unacceptable_manufacturer_id")
     private int manufacturerId;
 
-    public ProductCreateDto(String name, float price, boolean available, String description,
+    public ProductCreateDto(String name, Float price, boolean available, String description,
                             int categoryId, int manufacturerId) {
         this.name = name;
         this.price = price;
@@ -46,6 +48,6 @@ public class ProductCreateDto implements Serializable {
 
     @AssertTrue(message = "unacceptable_price")
     public boolean isValidPrice(){
-        return price >= 0.0f;
+        return price != null && price >= 0.0f;
     }
 }

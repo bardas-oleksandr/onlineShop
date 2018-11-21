@@ -12,6 +12,8 @@ public interface UserDao{
 
     void update(@NonNull User user) throws ApplicationException;
 
+    void updateWithoutPassword(@NonNull User user) throws ApplicationException;
+
     void delete(int id) throws ApplicationException;
 
     User getById(int id) throws ApplicationException;

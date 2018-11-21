@@ -8,9 +8,9 @@ import ua.levelup.dao.UserDao;
 import ua.levelup.model.User;
 import ua.levelup.service.UserService;
 import ua.levelup.web.dto.create.UserCreateDto;
+import ua.levelup.web.dto.create.UserWithoutPasswordCreateDto;
 import ua.levelup.web.dto.view.UserViewDto;
 
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,21 +27,27 @@ public class UserServiceImpl implements UserService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    public User registerUser(@Valid UserCreateDto createDto) {
+    public User registerUser(UserCreateDto createDto) {
         createDto.setPassword(bCryptPasswordEncoder.encode(createDto.getPassword()));
         User user = conversionService.convert(createDto, User.class);
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userDao.add(user);
         return user;
     }
 
     @Override
-    public UserViewDto updateUser(@Valid UserCreateDto userCreateDto, int userId) {
+    public UserViewDto updateUser(UserCreateDto userCreateDto, int userId) {
         User user = conversionService.convert(userCreateDto, User.class);
         user.setId(userId);
-        User original = userDao.getById(userId);
-        user.setPassword(original.getPassword());
         userDao.update(user);
+        return conversionService.convert(user, UserViewDto.class);
+    }
+
+    @Override
+    public UserViewDto updateUserWithoutPassword(UserWithoutPasswordCreateDto userCreateDto
+            , int userId) {
+        User user = conversionService.convert(userCreateDto, User.class);
+        user.setId(userId);
+        userDao.updateWithoutPassword(user);
         return conversionService.convert(user, UserViewDto.class);
     }
 

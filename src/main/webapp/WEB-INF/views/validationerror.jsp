@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ page contentType="text/html;charset=UTF-8" language="java" errorPage="/error.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
-<%@ taglib uri="/WEB-INF/tag/functions.tld" prefix="fn" %>
 
 <html>
 	<head>
@@ -17,9 +17,12 @@
 
 	    <div class="message-style">
     	    <div class="alert alert-danger" role="alert">
-    	        <c:set var="user_message_code" value="${fn:getUserMessageCode(${exception})}"/>
-    	        <spring:message code="${user_message_code}"/>
+    	        <p><spring:message code="operation_cant_be_performed"/></p>
+    	        <c:forEach var="messageCode" items="${messageCodes}">
+                    <p><spring:message code="${messageCode}"/></p>
+    	        </c:forEach>
                 <div>
+                    <p></p>
                     <p><a href="${pageContext.request.contextPath}/">
                         <spring:message code="main_page_title"/>
                     </a></p>

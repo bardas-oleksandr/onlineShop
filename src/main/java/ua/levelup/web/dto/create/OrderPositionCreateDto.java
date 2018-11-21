@@ -24,9 +24,9 @@ public class OrderPositionCreateDto implements Serializable {
     @Min(value = 1, message = "unacceptable_product_quantity")
     private int quantity;
 
-    private float unitPrice;
+    private Float unitPrice;
 
-    public OrderPositionCreateDto(int orderId, int productId, int quantity, float unitPrice) {
+    public OrderPositionCreateDto(int orderId, int productId, int quantity, Float unitPrice) {
         this.orderId = orderId;
         this.productId = productId;
         this.quantity = quantity;
@@ -35,6 +35,6 @@ public class OrderPositionCreateDto implements Serializable {
 
     @AssertTrue(message = "unacceptable_price")
     public boolean isValidPrice(){
-        return unitPrice >= 0.0f;
+        return unitPrice != null && unitPrice >= 0.0f;
     }
 }

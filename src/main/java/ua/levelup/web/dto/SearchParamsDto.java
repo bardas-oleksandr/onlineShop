@@ -24,16 +24,16 @@ public class SearchParamsDto {
 
     private boolean availableOnly;
 
-    private float minPrice;
+    private Float minPrice;
 
-    private float maxPrice;
+    private Float maxPrice;
 
     @Min(value = 0, message = "unacceptable_order_method")
     @Max(value = 2, message = "unacceptable_order_method")
     private int orderMethodIndex;
 
     public SearchParamsDto(int categoryId, int subcategoryId, int manufacturerId,
-                           boolean availableOnly, float minPrice, float maxPrice,
+                           boolean availableOnly, Float minPrice, Float maxPrice,
                            int orderMethodIndex) {
         this.categoryId = categoryId;
         this.subcategoryId = subcategoryId;
@@ -44,13 +44,13 @@ public class SearchParamsDto {
         this.orderMethodIndex = orderMethodIndex;
     }
 
-    @AssertTrue(message = "max_price_bigger_then_min_price")
+    @AssertTrue(message = "min_price_bigger_then_max_price")
     public boolean isValidPriceRange() {
-        return minPrice <= maxPrice;
+        return minPrice != null && maxPrice != null && minPrice <= maxPrice;
     }
 
     @AssertTrue(message = "unacceptable_price")
     public boolean isValidMinPrice() {
-        return minPrice >= 0.0f;
+        return minPrice != null && minPrice >= 0.0f;
     }
 }

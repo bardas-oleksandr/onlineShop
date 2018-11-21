@@ -10,8 +10,8 @@
     <uri>/WEB-INF/tag/functions</uri>
 
     <function>
-        <name>getBundleByLanguage</name>
-        <function-class>ua.levelup.util.ResourceBundleHolder</function-class>
-        <function-signature>java.util.ResourceBundle getBundleByLanguage(java.lang.String)</function-signature>
+        <name>getExceptionMessageCode</name>
+        <function-class>ua.levelup.function.UserMessageCodeExtractor</function-class>
+        <function-signature>java.lang.String getUserMessageCode(java.lang.Exception)</function-signature>
     </function>
 </taglib>

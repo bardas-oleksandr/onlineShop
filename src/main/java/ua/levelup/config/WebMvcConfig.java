@@ -96,7 +96,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Bean("messageSource")
     public ReloadableResourceBundleMessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-        messageSource.setBasenames("WEB-INF/i18n/application", "WEB-INF/i18n/message");
+        messageSource.setBasenames("WEB-INF/i18n/application", "WEB-INF/i18n/message"
+                , "WEB-INF/i18n/validation");
         messageSource.setDefaultEncoding("UTF-8");
         messageSource.setUseCodeAsDefaultMessage(true);
         //с. 647 "Spring для профессионалов"

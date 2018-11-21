@@ -82,6 +82,29 @@ public class UserDaoImpl implements UserDao, ShopLogger {
     }
 
     @Override
+    public void updateWithoutPassword(@NonNull User user) throws ApplicationException {
+        String sql = "UPDATE users " +
+                "SET user_name = ?, user_email = ?, user_state = ? " +
+                "WHERE id = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, user.getUserName());
+            statement.setString(2, user.getEmail());
+            statement.setInt(3, user.getUserState().ordinal());
+            statement.setInt(4, user.getId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            logError(e);
+            if (e.getErrorCode() == 23505) {
+                throw new ApplicationException(messagesProperties
+                        .getProperty("NOT_UNIQUE_USER"), e);
+            }
+            throw new ApplicationException(messagesProperties
+                    .getProperty("FAILED_SAVE_USER"), e);
+        }
+    }
+
+    @Override
     public void delete(int id) throws ApplicationException {
         String sql = "DELETE FROM users WHERE id = ?";
 

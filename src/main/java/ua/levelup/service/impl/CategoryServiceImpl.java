@@ -9,7 +9,6 @@ import ua.levelup.service.CategoryService;
 import ua.levelup.web.dto.create.CategoryCreateDto;
 import ua.levelup.web.dto.view.CategoryViewDto;
 
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +22,7 @@ public class CategoryServiceImpl implements CategoryService {
     private ConversionService conversionService;
 
     @Override
-    public CategoryViewDto createCategory(@Valid CategoryCreateDto categoryCreateDto) {
+    public CategoryViewDto createCategory(CategoryCreateDto categoryCreateDto) {
         Category category = conversionService.convert(categoryCreateDto, Category.class);
         categoryDao.add(category);
         return conversionService.convert(category, CategoryViewDto.class);
