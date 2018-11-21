@@ -8,8 +8,8 @@ import javax.validation.Valid;
 import java.util.List;
 
 public interface ProductService {
-    List<ProductViewDto> searchProducts(@Valid SearchParamsDto searchParams);
-    void deleteProduct(int productId);
-    ProductViewDto updateProduct(@Valid ProductCreateDto productCreateDto, int productId);
     ProductViewDto createProduct(@Valid ProductCreateDto productCreateDto);
+    ProductViewDto updateProduct(@Valid ProductCreateDto productCreateDto, int productId);
+    void deleteProduct(int productId);
+    List<ProductViewDto> searchProducts(@Valid SearchParamsDto searchParams);
 }

@@ -19,7 +19,7 @@ public class CategoryController {
 
     @PostMapping
     public String createCategory(@ModelAttribute CategoryCreateDto categoryCreateDto){
-        categoryService.createNewCategory(categoryCreateDto);
+        categoryService.createCategory(categoryCreateDto);
         return SUCCESS_PAGE;
     }
 }

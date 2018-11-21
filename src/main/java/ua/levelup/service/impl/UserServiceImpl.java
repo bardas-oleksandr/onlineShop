@@ -10,6 +10,7 @@ import ua.levelup.service.UserService;
 import ua.levelup.web.dto.create.UserCreateDto;
 import ua.levelup.web.dto.view.UserViewDto;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,10 +27,20 @@ public class UserServiceImpl implements UserService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    public UserViewDto registerUser(UserCreateDto createDto) {
+    public UserViewDto registerUser(@Valid UserCreateDto createDto) {
         User user = conversionService.convert(createDto, User.class);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userDao.add(user);
+        return conversionService.convert(user, UserViewDto.class);
+    }
+
+    @Override
+    public UserViewDto updateUser(@Valid UserCreateDto userCreateDto, int userId) {
+        User user = conversionService.convert(userCreateDto, User.class);
+        user.setId(userId);
+        User original = userDao.getById(userId);
+        user.setPassword(original.getPassword());
+        userDao.update(user);
         return conversionService.convert(user, UserViewDto.class);
     }
 

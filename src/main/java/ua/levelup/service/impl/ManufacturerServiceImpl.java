@@ -1,6 +1,5 @@
 package ua.levelup.service.impl;
 
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
@@ -13,7 +12,6 @@ import ua.levelup.web.dto.view.ManufacturerViewDto;
 import java.util.ArrayList;
 import java.util.List;
 
-@Setter
 @Service("manufacturerService")
 public class ManufacturerServiceImpl implements ManufacturerService {
 
@@ -24,7 +22,7 @@ public class ManufacturerServiceImpl implements ManufacturerService {
     private ConversionService conversionService;
 
     @Override
-    public ManufacturerViewDto createNewManufacturer(ManufacturerCreateDto manufacturerCreateDto) {
+    public ManufacturerViewDto createManufacturer(ManufacturerCreateDto manufacturerCreateDto) {
         Manufacturer manufacturer = conversionService.convert(manufacturerCreateDto, Manufacturer.class);
         manufacturerDao.add(manufacturer);
         return conversionService.convert(manufacturer, ManufacturerViewDto.class);

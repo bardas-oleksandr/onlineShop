@@ -1,6 +1,5 @@
 package ua.levelup.service.impl;
 
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
@@ -18,7 +17,6 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
-@Setter
 @Service("productService")
 public class ProductServiceImpl implements ProductService {
 
@@ -28,21 +26,13 @@ public class ProductServiceImpl implements ProductService {
     private ProductDao productDao;
 
     @Autowired
-    ConversionService conversionService;
+    private ConversionService conversionService;
 
     @Override
-    public List<ProductViewDto> searchProducts(@Valid SearchParamsDto createDto) {
-        SearchParams searchParams = conversionService.convert(createDto, SearchParams.class);
-        List<Product> products = productDao.getFilteredProducts(searchParams);
-        List<ProductViewDto> viewDtos = new ArrayList<>();
-        products.stream().forEach((item) -> viewDtos
-                .add(conversionService.convert(item, ProductViewDto.class)));
-        return viewDtos;
-    }
-
-    @Override
-    public void deleteProduct(int productId) {
-        productDao.delete(productId);
+    public ProductViewDto createProduct(@Valid ProductCreateDto productCreateDto) {
+        Product product = conversionService.convert(productCreateDto, Product.class);
+        productDao.add(product);
+        return conversionService.convert(product, ProductViewDto.class);
     }
 
     @Override
@@ -54,9 +44,17 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductViewDto createProduct(@Valid ProductCreateDto productCreateDto) {
-        Product product = conversionService.convert(productCreateDto, Product.class);
-        productDao.add(product);
-        return conversionService.convert(product, ProductViewDto.class);
+    public void deleteProduct(int productId) {
+        productDao.delete(productId);
+    }
+
+    @Override
+    public List<ProductViewDto> searchProducts(@Valid SearchParamsDto createDto) {
+        SearchParams searchParams = conversionService.convert(createDto, SearchParams.class);
+        List<Product> products = productDao.getFilteredProducts(searchParams);
+        List<ProductViewDto> viewDtos = new ArrayList<>();
+        products.stream().forEach((item) -> viewDtos
+                .add(conversionService.convert(item, ProductViewDto.class)));
+        return viewDtos;
     }
 }

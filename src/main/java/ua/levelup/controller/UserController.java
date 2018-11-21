@@ -41,7 +41,7 @@ public class UserController {
     @PostMapping(value = ID)
     public String modifyUser(ModelMap modelMap, @PathVariable("id") int userId
             , @ModelAttribute("userCreateDto") UserCreateDto userCreateDto) {
-
-        return USERS_PAGE;
+        userService.updateUser(userCreateDto, userId);
+        return REDIRECT_USER;
     }
 }

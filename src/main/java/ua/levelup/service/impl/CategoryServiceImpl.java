@@ -1,6 +1,5 @@
 package ua.levelup.service.impl;
 
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
@@ -14,7 +13,6 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
-@Setter
 @Service("categoryService")
 public class CategoryServiceImpl implements CategoryService {
 
@@ -25,7 +23,7 @@ public class CategoryServiceImpl implements CategoryService {
     private ConversionService conversionService;
 
     @Override
-    public CategoryViewDto createNewCategory(@Valid CategoryCreateDto categoryCreateDto) {
+    public CategoryViewDto createCategory(@Valid CategoryCreateDto categoryCreateDto) {
         Category category = conversionService.convert(categoryCreateDto, Category.class);
         categoryDao.add(category);
         return conversionService.convert(category, CategoryViewDto.class);

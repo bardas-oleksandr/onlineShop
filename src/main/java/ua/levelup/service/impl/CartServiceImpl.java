@@ -1,6 +1,5 @@
 package ua.levelup.service.impl;
 
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
@@ -16,7 +15,6 @@ import org.apache.logging.log4j.Logger;
 
 import javax.validation.Valid;
 
-@Setter
 @Service("cartService")
 public class CartServiceImpl implements CartService {
 
@@ -26,7 +24,7 @@ public class CartServiceImpl implements CartService {
     private ProductDao productDao;
 
     @Autowired
-    ConversionService conversionService;
+    private ConversionService conversionService;
 
     @Override
     public void putIntoCart(CartViewDto cart, @Valid ProductInCartCreateDto productInCartCreateDto) {
@@ -34,7 +32,6 @@ public class CartServiceImpl implements CartService {
         ProductViewDto productViewDto = conversionService.convert(product, ProductViewDto.class);
         int count = productInCartCreateDto.getCount();
         ProductInCartViewDto productInCartViewDto = new ProductInCartViewDto(productViewDto, count);
-
         cart.putIntoCart(productInCartViewDto);
     }
 }

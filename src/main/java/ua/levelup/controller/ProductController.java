@@ -49,7 +49,7 @@ public class ProductController {
     }
 
     @PostMapping(value = ID)
-    public String modifyProduct(@PathVariable("id") int productId
+    public String updateProduct(@PathVariable("id") int productId
             , @ModelAttribute("product") ProductCreateDto productCreateDto) {
         productService.updateProduct(productCreateDto, productId);
         return REDIRECT_SEARCH;

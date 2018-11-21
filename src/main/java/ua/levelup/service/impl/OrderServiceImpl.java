@@ -1,6 +1,5 @@
 package ua.levelup.service.impl;
 
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
@@ -23,7 +22,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-@Setter
 @Service("orderService")
 public class OrderServiceImpl implements OrderService {
 
@@ -39,7 +37,7 @@ public class OrderServiceImpl implements OrderService {
     private UserDao userDao;
 
     @Autowired
-    ConversionService conversionService;
+    private ConversionService conversionService;
 
     @Override
     public OrderViewDto createOrder(@Valid OrderCreateDto orderCreateDto, CartViewDto cartViewDto) {
@@ -61,6 +59,14 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public OrderViewDto updateOrder(@Valid OrderCreateDto orderCreateDto, int orderId) {
+        Order order = conversionService.convert(orderCreateDto, Order.class);
+        order.setId(orderId);
+        orderDao.update(order);
+        return conversionService.convert(order, OrderViewDto.class);
+    }
+
+    @Override
     public List<OrderViewDto> getUsersOrders(int userId) {
         return getOrderViewDtoList(orderDao.getAllByUserId(userId));
     }
@@ -68,14 +74,6 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderViewDto> getAllOrders() {
         return getOrderViewDtoList(orderDao.getAll());
-    }
-
-    @Override
-    public OrderViewDto updateOrder(@Valid OrderCreateDto orderCreateDto, int orderId) {
-        Order order = conversionService.convert(orderCreateDto, Order.class);
-        order.setId(orderId);
-        orderDao.update(order);
-        return conversionService.convert(order, OrderViewDto.class);
     }
 
     private List<OrderViewDto> getOrderViewDtoList(List<Order> orderList) {

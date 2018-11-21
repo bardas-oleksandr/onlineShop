@@ -17,7 +17,7 @@ public class ManufacturerController {
 
     @PostMapping
     public String createManufacturer(@ModelAttribute ManufacturerCreateDto manufacturerCreateDto){
-        manufacturerService.createNewManufacturer(manufacturerCreateDto);
+        manufacturerService.createManufacturer(manufacturerCreateDto);
         return SUCCESS_PAGE;
     }
 }
