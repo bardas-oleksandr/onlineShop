@@ -10,6 +10,9 @@ import ua.levelup.service.UserService;
 import ua.levelup.web.dto.create.UserCreateDto;
 import ua.levelup.web.dto.view.UserViewDto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service("userService")
 public class UserServiceImpl implements UserService {
 
@@ -39,5 +42,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUser(String email) {
         return userDao.getByEmail(email);
+    }
+
+    @Override
+    public List<UserViewDto> getAllUsers() {
+        List<User> userList = userDao.getAllUsers();
+        List<UserViewDto> viewDtos = new ArrayList<>();
+        userList.stream().forEach((user) -> viewDtos
+                .add(conversionService.convert(user, UserViewDto.class)));
+        return viewDtos;
     }
 }

@@ -37,8 +37,9 @@ public class UserCreateDtoConverterTest {
     public void convertTest_whenUserCreateDtoNotEqualsNull_thenOk() throws Exception {
         //GIVEN
         UserCreateDto dto = new UserCreateDto("name","password",
-                "mail@gmail.com");
-        User expected = new User(dto.getUserName(),dto.getPassword(), dto.getEmail());
+                "mail@gmail.com",User.UserState.ADMIN.ordinal());
+        User expected = new User(dto.getUserName(),dto.getPassword(), dto.getEmail()
+                , User.UserState.ADMIN);
         //WHEN
         User user = userCreateDtoConverter.convert(dto);
         //THEN

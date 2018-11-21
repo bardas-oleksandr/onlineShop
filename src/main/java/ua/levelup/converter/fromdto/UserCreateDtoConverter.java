@@ -20,6 +20,7 @@ public class UserCreateDtoConverter implements Converter<UserCreateDto, User> {
         user.setUserName(userCreateDto.getUserName());
         user.setPassword(userCreateDto.getPassword());
         user.setEmail(userCreateDto.getEmail());
+        user.setUserState(User.UserState.get(userCreateDto.getUserStateIndex()));
         return user;
     }
 }

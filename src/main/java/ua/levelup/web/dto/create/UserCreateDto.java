@@ -2,10 +2,7 @@ package ua.levelup.web.dto.create;
 
 import lombok.*;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 
 @Getter
@@ -29,9 +26,14 @@ public class UserCreateDto implements Serializable {
     @NotEmpty(message = "empty_email")
     private String email;
 
-    public UserCreateDto(String userName, String password, String email) {
+    @Min(value = 0, message = "unexpected_user_state")
+    @Max(value = 2, message = "unexpected_user_state")
+    private int userStateIndex;
+
+    public UserCreateDto(String userName, String password, String email, int userStateIndex) {
         this.userName = userName;
         this.password = password;
         this.email = email;
+        this.userStateIndex = userStateIndex;
     }
 }
