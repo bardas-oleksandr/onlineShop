@@ -156,7 +156,144 @@ public class UserDaoImplTest {
         userDao.add(null);
     }
 
+    /*Сценарий: - модификация в базе данных информации о пользователе
+    *            включая пароль пользователя;
+    *           - все поля корректны, пользователь уникален
+    * Результат: пользователь успешно добавлен в базу данных.
+    * */
+    @Test
+    @Sql({"classpath:schema_clean.sql", "classpath:schema_insert_userTest.sql"})
+    public void updateWithPasswordTest_whenUserIsUnique_thenOk() throws Exception {
+        //GIVEN
+        User user = new User("new name", "new password", "newmail@gmail.com");
+        user.setUserState(User.UserState.ACTIVE);
+        user.setId(1);
+        //WHEN
+        userDao.updateWithPassword(user);
+        //THEN
+        User extracted = userDao.getById(user.getId());
+        Assert.assertNotNull(extracted);
+        Assert.assertEquals(user, extracted);
+    }
+
+    /*Сценарий: - модификация в базе данных информации о пользователе
+    *            включая пароль пользователя;
+    *           - имя пользователя не уникально
+    * Результат: исключение ApplicationException.
+    * */
+    @Test
+    @Sql({"classpath:schema_clean.sql", "classpath:schema_insert_userTest.sql"})
+    public void updateWithPasswordTest_whenUserNameIsNotUnique_thenException() throws Exception {
+        //GIVEN
+        User user = new User("second user", "new password", "newmail@gmail.com");
+        user.setUserState(User.UserState.ACTIVE);
+        user.setId(1);
+        expectedException.expect(ApplicationException.class);
+        expectedException.expectMessage(messagesProperties
+                .getProperty("NOT_UNIQUE_USER"));
+        //WHEN-THEN
+        userDao.updateWithPassword(user);
+    }
+
+    /*Сценарий: - модификация в базе данных информации о пользователе
+    *            включая пароль пользователя;
+    *           - email пользователя не уникален
+    * Результат: исключение ApplicationException.
+    * */
+    @Test
+    @Sql({"classpath:schema_clean.sql", "classpath:schema_insert_userTest.sql"})
+    public void updateWithPasswordTest_whenEmailIsNotUnique_thenException() throws Exception {
+        //GIVEN
+        User user = new User("new user", "password", "secondmail@gmail.com");
+        user.setUserState(User.UserState.ACTIVE);
+        user.setId(1);
+        expectedException.expect(ApplicationException.class);
+        expectedException.expectMessage(messagesProperties
+                .getProperty("NOT_UNIQUE_USER"));
+        //WHEN-THEN
+        userDao.add(user);
+    }
+
+    /*Сценарий: - модификация в базе данных информации о пользователе
+    *            включая пароль пользователя;
+    *           - имя пользователя == null
+    * Результат: исключение ApplicationException.
+    * */
+    @Test
+    @Sql({"classpath:schema_clean.sql", "classpath:schema_insert_userTest.sql"})
+    public void updateWithPasswordTest_whenNameEqualsNull_thenException() throws Exception {
+        //GIVEN
+        User user = new User(null, "password", "mail@gmail.com");
+        user.setUserState(User.UserState.ACTIVE);
+        user.setId(1);
+        expectedException.expect(ApplicationException.class);
+        expectedException.expectMessage(messagesProperties
+                .getProperty("FAILED_SAVE_USER"));
+        //WHEN-THEN
+        userDao.add(user);
+    }
+
     /*Сценарий: - модификация в базе данных информации о пользователе;
+    *            включая пароль пользователя;
+    *           - пароль == null
+    * Результат: исключение ApplicationException.
+    * */
+    @Test
+    @Sql({"classpath:schema_clean.sql", "classpath:schema_insert_userTest.sql"})
+    public void updateWithPasswordTest_whenPasswordEqualsNull_thenException() throws Exception {
+        //GIVEN
+        User user = new User("new user", null, "mail@gmail.com");
+        user.setUserState(User.UserState.ACTIVE);
+        user.setId(1);
+        expectedException.expect(ApplicationException.class);
+        expectedException.expectMessage(messagesProperties
+                .getProperty("FAILED_SAVE_USER"));
+        //WHEN-THEN
+        userDao.add(user);
+    }
+
+    /*Сценарий: - модификация в базе данных информации о пользователе;
+    *            включая пароль пользователя;
+    *           - email == null
+    * Результат: исключение ApplicationException.
+    * */
+    @Test
+    @Sql({"classpath:schema_clean.sql", "classpath:schema_insert_userTest.sql"})
+    public void updateWithPasswordTest_whenEmailEqualsNull_thenException() throws Exception {
+        //GIVEN
+        User user = new User("new user", "password", null);
+        user.setUserState(User.UserState.ACTIVE);
+        user.setId(1);
+        expectedException.expect(ApplicationException.class);
+        expectedException.expectMessage(messagesProperties
+                .getProperty("FAILED_SAVE_USER"));
+        //WHEN-THEN
+        userDao.add(user);
+    }
+
+    /*Сценарий: - модификация в базе данных информации о пользователе;
+    *            включая пароль пользователя;
+    *           - модифицируемый объект равен null.
+    * Результат: исключение NullPointerException.
+    * */
+    @Test
+    @Sql({"classpath:schema_clean.sql"})
+    public void updateWithPasswordTest_whenUserEqualsNull_thenException() throws Exception {
+        //GIVEN
+        expectedException.expect(NullPointerException.class);
+        expectedException.expectMessage("user is marked @NonNull but is null");
+        //THEN
+        userDao.updateWithPassword(null);
+    }
+
+
+
+
+
+
+
+    /*Сценарий: - модификация в базе данных информации о пользователе
+    *            пароль пользователя не изменяется;
     *           - все поля корректны, пользователь уникален
     * Результат: пользователь успешно добавлен в базу данных.
     * */
@@ -164,18 +301,20 @@ public class UserDaoImplTest {
     @Sql({"classpath:schema_clean.sql", "classpath:schema_insert_userTest.sql"})
     public void updateTest_whenUserIsUnique_thenOk() throws Exception {
         //GIVEN
-        User user = new User("new name", "new password", "newmail@gmail.com");
+        User user = userDao.getById(1);
+        user.setUserName("new name");
+        user.setEmail("newmail@gmail.com");
         user.setUserState(User.UserState.ACTIVE);
-        user.setId(1);
         //WHEN
-        userDao.update(user);
+        userDao.updateWithPassword(user);
         //THEN
         User extracted = userDao.getById(user.getId());
         Assert.assertNotNull(extracted);
         Assert.assertEquals(user, extracted);
     }
 
-    /*Сценарий: - модификация в базе данных информации о пользователе;
+    /*Сценарий: - модификация в базе данных информации о пользователе
+    *            пароль пользователя не изменяется;
     *           - имя пользователя не уникально
     * Результат: исключение ApplicationException.
     * */
@@ -190,10 +329,11 @@ public class UserDaoImplTest {
         expectedException.expectMessage(messagesProperties
                 .getProperty("NOT_UNIQUE_USER"));
         //WHEN-THEN
-        userDao.update(user);
+        userDao.updateWithPassword(user);
     }
 
-    /*Сценарий: - модификация в базе данных информации о пользователе;
+    /*Сценарий: - модификация в базе данных информации о пользователе
+    *            пароль пользователя не изменяется;
     *           - email пользователя не уникален
     * Результат: исключение ApplicationException.
     * */
@@ -211,7 +351,8 @@ public class UserDaoImplTest {
         userDao.add(user);
     }
 
-    /*Сценарий: - модификация в базе данных информации о пользователе;
+    /*Сценарий: - модификация в базе данных информации о пользователе
+    *            пароль пользователя не изменяется;
     *           - имя пользователя == null
     * Результат: исключение ApplicationException.
     * */
@@ -230,24 +371,7 @@ public class UserDaoImplTest {
     }
 
     /*Сценарий: - модификация в базе данных информации о пользователе;
-    *           - пароль == null
-    * Результат: исключение ApplicationException.
-    * */
-    @Test
-    @Sql({"classpath:schema_clean.sql", "classpath:schema_insert_userTest.sql"})
-    public void updateTest_whenPasswordEqualsNull_thenException() throws Exception {
-        //GIVEN
-        User user = new User("new user", null, "mail@gmail.com");
-        user.setUserState(User.UserState.ACTIVE);
-        user.setId(1);
-        expectedException.expect(ApplicationException.class);
-        expectedException.expectMessage(messagesProperties
-                .getProperty("FAILED_SAVE_USER"));
-        //WHEN-THEN
-        userDao.add(user);
-    }
-
-    /*Сценарий: - модификация в базе данных информации о пользователе;
+    *            пароль пользователя не изменяется;
     *           - email == null
     * Результат: исключение ApplicationException.
     * */
@@ -266,6 +390,7 @@ public class UserDaoImplTest {
     }
 
     /*Сценарий: - модификация в базе данных информации о пользователе;
+    *            пароль пользователя не изменяется;
     *           - модифицируемый объект равен null.
     * Результат: исключение NullPointerException.
     * */
@@ -276,8 +401,24 @@ public class UserDaoImplTest {
         expectedException.expect(NullPointerException.class);
         expectedException.expectMessage("user is marked @NonNull but is null");
         //THEN
-        userDao.update(null);
+        userDao.updateWithPassword(null);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /*Сценарий: - удаление из базы данных информации о пользователе;
     *             пользователь существует.

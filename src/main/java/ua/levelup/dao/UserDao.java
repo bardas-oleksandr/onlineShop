@@ -10,9 +10,9 @@ public interface UserDao{
 
     void add(@NonNull User user) throws ApplicationException;
 
-    void update(@NonNull User user) throws ApplicationException;
+    void updateWithPassword(@NonNull User user) throws ApplicationException;
 
-    void updateWithoutPassword(@NonNull User user) throws ApplicationException;
+    void update(@NonNull User user) throws ApplicationException;
 
     void delete(int id) throws ApplicationException;
 

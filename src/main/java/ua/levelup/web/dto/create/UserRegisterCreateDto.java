@@ -10,13 +10,17 @@ import java.io.Serializable;
 @ToString
 @EqualsAndHashCode
 @NoArgsConstructor
-public class UserWithoutPasswordCreateDto implements Serializable {
+public class UserRegisterCreateDto implements Serializable {
 
-    private static final long serialVersionUID = 247754229132006935L;
+    private static final long serialVersionUID = 6331639670419471040L;
 
     @Size(max = 20, message = "unacceptable_username_length")
     @NotEmpty(message = "empty_username")
     private String userName;
+
+    @Size(min = 4,max = 20, message = "unacceptable_password_length")
+    @NotNull(message = "empty_password")
+    private String password;
 
     @Email(message = "wrong_email_format")
     @NotEmpty(message = "empty_email")
@@ -26,8 +30,10 @@ public class UserWithoutPasswordCreateDto implements Serializable {
     @Max(value = 2, message = "unexpected_user_state")
     private int userStateIndex;
 
-    public UserWithoutPasswordCreateDto(String userName, String email, int userStateIndex) {
+    public UserRegisterCreateDto(String userName, String password, String email
+            , int userStateIndex) {
         this.userName = userName;
+        this.password = password;
         this.email = email;
         this.userStateIndex = userStateIndex;
     }

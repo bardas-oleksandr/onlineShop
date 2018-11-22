@@ -7,4 +7,6 @@ import ua.levelup.web.dto.create.UserCreateDto;
  *
  */
 @Service("userValidatorService")
-public class UserValidatorService extends AbstractValidatorService<UserCreateDto> { }
+public class UserValidatorService
+        extends AbstractValidatorService<UserCreateDto> {
+}

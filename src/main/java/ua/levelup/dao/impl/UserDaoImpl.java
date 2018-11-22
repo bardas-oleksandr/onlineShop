@@ -58,7 +58,7 @@ public class UserDaoImpl implements UserDao, ShopLogger {
     }
 
     @Override
-    public void update(@NonNull User user) throws ApplicationException {
+    public void updateWithPassword(@NonNull User user) throws ApplicationException {
         String sql = "UPDATE users " +
                 "SET user_name = ?, user_password = ?, user_email = ?, user_state = ? " +
                 "WHERE id = ?";
@@ -82,7 +82,7 @@ public class UserDaoImpl implements UserDao, ShopLogger {
     }
 
     @Override
-    public void updateWithoutPassword(@NonNull User user) throws ApplicationException {
+    public void update(@NonNull User user) throws ApplicationException {
         String sql = "UPDATE users " +
                 "SET user_name = ?, user_email = ?, user_state = ? " +
                 "WHERE id = ?";

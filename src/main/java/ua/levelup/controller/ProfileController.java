@@ -66,8 +66,6 @@ public class ProfileController {
             List<String> messageCodes = new ArrayList<>();
             violations.stream().forEach((violation) -> messageCodes
                     .add(violation.getMessage()));
-
-            System.out.println(messageCodes);
             modelMap.addAttribute(MESSAGE_CODES_ATTRIBUTE, messageCodes);
             return VALIDATION_ERROR_PAGE;
         }
@@ -109,7 +107,6 @@ public class ProfileController {
             UserViewDto viewDto = userService.getUserViewDto(email);
             modelMap.addAttribute(USER_ATTRIBUTE, viewDto);
         }
-
         return USER_ORDERS_PAGE;
     }
 }

@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ua.levelup.testconfig.TestContextConfig;
 import ua.levelup.model.User;
 import ua.levelup.web.dto.create.UserCreateDto;
+import ua.levelup.web.dto.create.UserRegisterCreateDto;
 
 /*Класс UserCreateDtoConverterTest содержит тесты для проверки
 * конвертации объектов класса UserCreateDto в объекты класса User
@@ -36,9 +37,9 @@ public class UserCreateDtoConverterTest {
     @Test
     public void convertTest_whenUserCreateDtoNotEqualsNull_thenOk() throws Exception {
         //GIVEN
-        UserCreateDto dto = new UserCreateDto("name","password",
-                "mail@gmail.com",User.UserState.ADMIN.ordinal());
-        User expected = new User(dto.getUserName(),dto.getPassword(), dto.getEmail()
+        UserCreateDto dto = new UserCreateDto("name", "mail@gmail.com"
+                ,User.UserState.ADMIN.ordinal());
+        User expected = new User(dto.getUserName(),null,dto.getEmail()
                 , User.UserState.ADMIN);
         //WHEN
         User user = userCreateDtoConverter.convert(dto);

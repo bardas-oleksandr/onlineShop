@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 import ua.levelup.dao.UserDao;
 import ua.levelup.model.User;
 import ua.levelup.service.UserService;
+import ua.levelup.web.dto.create.UserRegisterCreateDto;
 import ua.levelup.web.dto.create.UserCreateDto;
-import ua.levelup.web.dto.create.UserWithoutPasswordCreateDto;
 import ua.levelup.web.dto.view.UserViewDto;
 
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    public User registerUser(UserCreateDto createDto) {
+    public User registerUser(UserRegisterCreateDto createDto) {
         createDto.setPassword(bCryptPasswordEncoder.encode(createDto.getPassword()));
         User user = conversionService.convert(createDto, User.class);
         userDao.add(user);
@@ -39,15 +39,6 @@ public class UserServiceImpl implements UserService {
         User user = conversionService.convert(userCreateDto, User.class);
         user.setId(userId);
         userDao.update(user);
-        return conversionService.convert(user, UserViewDto.class);
-    }
-
-    @Override
-    public UserViewDto updateUserWithoutPassword(UserWithoutPasswordCreateDto userCreateDto
-            , int userId) {
-        User user = conversionService.convert(userCreateDto, User.class);
-        user.setId(userId);
-        userDao.updateWithoutPassword(user);
         return conversionService.convert(user, UserViewDto.class);
     }
 

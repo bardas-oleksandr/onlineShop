@@ -107,7 +107,7 @@
 //            }.getType();
 //            User user = (User) extractFromJson(userCreateDtoString, type);
 //            UserValidator.validateNewUser(user);
-//            int count = userDao.update(id, user);
+//            int count = userDao.updateWithPassword(id, user);
 //            return Response.status(count == 0 ? 404 : 200).build();
 //        } catch (RestException e) {
 //            return Response.status(e.getHttpStatus()).build();

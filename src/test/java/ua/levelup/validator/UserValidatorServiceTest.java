@@ -33,82 +33,15 @@ public class UserValidatorServiceTest {
     * Результат: объект успешно валидирован.
     * */
     @Test
-    public void validateTest_CredentialsValidated() {
+    public void validateTest_ObjectIsValidated() {
         //GIVEN
-        UserCreateDto dto = new UserCreateDto("name","password"
-                ,"mail@gmail.com", User.UserState.ADMIN.ordinal());
+        UserCreateDto dto = new UserCreateDto("name","mail@gmail.com"
+                , User.UserState.ADMIN.ordinal());
         //WHEN
-        Set<ConstraintViolation<UserCreateDto>> violations = userValidatorService.validate(dto);
+        Set<ConstraintViolation<UserCreateDto>> violations = userValidatorService
+                .validate(dto);
         //THEN
         Assert.assertEquals(0, violations.size());
-    }
-
-    /*Сценарий: валидация объекта UserCreateDto;
-    *           поле String password == null.
-    * Результат: объект не валидирован.
-    * */
-    @Test
-    public void validateTest_whenPasswordEqualsNull_thenNotValidated() {
-        //GIVEN
-        UserCreateDto dto = new UserCreateDto("name", null, "mail@gmail.com"
-                , User.UserState.ADMIN.ordinal());
-        //WHEN
-        Set<ConstraintViolation<UserCreateDto>> violations = userValidatorService.validate(dto);
-        //THEN
-        Assert.assertEquals(1, violations.size());
-        Assert.assertEquals("empty_password",violations.stream()
-                .findFirst().get().getMessage());
-    }
-
-    /*Сценарий: валидация объекта UserCreateDto;
-    *           поле String password == "".
-    * Результат: объект не валидирован.
-    * */
-    @Test
-    public void validateTest_whenPasswordIsEmpty_thenNotValidated() {
-        //GIVEN
-        UserCreateDto dto = new UserCreateDto("name","", "mail@gmail.com"
-                , User.UserState.ADMIN.ordinal());
-        //WHEN
-        Set<ConstraintViolation<UserCreateDto>> violations = userValidatorService.validate(dto);
-        //THEN
-        Assert.assertEquals(1, violations.size());
-        Assert.assertEquals("unacceptable_password_length",violations.stream()
-                .findFirst().get().getMessage());
-    }
-
-    /*Сценарий: валидация объекта UserCreateDto;
-    *           поле String password короче 6 символов.
-    * Результат: объект не валидирован.
-    * */
-    @Test
-    public void validateTest_whenPasswordIsTooShort_thenNotValidated() {
-        //GIVEN
-        UserCreateDto dto = new UserCreateDto("name", "123", "mail@gmail.com"
-                , User.UserState.ADMIN.ordinal());
-        //WHEN
-        Set<ConstraintViolation<UserCreateDto>> violations = userValidatorService.validate(dto);
-        //THEN
-        Assert.assertEquals(1, violations.size());
-        Assert.assertEquals("unacceptable_password_length",violations.stream()
-                .findFirst().get().getMessage());
-    }
-
-    /*Сценарий: валидация объекта UserCreateDto;
-    *           поле String password длинее 20 символов.
-    * Результат: объект не валидирован.
-    * */
-    @Test
-    public void validateTest_whenPasswordIsTooLong_thenNotValidated() {
-        //GIVEN
-        UserCreateDto dto = new UserCreateDto("name","01234556789012345567890",
-                "mail@gmail.com", User.UserState.ADMIN.ordinal());
-        //WHEN
-        Set<ConstraintViolation<UserCreateDto>> violations = userValidatorService.validate(dto);
-        //THEN
-        Assert.assertEquals(1, violations.size());
-        Assert.assertEquals("unacceptable_password_length",violations.stream()
-                .findFirst().get().getMessage());
     }
 
     /*Сценарий: валидация объекта UserCreateDto;
@@ -118,10 +51,11 @@ public class UserValidatorServiceTest {
     @Test
     public void validateTest_whenEmailInvalid_thenNotValidated() {
         //GIVEN
-        UserCreateDto dto = new UserCreateDto("name","password", "mailgmail.com"
+        UserCreateDto dto = new UserCreateDto("name","mailgmail.com"
                 , User.UserState.ADMIN.ordinal());
         //WHEN
-        Set<ConstraintViolation<UserCreateDto>> violations = userValidatorService.validate(dto);
+        Set<ConstraintViolation<UserCreateDto>> violations = userValidatorService
+                .validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
         Assert.assertEquals("wrong_email_format",violations.stream()
@@ -135,10 +69,11 @@ public class UserValidatorServiceTest {
     @Test
     public void validateTest_whenEmailEqualsNull_thenNotValidated() {
         //GIVEN
-        UserCreateDto dto = new UserCreateDto("name","password", null
+        UserCreateDto dto = new UserCreateDto("name",null
                 , User.UserState.ADMIN.ordinal());
         //WHEN
-        Set<ConstraintViolation<UserCreateDto>> violations = userValidatorService.validate(dto);
+        Set<ConstraintViolation<UserCreateDto>> violations = userValidatorService
+                .validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
         Assert.assertEquals("empty_email",violations.stream()
@@ -152,10 +87,11 @@ public class UserValidatorServiceTest {
     @Test
     public void validateTest_whenEmailIsEmpty_thenNotValidated() {
         //GIVEN
-        UserCreateDto dto = new UserCreateDto("name","password", ""
+        UserCreateDto dto = new UserCreateDto("name",""
                 , User.UserState.ADMIN.ordinal());
         //WHEN
-        Set<ConstraintViolation<UserCreateDto>> violations = userValidatorService.validate(dto);
+        Set<ConstraintViolation<UserCreateDto>> violations = userValidatorService
+                .validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
         Assert.assertEquals("empty_email",violations.stream()
@@ -169,10 +105,11 @@ public class UserValidatorServiceTest {
     @Test
     public void validateTest_whenNameEqualsNull_thenNotValidated() {
         //GIVEN
-        UserCreateDto dto = new UserCreateDto(null,"password", "mail@gmail.com"
+        UserCreateDto dto = new UserCreateDto(null,"mail@gmail.com"
                 , User.UserState.ADMIN.ordinal());
         //WHEN
-        Set<ConstraintViolation<UserCreateDto>> violations = userValidatorService.validate(dto);
+        Set<ConstraintViolation<UserCreateDto>> violations = userValidatorService
+                .validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
         Assert.assertEquals("empty_username",violations.stream()
@@ -186,10 +123,11 @@ public class UserValidatorServiceTest {
     @Test
     public void validateTest_whenNameIsEmpty_thenNotValidated() {
         //GIVEN
-        UserCreateDto dto = new UserCreateDto("","password", "mail@gmail.com"
+        UserCreateDto dto = new UserCreateDto("","mail@gmail.com"
                 , User.UserState.ADMIN.ordinal());
         //WHEN
-        Set<ConstraintViolation<UserCreateDto>> violations = userValidatorService.validate(dto);
+        Set<ConstraintViolation<UserCreateDto>> violations = userValidatorService
+                .validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
         Assert.assertEquals("empty_username",violations.stream()
@@ -204,9 +142,10 @@ public class UserValidatorServiceTest {
     public void validateTest_whenNameIsTooLong_thenNotValidated() {
         //GIVEN
         UserCreateDto dto = new UserCreateDto("Остап-Сулейман-Берта-Мария-Бендер-бей"
-                ,"password", "mail@gmail.com", User.UserState.ADMIN.ordinal());
+                , "mail@gmail.com", User.UserState.ADMIN.ordinal());
         //WHEN
-        Set<ConstraintViolation<UserCreateDto>> violations = userValidatorService.validate(dto);
+        Set<ConstraintViolation<UserCreateDto>> violations = userValidatorService
+                .validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
         Assert.assertEquals("unacceptable_username_length",violations.stream()
@@ -220,10 +159,11 @@ public class UserValidatorServiceTest {
     @Test
     public void validateTest_whenUserStateIndexIsNegative_thenNotValidated() {
         //GIVEN
-        UserCreateDto dto = new UserCreateDto("name","password"
-                , "mail@gmail.com", -1);
+        UserCreateDto dto = new UserCreateDto("name", "mail@gmail.com"
+                , -1);
         //WHEN
-        Set<ConstraintViolation<UserCreateDto>> violations = userValidatorService.validate(dto);
+        Set<ConstraintViolation<UserCreateDto>> violations = userValidatorService
+                .validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
         Assert.assertEquals("unexpected_user_state",violations.stream()
@@ -237,10 +177,11 @@ public class UserValidatorServiceTest {
     @Test
     public void validateTest_whenUserStateIndexIsBiggerThenTwo_thenNotValidated() {
         //GIVEN
-        UserCreateDto dto = new UserCreateDto("name","password"
-                , "mail@gmail.com", 3);
+        UserCreateDto dto = new UserCreateDto("name", "mail@gmail.com"
+                , 3);
         //WHEN
-        Set<ConstraintViolation<UserCreateDto>> violations = userValidatorService.validate(dto);
+        Set<ConstraintViolation<UserCreateDto>> violations = userValidatorService
+                .validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
         Assert.assertEquals("unexpected_user_state",violations.stream()
