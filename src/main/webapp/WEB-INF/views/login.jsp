@@ -59,6 +59,11 @@
                         <c:url value="/j_spring_security_check" var="loginUrl"/>
                         <form action="${loginUrl}" method="POST">
                             <div class="modal-body">
+
+                                <c:if test="${not empty login_failed}">
+                                    <p><spring:message code="access_denied"/></p>
+                                </c:if>
+
                                 <div class="form-group">
                                     <label for="loginEmail">
                                         <spring:message code="email_address_label"/>
