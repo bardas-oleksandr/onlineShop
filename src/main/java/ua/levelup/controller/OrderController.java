@@ -18,8 +18,8 @@ import java.util.List;
 public class OrderController {
 
     private static final String ID = "/{id}";
-    private static final String ORDERS_PAGE = "orders";
     private static final String REDIRECT_ORDER = "redirect:/order/";
+    private static final String ORDERS_PAGE = "orders";
     private static final String ORDER_LIST_ATTRIBUTE = "orderList";
 
     @Autowired

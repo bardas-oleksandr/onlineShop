@@ -339,7 +339,7 @@
         	    <legend class="bar-legend">
         	        <spring:message code="search_products"/>
         	    </legend>
-        	    <form action="${pageContext.request.contextPath}/product" modelAttribute="searchParamsDto" method="GET">
+        	    <form action="${pageContext.request.contextPath}/search" modelAttribute="searchParamsDto" method="POST">
         	        <label>
         	            <spring:message code="category_label"/>
         	        </label>
@@ -448,7 +448,7 @@
     				    </button>
     				</div>
     			</form>
-                <form action="${pageContext.request.contextPath}/product/default" method="GET">
+                <form action="${pageContext.request.contextPath}/search/default" method="POST">
                     <div class="input-group mb-3">
                         <button type="submit" id="buttonResetFilters" name="resetFilters" class="btn btn-outline-secondary btn-block">
                             <spring:message code="reset_filters"/>

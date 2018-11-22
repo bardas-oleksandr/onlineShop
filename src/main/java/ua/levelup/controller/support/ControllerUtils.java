@@ -24,11 +24,13 @@ public class ControllerUtils {
     private static final float DEFAULT_MIN_PRICE = 0.0f;
     private static final float DEFAULT_MAX_PRICE = 1000.0f;
     private static final int DEFAULT_ORDER_METHOD_INDEX = 0;
+
     private static final String CATEGORY_LIST_ATTRIBUTE = "categoryList";
     private static final String SUBCATEGORY_LIST_ATTRIBUTE = "subcategoryList";
     private static final String MANUFACTURER_LIST_ATTRIBUTE = "manufacturerList";
     private static final String SEARCH_PARAMS_ATTRIBUTE = "searchParams";
     private static final String MESSAGE_CODES_ATTRIBUTE = "messageCodes";
+
     private static final String VALIDATION_ERROR_PAGE = "validationerror";
 
     @Autowired

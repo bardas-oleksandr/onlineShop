@@ -30,19 +30,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     //Тут непосредственно конфигурируются ограничения для каждой из ролей
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests()
-                .antMatchers("/resources/css/**", "/**").permitAll()
-                .anyRequest().permitAll().and();
-
-        http.formLogin()
+        http.csrf().disable()
+        .authorizeRequests()
+                .antMatchers("/resources/css/**", "/search/**").permitAll()
+                .antMatchers("/category/**", "/product/**", "/manufacturer/**"
+                        , "/order/**", "/user/**").hasRole("ADMIN")
+                .antMatchers("/profile/order/**").hasRole("ACTIVE")
+                .antMatchers("/cart/**")
+                .access("!isAuthenticated() or hasRole('ACTIVE')")
+                .and()
+        .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/j_spring_security_check")
                 .failureUrl("/error")
                 .usernameParameter("email")
                 .passwordParameter("password")
-                .permitAll();
-
-        http.logout()
+                .permitAll().and()
+        .logout()
                 .permitAll()
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/")
