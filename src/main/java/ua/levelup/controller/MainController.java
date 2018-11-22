@@ -2,8 +2,11 @@ package ua.levelup.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.ModelAndView;
 import ua.levelup.controller.support.ControllerUtils;
+import ua.levelup.controller.support.MessageResolver;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,10 +20,15 @@ public class MainController {
     private static final String INDEX_PAGE = "index";
     private static final String LOGIN_PAGE = "login";
     private static final String SUCCESS_PAGE = "success";
+    private static final String ERROR_PAGE = "error";
     private static final String VALIDATION_ERROR_PAGE = "validationerror";
+    private static final String MESSAGE_CODE_ATTRIBUTE = "message_code";
 
     @Autowired
     private ControllerUtils controllerUtils;
+
+    @Autowired
+    private MessageResolver messageResolver;
 
     @GetMapping(value = ROOT)
     public String indexPage(HttpServletRequest request) {
@@ -41,5 +49,13 @@ public class MainController {
     @GetMapping(value=VALIDATION_ERROR)
     public String validationErrorPage(){
         return VALIDATION_ERROR_PAGE;
+    }
+
+    @ExceptionHandler({Exception.class})
+    public ModelAndView handleException(Exception e) {
+        String messageCode = messageResolver.resolveMessageForException(e);
+        ModelAndView modelAndView = new ModelAndView(ERROR_PAGE);
+        modelAndView.addObject(MESSAGE_CODE_ATTRIBUTE, messageCode);
+        return modelAndView;
     }
 }

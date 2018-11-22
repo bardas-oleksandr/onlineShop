@@ -6,7 +6,9 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import ua.levelup.controller.support.ControllerUtils;
+import ua.levelup.controller.support.MessageResolver;
 import ua.levelup.model.Order;
 import ua.levelup.service.OrderService;
 import ua.levelup.service.UserService;
@@ -33,6 +35,7 @@ public class ProfileController {
     private static final String PROFILE_PAGE = "profile";
     private static final String USER_ORDERS_PAGE = "userorders";
     private static final String VALIDATION_ERROR_PAGE = "validationerror";
+    private static final String ERROR_PAGE = "error";
     private static final String REDIRECT_PROFILE_ORDER = "redirect:/profile/order/";
     private static final String SPRING_SECURITY_CONTEXT = "SPRING_SECURITY_CONTEXT";
     private static final String ID_ATTRIBUTE = "id";
@@ -40,6 +43,7 @@ public class ProfileController {
     private static final String CART_ATTRIBUTE = "cart";
     private static final String ORDER_LIST_ATTRIBUTE = "orderList";
     private static final String MESSAGE_CODES_ATTRIBUTE = "messageCodes";
+    private static final String MESSAGE_CODE_ATTRIBUTE = "message_code";
 
     @Autowired
     private UserService userService;
@@ -49,6 +53,9 @@ public class ProfileController {
 
     @Autowired
     private ControllerUtils controllerUtils;
+
+    @Autowired
+    private MessageResolver messageResolver;
 
     @Autowired
     private Validator validator;
@@ -108,5 +115,13 @@ public class ProfileController {
             modelMap.addAttribute(USER_ATTRIBUTE, viewDto);
         }
         return USER_ORDERS_PAGE;
+    }
+
+    @ExceptionHandler({Exception.class})
+    public ModelAndView handleException(Exception e) {
+        String messageCode = messageResolver.resolveMessageForException(e);
+        ModelAndView modelAndView = new ModelAndView(ERROR_PAGE);
+        modelAndView.addObject(MESSAGE_CODE_ATTRIBUTE, messageCode);
+        return modelAndView;
     }
 }

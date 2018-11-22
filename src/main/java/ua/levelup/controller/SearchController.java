@@ -4,11 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import ua.levelup.controller.support.ControllerUtils;
+import ua.levelup.controller.support.MessageResolver;
 import ua.levelup.service.ProductService;
 import ua.levelup.web.dto.SearchParamsDto;
 import ua.levelup.web.dto.view.ProductViewDto;
@@ -24,15 +23,20 @@ public class SearchController {
 
     private static final String DEFAULT_FILTER = "/default";
     private static final String INDEX_PAGE = "index";
+    private static final String ERROR_PAGE = "error";
     private static final String REDIRECT_SEARCH = "redirect:/search/";
     private static final String PRODUCT_LIST_ATTRIBUTE = "productList";
     private static final String SEARCH_PARAMS_ATTRIBUTE = "searchParams";
+    private static final String MESSAGE_CODE_ATTRIBUTE = "message_code";
 
     @Autowired
     private ProductService productService;
 
     @Autowired
     private ControllerUtils controllerUtils;
+
+    @Autowired
+    private MessageResolver messageResolver;
 
     @PostMapping
     public String setSearchParams(@Valid @ModelAttribute SearchParamsDto searchParamsDto
@@ -63,5 +67,13 @@ public class SearchController {
             session.setAttribute(PRODUCT_LIST_ATTRIBUTE, productViewDtos);
         }
         return INDEX_PAGE;
+    }
+
+    @ExceptionHandler({Exception.class})
+    public ModelAndView handleException(Exception e) {
+        String messageCode = messageResolver.resolveMessageForException(e);
+        ModelAndView modelAndView = new ModelAndView(ERROR_PAGE);
+        modelAndView.addObject(MESSAGE_CODE_ATTRIBUTE, messageCode);
+        return modelAndView;
     }
 }

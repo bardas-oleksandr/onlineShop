@@ -5,7 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import ua.levelup.controller.support.ControllerUtils;
+import ua.levelup.controller.support.MessageResolver;
 import ua.levelup.model.User;
 import ua.levelup.service.UserService;
 import ua.levelup.web.dto.create.UserRegisterCreateDto;
@@ -25,10 +27,12 @@ public class UserController {
     private static final String REDIRECT_SECURITY_CHECK = "redirect:/j_spring_security_check/";
     private static final String REDIRECT_USER = "redirect:/user/";
     private static final String USERS_PAGE = "users";
+    private static final String ERROR_PAGE = "error";
     private static final String ID_ATTRIBUTE = "id";
     private static final String USER_LIST_ATTRIBUTE = "userList";
     private static final String EMAIL_ATTRIBUTE = "email";
     private static final String PASSWORD_ATTRIBUTE = "password";
+    private static final String MESSAGE_CODE_ATTRIBUTE = "message_code";
 
     @Autowired
     private UserService userService;
@@ -39,12 +43,8 @@ public class UserController {
     @Autowired
     private ControllerUtils controllerUtils;
 
-    @GetMapping
-    public String usersPage(ModelMap modelMap, HttpServletRequest request) {
-        List<UserViewDto> userViewDtos = userService.getAllUsers();
-        modelMap.addAttribute(USER_LIST_ATTRIBUTE, userViewDtos);
-        return USERS_PAGE;
-    }
+    @Autowired
+    private MessageResolver messageResolver;
 
     @PostMapping
     public String register(@Valid @ModelAttribute UserRegisterCreateDto userRegisterCreateDto
@@ -68,5 +68,25 @@ public class UserController {
         }
         userService.updateUser(userCreateDto, userId);
         return REDIRECT_USER;
+    }
+
+    @GetMapping
+    public String usersPage(ModelMap modelMap, HttpServletRequest request) {
+        List<UserViewDto> userViewDtos = userService.getAllUsers();
+        modelMap.addAttribute(USER_LIST_ATTRIBUTE, userViewDtos);
+        return USERS_PAGE;
+    }
+
+    @GetMapping(value = ID)
+    public String redirectOnUser(){
+        return REDIRECT_USER;
+    }
+
+    @ExceptionHandler({Exception.class})
+    public ModelAndView handleException(Exception e) {
+        String messageCode = messageResolver.resolveMessageForException(e);
+        ModelAndView modelAndView = new ModelAndView(ERROR_PAGE);
+        modelAndView.addObject(MESSAGE_CODE_ATTRIBUTE, messageCode);
+        return modelAndView;
     }
 }
