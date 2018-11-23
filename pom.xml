@@ -16,9 +16,11 @@
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
         <spring.version>5.1.0.RELEASE</spring.version>
+        <jackson.version>2.9.7</jackson.version>
     </properties>
 
     <dependencies>
+
         <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -49,9 +51,8 @@
             <version>${spring.version}</version>
             <scope>test</scope>
         </dependency>
-        <!--==============================-->
 
-        <!--==============Зависимости Spring=============-->
+        <!--==============Зависимости Spring===================-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
@@ -107,7 +108,7 @@
             <version>${spring.version}</version>
         </dependency>
 
-        <!--============Зависимости для валидаторов================-->
+        <!--============Зависимости для валидаторов=======================-->
         <!--Аннотации JSR-380-->
         <dependency>
             <groupId>javax.validation</groupId>
@@ -156,6 +157,20 @@
             <version>1.2</version>
         </dependency>
 
+        <!-- Для REST в формате JSON-->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <!-- Для REST в формате XML-->
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-xml</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
         <!--==============Зависимости СУБД===============================================-->
         <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
         <dependency>
@@ -190,6 +205,10 @@
             <artifactId>log4j-core</artifactId>
             <version>2.6.1</version>
         </dependency>
+
+
+
+
 
         <dependency>
             <groupId>org.apache.commons</groupId>

@@ -1,9 +1,11 @@
 package ua.levelup.controller.support;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import ua.levelup.exception.RestException;
 import ua.levelup.service.CategoryService;
 import ua.levelup.service.ManufacturerService;
 import ua.levelup.web.dto.SearchParamsDto;
@@ -68,5 +70,20 @@ public class ControllerUtils {
                 .add(errorMessage.getDefaultMessage()));
         modelMap.addAttribute(MESSAGE_CODES_ATTRIBUTE, messageCodes);
         return VALIDATION_ERROR_PAGE;
+    }
+
+    private String getAllViolations(BindingResult result){
+        StringBuilder builder = new StringBuilder();
+        result.getAllErrors().stream().forEach((errorMessage) -> builder
+                .append(errorMessage.getDefaultMessage()));
+        return builder.toString();
+    }
+
+    public void checkValidationViolations(BindingResult result) {
+        if (result.hasErrors()) {
+            //http status 422
+            throw new RestException(HttpStatus.UNPROCESSABLE_ENTITY
+                    , getAllViolations(result));
+        }
     }
 }

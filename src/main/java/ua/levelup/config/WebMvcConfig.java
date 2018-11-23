@@ -23,6 +23,7 @@ import java.util.Locale;
 @Configuration
 @EnableWebMvc
 @ComponentScan("ua.levelup.controller")
+@ComponentScan("ua.levelup.exception")
 public class WebMvcConfig implements WebMvcConfigurer {
 
     //Продолжительность (в секундах) нахождения ресурсов в кеше

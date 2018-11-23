@@ -1,4 +1,4 @@
-package ua.levelup.rest;
+package ua.levelup.controller.rest;
 
 import org.springframework.web.bind.annotation.RestController;
 

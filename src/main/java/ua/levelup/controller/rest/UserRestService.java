@@ -1,4 +1,4 @@
-//package ua.levelup.rest;
+//package ua.levelup.controller.rest;
 //
 //import ua.levelup.converter.todto.UserConverter;
 //import ua.levelup.dao.UserDao;
@@ -6,7 +6,7 @@
 //import ua.levelup.exception.ApplicationException;
 //import ua.levelup.exception.RestException;
 //import ua.levelup.model.User;
-//import ua.levelup.rest.support.HeaderValidator;
+//import ua.levelup.controller.support.HeaderValidator;
 //import ua.levelup.web.dto.view.UserViewDto;
 //import com.google.gson.GsonBuilder;
 //import com.google.gson.reflect.TypeToken;
