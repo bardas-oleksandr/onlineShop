@@ -6,6 +6,14 @@ import ua.levelup.web.dto.view.ManufacturerViewDto;
 import java.util.List;
 
 public interface ManufacturerService {
-    ManufacturerViewDto createManufacturer(ManufacturerCreateDto manufacturerCreateDto);
-    List<ManufacturerViewDto> getAllManufacturers();
+    ManufacturerViewDto create(ManufacturerCreateDto manufacturerCreateDto);
+
+    ManufacturerViewDto update(ManufacturerCreateDto manufacturerCreateDto
+            , int manufacturerId);
+
+    void delete(int manufacturerId);
+
+    ManufacturerViewDto get(int manufacturerId);
+
+    List<ManufacturerViewDto> getAll();
 }

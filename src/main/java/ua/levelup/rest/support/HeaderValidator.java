@@ -1,16 +1,18 @@
 package ua.levelup.rest.support;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 import ua.levelup.exception.RestException;
 
 import javax.ws.rs.core.MediaType;
 
-public enum HeaderValidator {
-    ;
+@Component
+public class HeaderValidator {
 
-    public static void validateHeaders(String accept, String contentType) {
-        if (!accept.contains(MediaType.APPLICATION_JSON) ||
+    public void validateHeaders(String accept, String contentType) {
+        if (!accept.contains(MediaType.APPLICATION_JSON) &&
                 !contentType.contains(MediaType.APPLICATION_JSON)) {
-            throw new RestException(415);   //Unsupported media type
+            throw new RestException(HttpStatus.UNSUPPORTED_MEDIA_TYPE);
         }
     }
 }

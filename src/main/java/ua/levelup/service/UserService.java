@@ -9,8 +9,12 @@ import java.util.List;
 
 public interface UserService {
     User registerUser(UserRegisterCreateDto createDto);
+
     UserViewDto updateUser(UserCreateDto userCreateDto, int userId);
+
     UserViewDto getUserViewDto(String email);
+
     User getUser(String email);
+
     List<UserViewDto> getAllUsers();
 }

@@ -8,7 +8,10 @@ import java.util.List;
 
 public interface OrderService {
     OrderViewDto createOrder(OrderCreateDto orderCreateDto, CartViewDto cartViewDto);
+
     OrderViewDto updateOrder(OrderCreateDto orderCreateDto, int orderId);
+
     List<OrderViewDto> getUsersOrders(int userId);
+
     List<OrderViewDto> getAllOrders();
 }

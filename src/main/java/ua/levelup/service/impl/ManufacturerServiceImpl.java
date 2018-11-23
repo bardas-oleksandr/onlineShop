@@ -22,14 +22,35 @@ public class ManufacturerServiceImpl implements ManufacturerService {
     private ConversionService conversionService;
 
     @Override
-    public ManufacturerViewDto createManufacturer(ManufacturerCreateDto manufacturerCreateDto) {
+    public ManufacturerViewDto create(ManufacturerCreateDto manufacturerCreateDto) {
         Manufacturer manufacturer = conversionService.convert(manufacturerCreateDto, Manufacturer.class);
         manufacturerDao.add(manufacturer);
         return conversionService.convert(manufacturer, ManufacturerViewDto.class);
     }
 
     @Override
-    public List<ManufacturerViewDto> getAllManufacturers() {
+    public ManufacturerViewDto update(ManufacturerCreateDto manufacturerCreateDto
+            , int manufacturerId) {
+        Manufacturer manufacturer = conversionService.convert(manufacturerCreateDto
+                , Manufacturer.class);
+        manufacturer.setId(manufacturerId);
+        manufacturerDao.update(manufacturer);
+        return conversionService.convert(manufacturer, ManufacturerViewDto.class);
+    }
+
+    @Override
+    public void delete(int manufacturerId) {
+        manufacturerDao.delete(manufacturerId);
+    }
+
+    @Override
+    public ManufacturerViewDto get(int manufacturerId) {
+        Manufacturer manufacturer = manufacturerDao.getById(manufacturerId);
+        return conversionService.convert(manufacturer, ManufacturerViewDto.class);
+    }
+
+    @Override
+    public List<ManufacturerViewDto> getAll() {
         List<Manufacturer> manufacturers = manufacturerDao.getAll();
         List<ManufacturerViewDto> viewDtos = new ArrayList<>();
         manufacturers.stream().forEach((item) -> viewDtos

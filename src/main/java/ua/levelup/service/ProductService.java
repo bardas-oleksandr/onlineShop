@@ -8,7 +8,10 @@ import java.util.List;
 
 public interface ProductService {
     ProductViewDto createProduct(ProductCreateDto productCreateDto);
+
     ProductViewDto updateProduct(ProductCreateDto productCreateDto, int productId);
+
     void deleteProduct(int productId);
+
     List<ProductViewDto> searchProducts(SearchParamsDto searchParams);
 }

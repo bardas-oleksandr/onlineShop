@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface CategoryService {
     CategoryViewDto createCategory(CategoryCreateDto categoryCreateDto);
+
     List<CategoryViewDto> getCategoriesByLevel(int categoryLevel);
 }

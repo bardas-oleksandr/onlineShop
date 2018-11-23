@@ -43,7 +43,7 @@ public class ManufacturerController {
         if (result.hasErrors()) {
             return controllerUtils.redirectValidationError(result, modelMap);
         }
-        manufacturerService.createManufacturer(manufacturerCreateDto);
+        manufacturerService.create(manufacturerCreateDto);
         return REDIRECT_SUCCESS;
     }
 

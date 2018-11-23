@@ -5,10 +5,8 @@
 //import ua.levelup.dao.impl.UserDaoImpl;
 //import ua.levelup.exception.ApplicationException;
 //import ua.levelup.exception.RestException;
-//import ua.levelup.exception.support.MessageContainer;
 //import ua.levelup.model.User;
 //import ua.levelup.rest.support.HeaderValidator;
-//import ua.levelup.validator.UserValidator;
 //import ua.levelup.web.dto.view.UserViewDto;
 //import com.google.gson.GsonBuilder;
 //import com.google.gson.reflect.TypeToken;

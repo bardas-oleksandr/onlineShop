@@ -43,7 +43,7 @@ public class ControllerUtils {
 
         List<CategoryViewDto> categoryList = categoryService.getCategoriesByLevel(0);
         List<CategoryViewDto> subcategoryList = categoryService.getCategoriesByLevel(1);
-        List<ManufacturerViewDto> manufacturerList = manufacturerService.getAllManufacturers();
+        List<ManufacturerViewDto> manufacturerList = manufacturerService.getAll();
 
         session.setAttribute(CATEGORY_LIST_ATTRIBUTE, categoryList);
         session.setAttribute(SUBCATEGORY_LIST_ATTRIBUTE, subcategoryList);
