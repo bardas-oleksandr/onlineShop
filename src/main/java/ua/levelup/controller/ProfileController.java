@@ -79,8 +79,7 @@ public class ProfileController {
 
         HttpSession session = request.getSession(true);
         CartViewDto cart = (CartViewDto) session.getAttribute(CART_ATTRIBUTE);
-        orderService.createOrder(orderCreateDto, cart);
-        cart.setProductInCartViewDtoList(new ArrayList<>());
+        orderService.create(orderCreateDto, cart);
         return REDIRECT_PROFILE_ORDER + orderCreateDto.getUserId();
     }
 

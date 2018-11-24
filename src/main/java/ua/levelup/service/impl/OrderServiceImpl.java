@@ -38,7 +38,7 @@ public class OrderServiceImpl implements OrderService {
     private ConversionService conversionService;
 
     @Override
-    public OrderViewDto createOrder(OrderCreateDto orderCreateDto, CartViewDto cartViewDto) {
+    public OrderViewDto create(OrderCreateDto orderCreateDto, CartViewDto cartViewDto) {
         Order order = conversionService.convert(orderCreateDto, Order.class);
         User user = userDao.getById(order.getUser().getId());
         order.setUser(user);
@@ -52,16 +52,28 @@ public class OrderServiceImpl implements OrderService {
         orderPositionDao.addAll(orderPositionList);
 
         order.setOrderPositionList(orderPositionList);
+        cartViewDto.setProductInCartViewDtoList(new ArrayList<>());
         return conversionService.convert(order, OrderViewDto.class);
     }
 
     @Override
-    public OrderViewDto updateOrder(OrderCreateDto orderCreateDto, int orderId) {
+    public OrderViewDto update(OrderCreateDto orderCreateDto, int orderId) {
         Order order = conversionService.convert(orderCreateDto, Order.class);
         order.setId(orderId);
         orderDao.update(order);
         User user = userDao.getById(order.getUser().getId());
         order.setUser(user);
+        return conversionService.convert(order, OrderViewDto.class);
+    }
+
+    @Override
+    public void delete(int orderId) {
+        orderDao.delete(orderId);
+    }
+
+    @Override
+    public OrderViewDto get(int orderId) {
+        Order order = orderDao.getById(orderId);
         return conversionService.convert(order, OrderViewDto.class);
     }
 

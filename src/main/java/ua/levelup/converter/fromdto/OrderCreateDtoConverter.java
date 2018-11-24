@@ -7,6 +7,8 @@ import ua.levelup.model.Order;
 import ua.levelup.model.User;
 import ua.levelup.web.dto.create.OrderCreateDto;
 
+import java.util.ArrayList;
+
 /**
  *
  */
@@ -28,6 +30,7 @@ public class OrderCreateDtoConverter implements Converter<OrderCreateDto, Order>
                 .get(orderCreateDto.getOrderStateIndex()));
         order.setPaymentConditions(Order.PaymentConditions.get(orderCreateDto
                 .getPaymentConditionsIndex()));
+        order.setOrderPositionList(new ArrayList<>());
         return order;
     }
 }

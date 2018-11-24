@@ -41,7 +41,7 @@ public class OrderController {
         if (result.hasErrors()) {
             return controllerUtils.redirectValidationError(result, modelMap);
         }
-        orderService.updateOrder(orderCreateDto, orderId);
+        orderService.update(orderCreateDto, orderId);
         return REDIRECT_ORDER;
     }
 
