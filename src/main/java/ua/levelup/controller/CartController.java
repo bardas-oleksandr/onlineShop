@@ -79,7 +79,7 @@ public class CartController {
         if (securityContext != null) {
             User user = (User) securityContext.getAuthentication().getPrincipal();
             String email = user.getUsername();
-            UserViewDto viewDto = userService.getUserViewDto(email);
+            UserViewDto viewDto = userService.getUserViewDtoByEmail(email);
             modelMap.addAttribute(USER_ATTRIBUTE, viewDto);
         }
         return CART_PAGE;

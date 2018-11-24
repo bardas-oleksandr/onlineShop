@@ -10,11 +10,17 @@ import java.util.List;
 public interface UserService {
     User registerUser(UserRegisterCreateDto createDto);
 
-    UserViewDto updateUser(UserCreateDto userCreateDto, int userId);
+    UserViewDto create(UserRegisterCreateDto createDto);
 
-    UserViewDto getUserViewDto(String email);
+    UserViewDto update(UserCreateDto userCreateDto, int userId);
+
+    void delete(int userId);
+
+    UserViewDto getUserViewDtoByEmail(String email);
+
+    UserViewDto getUserViewDtoById(int userId);
 
     User getUser(String email);
 
-    List<UserViewDto> getAllUsers();
+    List<UserViewDto> getAll();
 }

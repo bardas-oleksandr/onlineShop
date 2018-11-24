@@ -68,7 +68,7 @@ public class CategoryDaoImpl extends AbstractDaoImpl implements CategoryDao, Sho
         MapSqlParameterSource source = new MapSqlParameterSource();
         source.addValue("category_name", category.getName());
         Integer parentId = null;
-        if (category.getParentCategory() != null) {
+        if (category.getParentCategory() != null && category.getParentCategory().getId() != 0) {
             parentId = category.getParentCategory().getId();
         }
         source.addValue("category_parent_id", parentId);

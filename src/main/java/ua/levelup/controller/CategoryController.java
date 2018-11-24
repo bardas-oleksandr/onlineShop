@@ -43,7 +43,7 @@ public class CategoryController {
         if (result.hasErrors()) {
             return controllerUtils.redirectValidationError(result, modelMap);
         }
-        categoryService.createCategory(categoryCreateDto);
+        categoryService.create(categoryCreateDto);
         return REDIRECT_SUCCESS;
     }
 

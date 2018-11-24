@@ -69,7 +69,11 @@ public class UserDaoImpl implements UserDao, ShopLogger {
             statement.setString(3, user.getEmail());
             statement.setInt(4, user.getUserState().ordinal());
             statement.setInt(5, user.getId());
-            statement.executeUpdate();
+            int count = statement.executeUpdate();
+            if(count == 0){
+                throw new ApplicationException(messagesProperties
+                        .getProperty("FAILED_UPDATE_USER_NONEXISTENT"));
+            }
         } catch (SQLException e) {
             logError(e);
             if (e.getErrorCode() == 23505) {
@@ -92,7 +96,11 @@ public class UserDaoImpl implements UserDao, ShopLogger {
             statement.setString(2, user.getEmail());
             statement.setInt(3, user.getUserState().ordinal());
             statement.setInt(4, user.getId());
-            statement.executeUpdate();
+            int count = statement.executeUpdate();
+            if(count == 0){
+                throw new ApplicationException(messagesProperties
+                        .getProperty("FAILED_UPDATE_USER_NONEXISTENT"));
+            }
         } catch (SQLException e) {
             logError(e);
             if (e.getErrorCode() == 23505) {

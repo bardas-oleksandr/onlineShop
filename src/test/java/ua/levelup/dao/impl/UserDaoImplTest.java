@@ -286,11 +286,43 @@ public class UserDaoImplTest {
         userDao.updateWithPassword(null);
     }
 
+    /*Сценарий: - модификация в базе данных информации о пользователе;
+    *            включая пароль пользователя;
+    *           - пользователь с заданным ID не существует.
+    * Результат: исключение ApplicationException.
+    * */
+    @Test
+    @Sql({"classpath:schema_clean.sql"})
+    public void updateWithPasswordTest_whenUserNonexistent_thenException() throws Exception {
+        //GIVEN
+        User user = new User("userName","password","email");
+        user.setUserState(User.UserState.ADMIN);
+        user.setId(1);
+        expectedException.expect(ApplicationException.class);
+        expectedException.expectMessage(messagesProperties
+                .getProperty("FAILED_UPDATE_USER_NONEXISTENT"));
+        //WHEN
+        userDao.updateWithPassword(user);
+    }
 
-
-
-
-
+    /*Сценарий: - модификация в базе данных информации о пользователе;
+   *            включая пароль пользователя;
+   *           - пользователь с заданным ID не существует.
+   * Результат: исключение ApplicationException.
+   * */
+    @Test
+    @Sql({"classpath:schema_clean.sql"})
+    public void updateTest_whenUserNonexistent_thenException() throws Exception {
+        //GIVEN
+        User user = new User("userName","password","email");
+        user.setUserState(User.UserState.ADMIN);
+        user.setId(1);
+        expectedException.expect(ApplicationException.class);
+        expectedException.expectMessage(messagesProperties
+                .getProperty("FAILED_UPDATE_USER_NONEXISTENT"));
+        //WHEN
+        userDao.update(user);
+    }
 
     /*Сценарий: - модификация в базе данных информации о пользователе
     *            пароль пользователя не изменяется;
@@ -403,22 +435,6 @@ public class UserDaoImplTest {
         //THEN
         userDao.updateWithPassword(null);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     /*Сценарий: - удаление из базы данных информации о пользователе;
     *             пользователь существует.

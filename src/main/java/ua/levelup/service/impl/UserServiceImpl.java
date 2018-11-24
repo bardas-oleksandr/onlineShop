@@ -35,7 +35,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserViewDto updateUser(UserCreateDto userCreateDto, int userId) {
+    public UserViewDto create(UserRegisterCreateDto createDto) {
+        createDto.setPassword(bCryptPasswordEncoder.encode(createDto.getPassword()));
+        User user = conversionService.convert(createDto, User.class);
+        userDao.add(user);
+        return conversionService.convert(user, UserViewDto.class);
+    }
+
+    @Override
+    public UserViewDto update(UserCreateDto userCreateDto, int userId) {
         User user = conversionService.convert(userCreateDto, User.class);
         user.setId(userId);
         userDao.update(user);
@@ -43,8 +51,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserViewDto getUserViewDto(String email) {
+    public void delete(int userId) {
+        userDao.delete(userId);
+    }
+
+    @Override
+    public UserViewDto getUserViewDtoByEmail(String email) {
         User user = userDao.getByEmail(email);
+        return conversionService.convert(user, UserViewDto.class);
+    }
+
+    @Override
+    public UserViewDto getUserViewDtoById(int userId) {
+        User user = userDao.getById(userId);
         return conversionService.convert(user, UserViewDto.class);
     }
 
@@ -54,7 +73,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserViewDto> getAllUsers() {
+    public List<UserViewDto> getAll() {
         List<User> userList = userDao.getAllUsers();
         List<UserViewDto> viewDtos = new ArrayList<>();
         userList.stream().forEach((user) -> viewDtos

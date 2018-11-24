@@ -90,7 +90,7 @@ public class ProfileController {
                 .getSession(true).getAttribute(SPRING_SECURITY_CONTEXT);
         User user = (User) securityContext.getAuthentication().getPrincipal();
         String email = user.getUsername();
-        UserViewDto viewDto = userService.getUserViewDto(email);
+        UserViewDto viewDto = userService.getUserViewDtoByEmail(email);
         modelMap.addAttribute(USER_ATTRIBUTE, viewDto);
         return PROFILE_PAGE;
     }
@@ -111,7 +111,7 @@ public class ProfileController {
         if (securityContext != null) {
             User user = (User) securityContext.getAuthentication().getPrincipal();
             String email = user.getUsername();
-            UserViewDto viewDto = userService.getUserViewDto(email);
+            UserViewDto viewDto = userService.getUserViewDtoByEmail(email);
             modelMap.addAttribute(USER_ATTRIBUTE, viewDto);
         }
         return USER_ORDERS_PAGE;

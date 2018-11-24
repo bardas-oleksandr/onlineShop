@@ -41,7 +41,7 @@ public class ProductController {
         if (result.hasErrors()) {
             return controllerUtils.redirectValidationError(result, modelMap);
         }
-        productService.createProduct(productCreateDto);
+        productService.create(productCreateDto);
         return REDIRECT_SUCCESS;
     }
 
@@ -51,13 +51,13 @@ public class ProductController {
         if (result.hasErrors()) {
             return controllerUtils.redirectValidationError(result, modelMap);
         }
-        productService.updateProduct(productCreateDto, productId);
+        productService.update(productCreateDto, productId);
         return REDIRECT_SEARCH;
     }
 
     @PostMapping(value = DELETE + ID)
     public String deleteProduct(@PathVariable(ID_ATTRIBUTE) int productId) {
-        productService.deleteProduct(productId);
+        productService.delete(productId);
         return REDIRECT_SEARCH;
     }
 

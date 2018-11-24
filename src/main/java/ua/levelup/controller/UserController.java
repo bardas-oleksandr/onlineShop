@@ -66,13 +66,13 @@ public class UserController {
         if (result.hasErrors()) {
             return controllerUtils.redirectValidationError(result, modelMap);
         }
-        userService.updateUser(userCreateDto, userId);
+        userService.update(userCreateDto, userId);
         return REDIRECT_USER;
     }
 
     @GetMapping
     public String usersPage(ModelMap modelMap, HttpServletRequest request) {
-        List<UserViewDto> userViewDtos = userService.getAllUsers();
+        List<UserViewDto> userViewDtos = userService.getAll();
         modelMap.addAttribute(USER_LIST_ATTRIBUTE, userViewDtos);
         return USERS_PAGE;
     }

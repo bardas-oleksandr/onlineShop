@@ -22,15 +22,43 @@ public class CategoryServiceImpl implements CategoryService {
     private ConversionService conversionService;
 
     @Override
-    public CategoryViewDto createCategory(CategoryCreateDto categoryCreateDto) {
+    public CategoryViewDto create(CategoryCreateDto categoryCreateDto) {
         Category category = conversionService.convert(categoryCreateDto, Category.class);
         categoryDao.add(category);
         return conversionService.convert(category, CategoryViewDto.class);
     }
 
     @Override
+    public CategoryViewDto update(CategoryCreateDto categoryCreateDto, int categoryId) {
+        Category category = conversionService.convert(categoryCreateDto, Category.class);
+        category.setId(categoryId);
+        categoryDao.update(category);
+        return conversionService.convert(category, CategoryViewDto.class);
+    }
+
+    @Override
+    public void delete(int categoryId) {
+        categoryDao.delete(categoryId);
+    }
+
+    @Override
+    public CategoryViewDto get(int categoryId) {
+        Category category = categoryDao.getById(categoryId);
+        return conversionService.convert(category, CategoryViewDto.class);
+    }
+
+    @Override
     public List<CategoryViewDto> getCategoriesByLevel(int categoryLevel) {
         List<Category> categories = categoryDao.getAllByLevel(categoryLevel);
+        List<CategoryViewDto> viewDtos = new ArrayList<>();
+        categories.stream().forEach((item) -> viewDtos
+                .add(conversionService.convert(item, CategoryViewDto.class)));
+        return viewDtos;
+    }
+
+    @Override
+    public List<CategoryViewDto> getCategoriesByParentId(int parentId) {
+        List<Category> categories = categoryDao.getAllByParentId(parentId);
         List<CategoryViewDto> viewDtos = new ArrayList<>();
         categories.stream().forEach((item) -> viewDtos
                 .add(conversionService.convert(item, CategoryViewDto.class)));

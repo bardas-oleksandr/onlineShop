@@ -28,14 +28,14 @@ public class ProductServiceImpl implements ProductService {
     private ConversionService conversionService;
 
     @Override
-    public ProductViewDto createProduct(ProductCreateDto productCreateDto) {
+    public ProductViewDto create(ProductCreateDto productCreateDto) {
         Product product = conversionService.convert(productCreateDto, Product.class);
         productDao.add(product);
         return conversionService.convert(product, ProductViewDto.class);
     }
 
     @Override
-    public ProductViewDto updateProduct(ProductCreateDto productCreateDto, int productId) {
+    public ProductViewDto update(ProductCreateDto productCreateDto, int productId) {
         Product product = conversionService.convert(productCreateDto, Product.class);
         product.setId(productId);
         productDao.update(product);
@@ -43,8 +43,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void deleteProduct(int productId) {
+    public void delete(int productId) {
         productDao.delete(productId);
+    }
+
+    @Override
+    public ProductViewDto get(int productId) {
+        Product product = productDao.getById(productId);
+        return conversionService.convert(product, ProductViewDto.class);
     }
 
     @Override
