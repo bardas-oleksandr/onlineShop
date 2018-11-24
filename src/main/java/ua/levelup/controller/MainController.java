@@ -17,6 +17,9 @@ import ua.levelup.web.dto.create.UserRegisterCreateDto;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+/**
+ *
+ */
 @Controller
 public class MainController {
 

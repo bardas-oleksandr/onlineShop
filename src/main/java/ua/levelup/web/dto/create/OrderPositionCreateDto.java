@@ -6,6 +6,9 @@ import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Min;
 import java.io.Serializable;
 
+/**
+ *
+ */
 @Getter
 @Setter
 @ToString

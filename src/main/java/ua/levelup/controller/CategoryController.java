@@ -13,6 +13,9 @@ import ua.levelup.web.dto.create.CategoryCreateDto;
 
 import javax.validation.Valid;
 
+/**
+ *
+ */
 @Controller
 @RequestMapping(value = "/category")
 public class CategoryController {

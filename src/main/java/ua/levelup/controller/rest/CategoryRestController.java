@@ -17,6 +17,9 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Properties;
 
+/**
+ *
+ */
 @RestController
 @RequestMapping(value = "/rest/category"
         , consumes = {MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_XML_VALUE}

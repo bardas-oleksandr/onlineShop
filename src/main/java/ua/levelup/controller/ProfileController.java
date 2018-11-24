@@ -26,6 +26,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+/**
+ *
+ */
 @Controller
 @RequestMapping(value = "/profile")
 public class ProfileController {

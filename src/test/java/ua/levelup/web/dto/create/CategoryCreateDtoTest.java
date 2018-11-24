@@ -1,4 +1,4 @@
-package ua.levelup.validator;
+package ua.levelup.web.dto.create;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -8,13 +8,13 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ua.levelup.testconfig.TestContextConfig;
-import ua.levelup.web.dto.create.CategoryCreateDto;
+import ua.levelup.validator.CategoryValidatorService;
 
 import javax.validation.ConstraintViolation;
 import java.util.Set;
 
 /**
- * Класс CategoryValidatorServiceTest содержит интеграционные тесты
+ * Класс CategoryCreateDtoTest содержит интеграционные тесты
  * для проверки корректности валидации объектов CategoryCreateDto
  *
  * Автор: Бардась А.А.
@@ -22,7 +22,7 @@ import java.util.Set;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestContextConfig.class})
 @ActiveProfiles("test")
-public class CategoryValidatorServiceTest {
+public class CategoryCreateDtoTest {
 
     @Autowired
     private CategoryValidatorService categoryValidatorService;

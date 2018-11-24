@@ -15,6 +15,9 @@ import ua.levelup.web.dto.view.OrderViewDto;
 import javax.validation.Valid;
 import java.util.List;
 
+/**
+ *
+ */
 @Controller
 @RequestMapping(value = "/order")
 public class OrderController {

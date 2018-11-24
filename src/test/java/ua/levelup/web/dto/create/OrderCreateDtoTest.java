@@ -1,4 +1,4 @@
-package ua.levelup.validator;
+package ua.levelup.web.dto.create;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -8,14 +8,14 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ua.levelup.testconfig.TestContextConfig;
-import ua.levelup.web.dto.create.OrderCreateDto;
+import ua.levelup.validator.OrderValidatorService;
 
 import javax.validation.ConstraintViolation;
 import java.sql.Timestamp;
 import java.util.Set;
 
 /**
- * Класс OrderValidatorServiceTest содержит интеграционные тесты
+ * Класс OrderCreateDtoTest содержит интеграционные тесты
  * для проверки корректности валидации объектов OrderCreateDto
  * <p>
  * Автор: Бардась А.А.
@@ -23,7 +23,7 @@ import java.util.Set;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestContextConfig.class})
 @ActiveProfiles("test")
-public class OrderValidatorServiceTest {
+public class OrderCreateDtoTest {
 
     @Autowired
     private OrderValidatorService orderValidatorService;

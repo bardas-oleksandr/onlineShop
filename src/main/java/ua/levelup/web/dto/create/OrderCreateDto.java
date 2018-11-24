@@ -6,6 +6,9 @@ import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+/**
+ *
+ */
 @Getter
 @Setter
 @ToString

@@ -1,14 +1,11 @@
 package ua.levelup.web.dto.view;
 
 import lombok.*;
-
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 
-@XmlRootElement(name = "userViewDto")
-@XmlAccessorType(XmlAccessType.FIELD)
+/**
+ *
+ */
 @Setter
 @Getter
 @ToString

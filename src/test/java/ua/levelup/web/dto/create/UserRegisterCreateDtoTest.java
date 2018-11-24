@@ -1,4 +1,4 @@
-package ua.levelup.validator;
+package ua.levelup.web.dto.create;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -9,13 +9,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ua.levelup.model.User;
 import ua.levelup.testconfig.TestContextConfig;
-import ua.levelup.web.dto.create.UserRegisterCreateDto;
+import ua.levelup.validator.UserRegisterValidatorService;
 
 import javax.validation.ConstraintViolation;
 import java.util.Set;
 
 /**
- * Класс UserRegisterValidatorServiceTest содержит интеграционные тесты
+ * Класс UserRegisterCreateDtoTest содержит интеграционные тесты
  * для проверки корректности валидации объектов UserRegisterCreateDto
  *
  * Автор: Бардась А.А.
@@ -23,7 +23,7 @@ import java.util.Set;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestContextConfig.class})
 @ActiveProfiles("test")
-public class UserRegisterValidatorServiceTest {
+public class UserRegisterCreateDtoTest {
 
     @Autowired
     private UserRegisterValidatorService userRegisterValidatorService;

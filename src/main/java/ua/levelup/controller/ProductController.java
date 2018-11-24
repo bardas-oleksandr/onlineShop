@@ -13,6 +13,9 @@ import ua.levelup.web.dto.create.ProductCreateDto;
 
 import javax.validation.Valid;
 
+/**
+ *
+ */
 @Controller
 @RequestMapping(value = "/product")
 public class ProductController {

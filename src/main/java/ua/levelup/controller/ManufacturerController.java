@@ -13,6 +13,9 @@ import ua.levelup.web.dto.create.ManufacturerCreateDto;
 
 import javax.validation.Valid;
 
+/**
+ *
+ */
 @Controller
 @RequestMapping(value = "/manufacturer")
 public class ManufacturerController {

@@ -1,4 +1,4 @@
-package ua.levelup.validator;
+package ua.levelup.web.dto.create;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -8,13 +8,13 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ua.levelup.testconfig.TestContextConfig;
-import ua.levelup.web.dto.create.ProductCreateDto;
+import ua.levelup.validator.ProductValidatorService;
 
 import javax.validation.ConstraintViolation;
 import java.util.Set;
 
 /**
- * Класс ProductValidatorServiceTest содержит интеграционные тесты
+ * Класс ProductCreateDtoTest содержит интеграционные тесты
  * для проверки корректности валидации объектов ProductCreateDto
  *
  * Автор: Бардась А.А.
@@ -22,7 +22,7 @@ import java.util.Set;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestContextConfig.class})
 @ActiveProfiles("test")
-public class ProductValidatorServiceTest {
+public class ProductCreateDtoTest {
 
     @Autowired
     private ProductValidatorService productValidatorService;
