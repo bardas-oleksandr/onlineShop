@@ -8,9 +8,9 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ua.levelup.testconfig.TestContextConfig;
-import ua.levelup.validator.CategoryValidatorService;
 
 import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 import java.util.Set;
 
 /**
@@ -25,7 +25,7 @@ import java.util.Set;
 public class CategoryCreateDtoTest {
 
     @Autowired
-    private CategoryValidatorService categoryValidatorService;
+    private Validator validator;
 
     /*Сценарий: валидация объекта CategoryCreateDto;
     *           все поля корректны.
@@ -36,7 +36,7 @@ public class CategoryCreateDtoTest {
         //GIVEN
         CategoryCreateDto dto = new CategoryCreateDto("category", 1);
         //WHEN
-        Set<ConstraintViolation<CategoryCreateDto>> violations = categoryValidatorService.validate(dto);
+        Set<ConstraintViolation<CategoryCreateDto>> violations = validator.validate(dto);
         //THEN
         Assert.assertEquals(0, violations.size());
     }
@@ -50,7 +50,7 @@ public class CategoryCreateDtoTest {
         //GIVEN
         CategoryCreateDto dto = new CategoryCreateDto(null, 1);
         //WHEN
-        Set<ConstraintViolation<CategoryCreateDto>> violations = categoryValidatorService.validate(dto);
+        Set<ConstraintViolation<CategoryCreateDto>> violations = validator.validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
         Assert.assertEquals("empty_category_name",violations.stream()
@@ -66,7 +66,7 @@ public class CategoryCreateDtoTest {
         //GIVEN
         CategoryCreateDto dto = new CategoryCreateDto("", 1);
         //WHEN
-        Set<ConstraintViolation<CategoryCreateDto>> violations = categoryValidatorService.validate(dto);
+        Set<ConstraintViolation<CategoryCreateDto>> violations = validator.validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
         Assert.assertEquals("empty_category_name",violations.stream()
@@ -83,7 +83,7 @@ public class CategoryCreateDtoTest {
         CategoryCreateDto dto = new CategoryCreateDto("1234567890123456789012345678901" +
                 "23456789012345678901", 1);
         //WHEN
-        Set<ConstraintViolation<CategoryCreateDto>> violations = categoryValidatorService.validate(dto);
+        Set<ConstraintViolation<CategoryCreateDto>> violations = validator.validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
         Assert.assertEquals("unacceptable_category_name_length",violations.stream()
@@ -99,7 +99,7 @@ public class CategoryCreateDtoTest {
         //GIVEN
         CategoryCreateDto dto = new CategoryCreateDto("category", -1);
         //WHEN
-        Set<ConstraintViolation<CategoryCreateDto>> violations = categoryValidatorService.validate(dto);
+        Set<ConstraintViolation<CategoryCreateDto>> violations = validator.validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
         Assert.assertEquals("negative_parent_category_id",violations.stream()

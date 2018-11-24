@@ -8,9 +8,9 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ua.levelup.testconfig.TestContextConfig;
-import ua.levelup.validator.OrderPositionValidatorService;
 
 import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 import java.util.Set;
 
 /**
@@ -25,7 +25,7 @@ import java.util.Set;
 public class OrderPositionCreateDtoTest {
 
     @Autowired
-    private OrderPositionValidatorService orderPositionValidatorService;
+    private Validator validator;
 
     /*Сценарий: валидация объекта OrderPositionCreateDto;
     *           все поля корректны.
@@ -34,9 +34,10 @@ public class OrderPositionCreateDtoTest {
     @Test
     public void validateTest_OrderPositionValidated() {
         //GIVEN
-        OrderPositionCreateDto dto = new OrderPositionCreateDto(1,2,3,4.0f);
+        OrderPositionCreateDto dto = new OrderPositionCreateDto(1
+                ,2,3,4.0f);
         //WHEN
-        Set<ConstraintViolation<OrderPositionCreateDto>> violations = orderPositionValidatorService
+        Set<ConstraintViolation<OrderPositionCreateDto>> violations = validator
                 .validate(dto);
         //THEN
         Assert.assertEquals(0, violations.size());
@@ -49,9 +50,10 @@ public class OrderPositionCreateDtoTest {
     @Test
     public void validateTest_whenOrderIdSmallerThenOne_thenNotValidated() {
         //GIVEN
-        OrderPositionCreateDto dto = new OrderPositionCreateDto(0,2,3,4.0f);
+        OrderPositionCreateDto dto = new OrderPositionCreateDto(0
+                ,2,3,4.0f);
         //WHEN
-        Set<ConstraintViolation<OrderPositionCreateDto>> violations = orderPositionValidatorService
+        Set<ConstraintViolation<OrderPositionCreateDto>> violations = validator
                 .validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
@@ -66,9 +68,10 @@ public class OrderPositionCreateDtoTest {
     @Test
     public void validateTest_whenProductIdSmallerThenOne_thenNotValidated() {
         //GIVEN
-        OrderPositionCreateDto dto = new OrderPositionCreateDto(1,0,3,4.0f);
+        OrderPositionCreateDto dto = new OrderPositionCreateDto(1
+                ,0,3,4.0f);
         //WHEN
-        Set<ConstraintViolation<OrderPositionCreateDto>> violations = orderPositionValidatorService
+        Set<ConstraintViolation<OrderPositionCreateDto>> violations = validator
                 .validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
@@ -83,9 +86,10 @@ public class OrderPositionCreateDtoTest {
     @Test
     public void validateTest_whenQuantitySmallerThenOne_thenNotValidated() {
         //GIVEN
-        OrderPositionCreateDto dto = new OrderPositionCreateDto(1,2,0,4.0f);
+        OrderPositionCreateDto dto = new OrderPositionCreateDto(1
+                ,2,0,4.0f);
         //WHEN
-        Set<ConstraintViolation<OrderPositionCreateDto>> violations = orderPositionValidatorService
+        Set<ConstraintViolation<OrderPositionCreateDto>> violations = validator
                 .validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
@@ -100,9 +104,10 @@ public class OrderPositionCreateDtoTest {
     @Test
     public void validateTest_whenPriceIsNegative_thenNotValidated() {
         //GIVEN
-        OrderPositionCreateDto dto = new OrderPositionCreateDto(1,2,3,-0.1f);
+        OrderPositionCreateDto dto = new OrderPositionCreateDto(1
+                ,2,3,-0.1f);
         //WHEN
-        Set<ConstraintViolation<OrderPositionCreateDto>> violations = orderPositionValidatorService
+        Set<ConstraintViolation<OrderPositionCreateDto>> violations = validator
                 .validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());

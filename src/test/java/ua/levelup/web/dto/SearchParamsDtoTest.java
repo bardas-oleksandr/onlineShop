@@ -8,9 +8,9 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ua.levelup.testconfig.TestContextConfig;
-import ua.levelup.validator.SearchParamsValidatorService;
 
 import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 import java.util.Set;
 
 /**
@@ -25,7 +25,7 @@ import java.util.Set;
 public class SearchParamsDtoTest {
 
     @Autowired
-    private SearchParamsValidatorService searchParamsValidatorService;
+    private Validator validator;
 
     /*Сценарий: валидация объекта SearchParamsCreateDto;
     *           все поля корректны.
@@ -37,7 +37,7 @@ public class SearchParamsDtoTest {
         SearchParamsDto dto = new SearchParamsDto(1, 2,
                 3, true, 4.0f, 5.0f, 1);
         //WHEN
-        Set<ConstraintViolation<SearchParamsDto>> violations = searchParamsValidatorService
+        Set<ConstraintViolation<SearchParamsDto>> violations = validator
                 .validate(dto);
         //THEN
         Assert.assertEquals(0, violations.size());
@@ -53,7 +53,7 @@ public class SearchParamsDtoTest {
         SearchParamsDto dto = new SearchParamsDto(-1, 1,
                 2, true, 3.0f, 4.0f, 1);
         //WHEN
-        Set<ConstraintViolation<SearchParamsDto>> violations = searchParamsValidatorService
+        Set<ConstraintViolation<SearchParamsDto>> violations = validator
                 .validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
@@ -71,7 +71,7 @@ public class SearchParamsDtoTest {
         SearchParamsDto dto = new SearchParamsDto(1, -1,
                 2, true, 3.0f, 4.0f, 1);
         //WHEN
-        Set<ConstraintViolation<SearchParamsDto>> violations = searchParamsValidatorService
+        Set<ConstraintViolation<SearchParamsDto>> violations = validator
                 .validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
@@ -89,7 +89,7 @@ public class SearchParamsDtoTest {
         SearchParamsDto dto = new SearchParamsDto(1, 2,
                 -1, true, 3.0f, 4.0f, 1);
         //WHEN
-        Set<ConstraintViolation<SearchParamsDto>> violations = searchParamsValidatorService
+        Set<ConstraintViolation<SearchParamsDto>> violations = validator
                 .validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
@@ -107,7 +107,7 @@ public class SearchParamsDtoTest {
         SearchParamsDto dto = new SearchParamsDto(0, 1,
                 2, true, -0.1f, 4.0f, 1);
         //WHEN
-        Set<ConstraintViolation<SearchParamsDto>> violations = searchParamsValidatorService
+        Set<ConstraintViolation<SearchParamsDto>> violations = validator
                 .validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
@@ -125,7 +125,7 @@ public class SearchParamsDtoTest {
         SearchParamsDto dto = new SearchParamsDto(0, 1,
                 2, true, 5.0f, 4.0f, 1);
         //WHEN
-        Set<ConstraintViolation<SearchParamsDto>> violations = searchParamsValidatorService
+        Set<ConstraintViolation<SearchParamsDto>> violations = validator
                 .validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
@@ -143,7 +143,7 @@ public class SearchParamsDtoTest {
         SearchParamsDto dto = new SearchParamsDto(0, 1,
                 2, true, 3.0f, 4.0f, -1);
         //WHEN
-        Set<ConstraintViolation<SearchParamsDto>> violations = searchParamsValidatorService
+        Set<ConstraintViolation<SearchParamsDto>> violations = validator
                 .validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
@@ -161,7 +161,7 @@ public class SearchParamsDtoTest {
         SearchParamsDto dto = new SearchParamsDto(0, 1,
                 2, true, 3.0f, 4.0f, 3);
         //WHEN
-        Set<ConstraintViolation<SearchParamsDto>> violations = searchParamsValidatorService
+        Set<ConstraintViolation<SearchParamsDto>> violations = validator
                 .validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());

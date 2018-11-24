@@ -9,9 +9,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ua.levelup.model.User;
 import ua.levelup.testconfig.TestContextConfig;
-import ua.levelup.validator.UserRegisterValidatorService;
 
 import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 import java.util.Set;
 
 /**
@@ -26,7 +26,7 @@ import java.util.Set;
 public class UserRegisterCreateDtoTest {
 
     @Autowired
-    private UserRegisterValidatorService userRegisterValidatorService;
+    private Validator validator;
 
     /*Сценарий: валидация объекта UserRegisterCreateDto;
     *           все поля корректны.
@@ -38,7 +38,7 @@ public class UserRegisterCreateDtoTest {
         UserRegisterCreateDto dto = new UserRegisterCreateDto("name","password"
                 ,"mail@gmail.com", User.UserState.ADMIN.ordinal());
         //WHEN
-        Set<ConstraintViolation<UserRegisterCreateDto>> violations = userRegisterValidatorService
+        Set<ConstraintViolation<UserRegisterCreateDto>> violations = validator
                 .validate(dto);
         //THEN
         Assert.assertEquals(0, violations.size());
@@ -54,7 +54,7 @@ public class UserRegisterCreateDtoTest {
         UserRegisterCreateDto dto = new UserRegisterCreateDto("name", null
                 , "mail@gmail.com", User.UserState.ADMIN.ordinal());
         //WHEN
-        Set<ConstraintViolation<UserRegisterCreateDto>> violations = userRegisterValidatorService
+        Set<ConstraintViolation<UserRegisterCreateDto>> violations = validator
                 .validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
@@ -72,7 +72,7 @@ public class UserRegisterCreateDtoTest {
         UserRegisterCreateDto dto = new UserRegisterCreateDto("name",""
                 , "mail@gmail.com", User.UserState.ADMIN.ordinal());
         //WHEN
-        Set<ConstraintViolation<UserRegisterCreateDto>> violations = userRegisterValidatorService
+        Set<ConstraintViolation<UserRegisterCreateDto>> violations = validator
                 .validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
@@ -90,7 +90,7 @@ public class UserRegisterCreateDtoTest {
         UserRegisterCreateDto dto = new UserRegisterCreateDto("name", "123"
                 , "mail@gmail.com", User.UserState.ADMIN.ordinal());
         //WHEN
-        Set<ConstraintViolation<UserRegisterCreateDto>> violations = userRegisterValidatorService
+        Set<ConstraintViolation<UserRegisterCreateDto>> violations = validator
                 .validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
@@ -109,7 +109,7 @@ public class UserRegisterCreateDtoTest {
                 ,"01234556789012345567890", "mail@gmail.com"
                 , User.UserState.ADMIN.ordinal());
         //WHEN
-        Set<ConstraintViolation<UserRegisterCreateDto>> violations = userRegisterValidatorService
+        Set<ConstraintViolation<UserRegisterCreateDto>> violations = validator
                 .validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
@@ -127,7 +127,7 @@ public class UserRegisterCreateDtoTest {
         UserRegisterCreateDto dto = new UserRegisterCreateDto("name","password"
                 , "mailgmail.com", User.UserState.ADMIN.ordinal());
         //WHEN
-        Set<ConstraintViolation<UserRegisterCreateDto>> violations = userRegisterValidatorService
+        Set<ConstraintViolation<UserRegisterCreateDto>> violations = validator
                 .validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
@@ -145,7 +145,7 @@ public class UserRegisterCreateDtoTest {
         UserRegisterCreateDto dto = new UserRegisterCreateDto("name","password"
                 , null, User.UserState.ADMIN.ordinal());
         //WHEN
-        Set<ConstraintViolation<UserRegisterCreateDto>> violations = userRegisterValidatorService
+        Set<ConstraintViolation<UserRegisterCreateDto>> violations = validator
                 .validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
@@ -163,7 +163,7 @@ public class UserRegisterCreateDtoTest {
         UserRegisterCreateDto dto = new UserRegisterCreateDto("name","password"
                 , "", User.UserState.ADMIN.ordinal());
         //WHEN
-        Set<ConstraintViolation<UserRegisterCreateDto>> violations = userRegisterValidatorService
+        Set<ConstraintViolation<UserRegisterCreateDto>> violations = validator
                 .validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
@@ -181,7 +181,7 @@ public class UserRegisterCreateDtoTest {
         UserRegisterCreateDto dto = new UserRegisterCreateDto(null,"password"
                 , "mail@gmail.com", User.UserState.ADMIN.ordinal());
         //WHEN
-        Set<ConstraintViolation<UserRegisterCreateDto>> violations = userRegisterValidatorService
+        Set<ConstraintViolation<UserRegisterCreateDto>> violations = validator
                 .validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
@@ -199,7 +199,7 @@ public class UserRegisterCreateDtoTest {
         UserRegisterCreateDto dto = new UserRegisterCreateDto("","password"
                 , "mail@gmail.com", User.UserState.ADMIN.ordinal());
         //WHEN
-        Set<ConstraintViolation<UserRegisterCreateDto>> violations = userRegisterValidatorService
+        Set<ConstraintViolation<UserRegisterCreateDto>> violations = validator
                 .validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
@@ -217,7 +217,7 @@ public class UserRegisterCreateDtoTest {
         UserRegisterCreateDto dto = new UserRegisterCreateDto("Остап-Сулейман-Берта-Мария-Бендер-бей"
                 ,"password", "mail@gmail.com", User.UserState.ADMIN.ordinal());
         //WHEN
-        Set<ConstraintViolation<UserRegisterCreateDto>> violations = userRegisterValidatorService
+        Set<ConstraintViolation<UserRegisterCreateDto>> violations = validator
                 .validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
@@ -235,7 +235,7 @@ public class UserRegisterCreateDtoTest {
         UserRegisterCreateDto dto = new UserRegisterCreateDto("name","password"
                 , "mail@gmail.com", -1);
         //WHEN
-        Set<ConstraintViolation<UserRegisterCreateDto>> violations = userRegisterValidatorService
+        Set<ConstraintViolation<UserRegisterCreateDto>> violations = validator
                 .validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
@@ -253,7 +253,7 @@ public class UserRegisterCreateDtoTest {
         UserRegisterCreateDto dto = new UserRegisterCreateDto("name","password"
                 , "mail@gmail.com", 3);
         //WHEN
-        Set<ConstraintViolation<UserRegisterCreateDto>> violations = userRegisterValidatorService
+        Set<ConstraintViolation<UserRegisterCreateDto>> violations = validator
                 .validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());

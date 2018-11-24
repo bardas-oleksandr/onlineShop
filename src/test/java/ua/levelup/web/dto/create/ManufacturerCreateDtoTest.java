@@ -8,9 +8,9 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ua.levelup.testconfig.TestContextConfig;
-import ua.levelup.validator.ManufacturerValidatorService;
 
 import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 import java.util.Set;
 
 /**
@@ -25,7 +25,7 @@ import java.util.Set;
 public class ManufacturerCreateDtoTest {
 
     @Autowired
-    private ManufacturerValidatorService manufacturerValidatorService;
+    private Validator validator;
 
     /*Сценарий: валидация объекта ManufacturerCreateDto;
     *           все поля корректны.
@@ -36,7 +36,7 @@ public class ManufacturerCreateDtoTest {
         //GIVEN
         ManufacturerCreateDto dto = new ManufacturerCreateDto("manufacturer");
         //WHEN
-        Set<ConstraintViolation<ManufacturerCreateDto>> violations = manufacturerValidatorService
+        Set<ConstraintViolation<ManufacturerCreateDto>> violations = validator
                 .validate(dto);
         //THEN
         Assert.assertEquals(0, violations.size());
@@ -51,7 +51,7 @@ public class ManufacturerCreateDtoTest {
         //GIVEN
         ManufacturerCreateDto dto = new ManufacturerCreateDto(null);
         //WHEN
-        Set<ConstraintViolation<ManufacturerCreateDto>> violations = manufacturerValidatorService
+        Set<ConstraintViolation<ManufacturerCreateDto>> violations = validator
                 .validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
@@ -68,7 +68,7 @@ public class ManufacturerCreateDtoTest {
         //GIVEN
         ManufacturerCreateDto dto = new ManufacturerCreateDto("");
         //WHEN
-        Set<ConstraintViolation<ManufacturerCreateDto>> violations = manufacturerValidatorService
+        Set<ConstraintViolation<ManufacturerCreateDto>> violations = validator
                 .validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
@@ -86,7 +86,7 @@ public class ManufacturerCreateDtoTest {
         ManufacturerCreateDto dto = new ManufacturerCreateDto("123456789012345678901234567890123" +
                 "456789012345678901");
         //WHEN
-        Set<ConstraintViolation<ManufacturerCreateDto>> violations = manufacturerValidatorService
+        Set<ConstraintViolation<ManufacturerCreateDto>> violations = validator
                 .validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());

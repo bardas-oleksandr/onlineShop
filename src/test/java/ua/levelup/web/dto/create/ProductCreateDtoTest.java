@@ -8,9 +8,9 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ua.levelup.testconfig.TestContextConfig;
-import ua.levelup.validator.ProductValidatorService;
 
 import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 import java.util.Set;
 
 /**
@@ -25,7 +25,7 @@ import java.util.Set;
 public class ProductCreateDtoTest {
 
     @Autowired
-    private ProductValidatorService productValidatorService;
+    private Validator validator;
 
     /*Сценарий: валидация объекта ProductCreateDto;
     *           все поля корректны.
@@ -37,7 +37,7 @@ public class ProductCreateDtoTest {
         ProductCreateDto dto = new ProductCreateDto("product",1.0f,true,
                 "description",2,3);
         //WHEN
-        Set<ConstraintViolation<ProductCreateDto>> violations = productValidatorService
+        Set<ConstraintViolation<ProductCreateDto>> violations = validator
                 .validate(dto);
         //THEN
         Assert.assertEquals(0, violations.size());
@@ -53,7 +53,7 @@ public class ProductCreateDtoTest {
         ProductCreateDto dto = new ProductCreateDto(null,1.0f,true,
                 "description",2,3);
         //WHEN
-        Set<ConstraintViolation<ProductCreateDto>> violations = productValidatorService.
+        Set<ConstraintViolation<ProductCreateDto>> violations = validator.
                 validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
@@ -71,7 +71,7 @@ public class ProductCreateDtoTest {
         ProductCreateDto dto = new ProductCreateDto("",1.0f,true,
                 "description",2,3);
         //WHEN
-        Set<ConstraintViolation<ProductCreateDto>> violations = productValidatorService.
+        Set<ConstraintViolation<ProductCreateDto>> violations = validator.
                 validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
@@ -90,7 +90,7 @@ public class ProductCreateDtoTest {
                 "89012345678901234567890",1.0f,true,
                 "description",2,3);
         //WHEN
-        Set<ConstraintViolation<ProductCreateDto>> violations = productValidatorService.
+        Set<ConstraintViolation<ProductCreateDto>> violations = validator.
                 validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
@@ -108,7 +108,7 @@ public class ProductCreateDtoTest {
         ProductCreateDto dto = new ProductCreateDto("product",-0.1f,true,
                 "description",2,3);
         //WHEN
-        Set<ConstraintViolation<ProductCreateDto>> violations = productValidatorService
+        Set<ConstraintViolation<ProductCreateDto>> violations = validator
                 .validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
@@ -127,7 +127,7 @@ public class ProductCreateDtoTest {
                 "01234567890123456789012345678901234567890123456789012345678901234" +
                         "567890123456789012345678901234567890",2,3);
         //WHEN
-        Set<ConstraintViolation<ProductCreateDto>> violations = productValidatorService.
+        Set<ConstraintViolation<ProductCreateDto>> violations = validator.
                 validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
@@ -145,7 +145,7 @@ public class ProductCreateDtoTest {
         ProductCreateDto dto = new ProductCreateDto("product",1.0f,true,
                 "description",0,3);
         //WHEN
-        Set<ConstraintViolation<ProductCreateDto>> violations = productValidatorService.
+        Set<ConstraintViolation<ProductCreateDto>> violations = validator.
                 validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
@@ -163,7 +163,7 @@ public class ProductCreateDtoTest {
         ProductCreateDto dto = new ProductCreateDto("product",1.0f,true,
                 "description",2,0);
         //WHEN
-        Set<ConstraintViolation<ProductCreateDto>> violations = productValidatorService.
+        Set<ConstraintViolation<ProductCreateDto>> violations = validator.
                 validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());

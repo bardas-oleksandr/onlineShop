@@ -8,9 +8,9 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ua.levelup.testconfig.TestContextConfig;
-import ua.levelup.validator.OrderValidatorService;
 
 import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 import java.sql.Timestamp;
 import java.util.Set;
 
@@ -26,7 +26,7 @@ import java.util.Set;
 public class OrderCreateDtoTest {
 
     @Autowired
-    private OrderValidatorService orderValidatorService;
+    private Validator validator;
 
     /*Сценарий: валидация объекта OrderCreateDto;
     *           все поля корректны.
@@ -38,7 +38,7 @@ public class OrderCreateDtoTest {
         OrderCreateDto dto = new OrderCreateDto(1, "address", new Timestamp(1)
                 , true, 0, 1);
         //WHEN
-        Set<ConstraintViolation<OrderCreateDto>> violations = orderValidatorService.validate(dto);
+        Set<ConstraintViolation<OrderCreateDto>> violations = validator.validate(dto);
         //THEN
         Assert.assertEquals(0, violations.size());
     }
@@ -53,7 +53,7 @@ public class OrderCreateDtoTest {
         OrderCreateDto dto = new OrderCreateDto(0, "address", new Timestamp(1)
                 , true, 0, 1);
         //WHEN
-        Set<ConstraintViolation<OrderCreateDto>> violations = orderValidatorService.validate(dto);
+        Set<ConstraintViolation<OrderCreateDto>> violations = validator.validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
         Assert.assertEquals("unacceptable_user_id", violations.stream()
@@ -70,7 +70,7 @@ public class OrderCreateDtoTest {
         OrderCreateDto dto = new OrderCreateDto(1, null, new Timestamp(1)
                 , true, 0, 1);
         //WHEN
-        Set<ConstraintViolation<OrderCreateDto>> violations = orderValidatorService.validate(dto);
+        Set<ConstraintViolation<OrderCreateDto>> violations = validator.validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
         Assert.assertEquals("empty_address", violations.stream()
@@ -87,7 +87,7 @@ public class OrderCreateDtoTest {
         OrderCreateDto dto = new OrderCreateDto(1,"",new Timestamp(1)
                 ,true,0, 1);
         //WHEN
-        Set<ConstraintViolation<OrderCreateDto>> violations = orderValidatorService.validate(dto);
+        Set<ConstraintViolation<OrderCreateDto>> violations = validator.validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
         Assert.assertEquals("empty_address", violations.stream()
@@ -108,7 +108,7 @@ public class OrderCreateDtoTest {
                 ,true,0, 1);
         dto.setDate(new Timestamp(System.currentTimeMillis()));
         //WHEN
-        Set<ConstraintViolation<OrderCreateDto>> violations = orderValidatorService.validate(dto);
+        Set<ConstraintViolation<OrderCreateDto>> violations = validator.validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
         Assert.assertEquals("unacceptable_address_length", violations.stream()
@@ -125,7 +125,7 @@ public class OrderCreateDtoTest {
         OrderCreateDto dto = new OrderCreateDto(1, "address", null
                 , true, 0, 1);
         //WHEN
-        Set<ConstraintViolation<OrderCreateDto>> violations = orderValidatorService.validate(dto);
+        Set<ConstraintViolation<OrderCreateDto>> violations = validator.validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
         Assert.assertEquals("empty_order_date", violations.stream()
@@ -142,7 +142,7 @@ public class OrderCreateDtoTest {
         OrderCreateDto dto = new OrderCreateDto(1, "address", new Timestamp(1)
                 , true, -1, 0);
         //WHEN
-        Set<ConstraintViolation<OrderCreateDto>> violations = orderValidatorService.validate(dto);
+        Set<ConstraintViolation<OrderCreateDto>> violations = validator.validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
         Assert.assertEquals("unexpected_order_state", violations.stream()
@@ -159,7 +159,7 @@ public class OrderCreateDtoTest {
         OrderCreateDto dto = new OrderCreateDto(1, "address", new Timestamp(1)
                 , true, 3, 0);
         //WHEN
-        Set<ConstraintViolation<OrderCreateDto>> violations = orderValidatorService.validate(dto);
+        Set<ConstraintViolation<OrderCreateDto>> violations = validator.validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
         Assert.assertEquals("unexpected_order_state", violations.stream()
@@ -176,7 +176,7 @@ public class OrderCreateDtoTest {
         OrderCreateDto dto = new OrderCreateDto(1, "address", new Timestamp(1)
                 , true, 0, -1);
         //WHEN
-        Set<ConstraintViolation<OrderCreateDto>> violations = orderValidatorService.validate(dto);
+        Set<ConstraintViolation<OrderCreateDto>> violations = validator.validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
         Assert.assertEquals("unexpected_payment_conditions", violations.stream()
@@ -193,7 +193,7 @@ public class OrderCreateDtoTest {
         OrderCreateDto dto = new OrderCreateDto(1, "address", new Timestamp(1)
                 , true, 0, 2);
         //WHEN
-        Set<ConstraintViolation<OrderCreateDto>> violations = orderValidatorService.validate(dto);
+        Set<ConstraintViolation<OrderCreateDto>> violations = validator.validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
         Assert.assertEquals("unexpected_payment_conditions", violations.stream()

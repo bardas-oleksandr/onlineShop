@@ -8,9 +8,9 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ua.levelup.testconfig.TestContextConfig;
-import ua.levelup.validator.ProductInCartValidatorService;
 
 import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 import java.util.Set;
 
 /**
@@ -25,7 +25,7 @@ import java.util.Set;
 public class ProductInCartCreateDtoTest {
 
     @Autowired
-    private ProductInCartValidatorService productInCartValidatorService;
+    private Validator validator;
 
     /*Сценарий: валидация объекта ProductInCartCreateDto;
     *           все поля корректны.
@@ -36,7 +36,7 @@ public class ProductInCartCreateDtoTest {
         //GIVEN
         ProductInCartCreateDto dto = new ProductInCartCreateDto(1,2);
         //WHEN
-        Set<ConstraintViolation<ProductInCartCreateDto>> violations = productInCartValidatorService
+        Set<ConstraintViolation<ProductInCartCreateDto>> violations = validator
                 .validate(dto);
         //THEN
         Assert.assertEquals(0, violations.size());
@@ -51,7 +51,7 @@ public class ProductInCartCreateDtoTest {
         //GIVEN
         ProductInCartCreateDto dto = new ProductInCartCreateDto(0,2);
         //WHEN
-        Set<ConstraintViolation<ProductInCartCreateDto>> violations = productInCartValidatorService
+        Set<ConstraintViolation<ProductInCartCreateDto>> violations = validator
                 .validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
@@ -68,7 +68,7 @@ public class ProductInCartCreateDtoTest {
         //GIVEN
         ProductInCartCreateDto dto = new ProductInCartCreateDto(1,0);
         //WHEN
-        Set<ConstraintViolation<ProductInCartCreateDto>> violations = productInCartValidatorService
+        Set<ConstraintViolation<ProductInCartCreateDto>> violations = validator
                 .validate(dto);
         //THEN
         Assert.assertEquals(1, violations.size());
