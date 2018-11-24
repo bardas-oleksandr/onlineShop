@@ -8,7 +8,6 @@ import ua.levelup.web.dto.view.UserViewDto;
 import java.util.List;
 
 public interface UserService {
-    User registerUser(UserRegisterCreateDto createDto);
 
     UserViewDto create(UserRegisterCreateDto createDto);
 

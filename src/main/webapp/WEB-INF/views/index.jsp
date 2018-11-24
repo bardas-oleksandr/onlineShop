@@ -62,7 +62,7 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <form action="${pageContext.request.contextPath}/user" modelAttribute="userRegisterCreateDto" method="POST">
+                                <form action="${pageContext.request.contextPath}/register" modelAttribute="userRegisterCreateDto" method="POST">
                                     <div class="modal-body">
                                         <div class="form-group">
                                             <label for="registerUserName">
