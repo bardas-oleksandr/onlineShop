@@ -4,6 +4,8 @@ INSERT INTO users (id, user_name, user_password, user_email, user_state)
 VALUES (2, 'John Doe', '$2a$10$gPCFfSC7vYvN1.NOIyI7deMU1QOL6kPICmzKU4O75EJK0Akr.nBEe', 'active@gmail.com', 1);
 INSERT INTO users (id, user_name, user_password, user_email, user_state)
 VALUES (3, 'Dr. Evil', '$2a$10$gPCFfSC7vYvN1.NOIyI7deMU1QOL6kPICmzKU4O75EJK0Akr.nBEe', 'blocked@gmail.com', 2);
+INSERT INTO users (id, user_name, user_password, user_email, user_state)
+VALUES (4, 'Spiderman', '$2a$10$gPCFfSC7vYvN1.NOIyI7deMU1QOL6kPICmzKU4O75EJK0Akr.nBEe', 'spider@gmail.com', 1);
 
 INSERT INTO categories (id, category_name, category_parent_id) VALUES (1,'Carp',NULL);
 INSERT INTO categories (id, category_name, category_parent_id) VALUES (2,'Predator',NULL);
@@ -35,6 +37,7 @@ INSERT INTO manufacturers (id, manufacturer_name) VALUES (6,'Shakespeare');
 INSERT INTO manufacturers (id, manufacturer_name) VALUES (7,'Drennan');
 INSERT INTO manufacturers (id, manufacturer_name) VALUES (8,'Avid Carp');
 INSERT INTO manufacturers (id, manufacturer_name) VALUES (9,'Fox');
+INSERT INTO manufacturers (id, manufacturer_name) VALUES (10,'Kosadaka');
 
 INSERT INTO products (id, product_name, product_price, product_available, product_description
 , product_category_id, product_manufacturer_id)
@@ -325,3 +328,13 @@ VALUES (2, 50, 1, 56.99);
 
 INSERT INTO orders_products (order_id, product_id, order_product_quantity, order_product_unit_price)
 VALUES (2, 15, 2, 5.99);
+
+INSERT INTO orders (id, order_user_id, order_address, order_date, order_payed
+, order_state, order_payment_conditions)
+VALUES (3,2,'15, Yemen road, Yemen','2018-07-03 22:15:38.646',TRUE,1,1);
+
+INSERT INTO orders_products (order_id, product_id, order_product_quantity, order_product_unit_price)
+VALUES (3, 50, 1, 56.99);
+
+INSERT INTO orders_products (order_id, product_id, order_product_quantity, order_product_unit_price)
+VALUES (3, 15, 2, 5.99);

@@ -44,7 +44,7 @@ public class CartRestController {
     CartViewDto get(HttpServletRequest request) {
         HttpSession session = request.getSession(true);
         CartViewDto cart = (CartViewDto) session.getAttribute(CART_ATTRIBUTE);
-        if (cart == null && cart.getProductInCartViewDtoList().size() == 0) {
+        if (cart == null || cart.getProductInCartViewDtoList().size() == 0) {
             //http status 404
             throw new RestException(HttpStatus.NOT_FOUND, messagesProperties.getProperty("EMPTY_CART"));
         }
