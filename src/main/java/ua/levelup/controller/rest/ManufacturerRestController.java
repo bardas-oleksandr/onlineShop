@@ -86,7 +86,8 @@ public class ManufacturerRestController {
             return manufacturerService.update(manufacturerCreateDto, manufacturerId);
         } catch (ApplicationException e) {
             String message = e.getMessage();
-            if (message.equals(messagesProperties.getProperty("DATA_INTEGRITY_VIOLATION_FOR_MANUFACTURER"))
+            if (message.equals(messagesProperties
+                    .getProperty("DATA_INTEGRITY_VIOLATION_FOR_MANUFACTURER"))
                     || message.equals(messagesProperties.getProperty("NOT_UNIQUE_MANUFACTURER"))) {
                 //http status 409
                 throw new RestException(HttpStatus.CONFLICT, message);
@@ -108,7 +109,8 @@ public class ManufacturerRestController {
             manufacturerService.delete(manufacturerId);
         } catch (ApplicationException e) {
             String message = e.getMessage();
-            if (message.equals(messagesProperties.getProperty("INTEGRITY_VIOLATION_WHILE_DELETE_MANUFACTURER"))) {
+            if (message.equals(messagesProperties
+                    .getProperty("INTEGRITY_VIOLATION_WHILE_DELETE_MANUFACTURER"))) {
                 //http status 409
                 throw new RestException(HttpStatus.CONFLICT, message);
             } else if (message.equals(messagesProperties

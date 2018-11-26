@@ -41,8 +41,8 @@ public class UserRestController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public @ResponseBody
-    UserViewDto create(@Valid @RequestBody UserRegisterCreateDto userRegisterCreateDto,
-                       BindingResult result) {
+    UserViewDto create(@Valid @RequestBody UserRegisterCreateDto userRegisterCreateDto
+            , BindingResult result) {
         controllerUtils.checkValidationViolations(result);
         try {
             return userService.create(userRegisterCreateDto);
@@ -79,8 +79,8 @@ public class UserRestController {
     @PutMapping(value = ID)
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
-    UserViewDto update(@Valid @RequestBody UserCreateDto userCreateDto,
-                       BindingResult result, @PathVariable("id") int userId) {
+    UserViewDto update(@Valid @RequestBody UserCreateDto userCreateDto
+            , BindingResult result, @PathVariable("id") int userId) {
         controllerUtils.checkValidationViolations(result);
         try {
             return userService.update(userCreateDto, userId);

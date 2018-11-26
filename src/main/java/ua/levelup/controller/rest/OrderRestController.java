@@ -45,8 +45,8 @@ public class OrderRestController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public @ResponseBody
-    OrderViewDto create(@Valid @RequestBody OrderCreateDto orderCreateDto,
-                        BindingResult result, HttpServletRequest request) {
+    OrderViewDto create(@Valid @RequestBody OrderCreateDto orderCreateDto, BindingResult result
+            , HttpServletRequest request) {
         controllerUtils.checkValidationViolations(result);
 
         HttpSession session = request.getSession(true);
@@ -92,8 +92,8 @@ public class OrderRestController {
     @PutMapping(value = ID)
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
-    OrderViewDto update(@Valid @RequestBody OrderCreateDto orderCreateDto,
-                               BindingResult result, @PathVariable("id") int orderId) {
+    OrderViewDto update(@Valid @RequestBody OrderCreateDto orderCreateDto, BindingResult result
+            , @PathVariable("id") int orderId) {
         controllerUtils.checkValidationViolations(result);
         try {
             return orderService.update(orderCreateDto,orderId);

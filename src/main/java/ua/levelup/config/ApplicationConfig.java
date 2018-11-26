@@ -10,10 +10,9 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import ua.levelup.dao.factory.ConnectionFactory;
+import ua.levelup.dao.support.DataBaseScriptExecutor;
 import ua.levelup.exception.ApplicationException;
 
 import javax.annotation.Resource;
@@ -31,6 +30,7 @@ import java.util.Set;
 @Configuration
 @ComponentScan("ua.levelup.converter")
 @ComponentScan("ua.levelup.dao")
+@ComponentScan("ua.levelup.dao.support")
 @ComponentScan("ua.levelup.service")
 @ComponentScan("ua.levelup.web.dto")
 @ComponentScan("ua.levelup.validator")

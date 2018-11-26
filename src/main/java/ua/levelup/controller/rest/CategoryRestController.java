@@ -42,8 +42,7 @@ public class CategoryRestController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public @ResponseBody
-    CategoryViewDto create(@Valid @RequestBody CategoryCreateDto categoryCreateDto,
-                           BindingResult result) {
+    CategoryViewDto create(@Valid @RequestBody CategoryCreateDto categoryCreateDto, BindingResult result) {
         controllerUtils.checkValidationViolations(result);
         try {
             return categoryService.create(categoryCreateDto);
@@ -81,8 +80,8 @@ public class CategoryRestController {
     @PutMapping(value = ID)
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
-    CategoryViewDto update(@Valid @RequestBody CategoryCreateDto categoryCreateDto,
-                               BindingResult result, @PathVariable("id") int categoryId) {
+    CategoryViewDto update(@Valid @RequestBody CategoryCreateDto categoryCreateDto, BindingResult result
+            , @PathVariable("id") int categoryId) {
         controllerUtils.checkValidationViolations(result);
         try {
             return categoryService.update(categoryCreateDto, categoryId);
@@ -124,7 +123,7 @@ public class CategoryRestController {
         }
     }
 
-    @GetMapping(value=LEVEL + ID)
+    @GetMapping(value = LEVEL + ID)
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
     List<CategoryViewDto> getAllByLevel(@PathVariable("id") int categoryLevel) {
@@ -142,12 +141,12 @@ public class CategoryRestController {
         }
     }
 
-    @GetMapping(value=PARENT + ID)
+    @GetMapping(value = PARENT + ID)
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
     List<CategoryViewDto> getAllByParentId(@PathVariable("id") int parentId) {
         try {
-            List<CategoryViewDto> list = categoryService.getCategoriesByLevel(parentId);
+            List<CategoryViewDto> list = categoryService.getCategoriesByParentId(parentId);
             if (list.size() == 0) {
                 //http status 404
                 throw new RestException(HttpStatus.NOT_FOUND,

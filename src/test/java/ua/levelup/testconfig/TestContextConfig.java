@@ -4,6 +4,8 @@ import org.springframework.context.annotation.*;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.web.WebAppConfiguration;
 import ua.levelup.config.ApplicationConfig;
 
 import javax.sql.DataSource;
@@ -12,8 +14,9 @@ import java.sql.SQLException;
 
 //При xml-конфигурировании мы бы использовали аннотацию @ImportResource
 //@ImportResource({"classpath:context/app-context.xml"})
-@Configuration
+@ContextConfiguration
 @Import({ApplicationConfig.class})
+@WebAppConfiguration
 @Profile("test")
 public class TestContextConfig {
 

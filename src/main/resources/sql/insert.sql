@@ -24,6 +24,7 @@ INSERT INTO categories (id, category_name, category_parent_id) VALUES (16,'Baitr
 INSERT INTO categories (id, category_name, category_parent_id) VALUES (17,'Closed Face Reels',4);
 INSERT INTO categories (id, category_name, category_parent_id) VALUES (18,'Bass Rods',5);
 INSERT INTO categories (id, category_name, category_parent_id) VALUES (19,'Boat Rods',5);
+INSERT INTO categories (id, category_name, category_parent_id) VALUES (20,'Ultralight Rods',5);
 
 INSERT INTO manufacturers (id, manufacturer_name) VALUES (1,'Daiwa');
 INSERT INTO manufacturers (id, manufacturer_name) VALUES (2,'Yo-zuri');

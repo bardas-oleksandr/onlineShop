@@ -42,8 +42,7 @@ public class ProductRestController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public @ResponseBody
-    ProductViewDto create(@Valid @RequestBody ProductCreateDto productCreateDto,
-                          BindingResult result) {
+    ProductViewDto create(@Valid @RequestBody ProductCreateDto productCreateDto, BindingResult result) {
         controllerUtils.checkValidationViolations(result);
         try {
             return productService.create(productCreateDto);
@@ -81,8 +80,8 @@ public class ProductRestController {
     @PutMapping(value = ID)
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
-    ProductViewDto update(@Valid @RequestBody ProductCreateDto productCreateDto,
-                               BindingResult result, @PathVariable("id") int productId) {
+    ProductViewDto update(@Valid @RequestBody ProductCreateDto productCreateDto
+            , BindingResult result, @PathVariable("id") int productId) {
         controllerUtils.checkValidationViolations(result);
         try {
             return productService.update(productCreateDto, productId);
