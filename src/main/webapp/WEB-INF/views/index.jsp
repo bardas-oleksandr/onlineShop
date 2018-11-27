@@ -11,10 +11,26 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 		<title>Online shop</title>
 		<link href="${pageContext.request.contextPath}/resources/css/index_styles.css" type="text/css" rel="stylesheet">
 	</head>
 	<body>
+
+    <script type="text/javascript">
+        function selectSubcategory(){
+            var subcategorySelect = $('select[name="subcategoryId"]');
+            var id_category = $('select[name="categoryId"]').val();
+
+            $.getJSON('http://localhost:8080/onlineShop/rest/category/parent/1', {action:'getSubcategory', categoryId:select.value}, function(subcategoryList){
+                subcategorySelect.html('');
+
+                $.each(subcategoryList, function(i){
+                    subcategorySelect.append('<option value="' + i + '">' + i + '</option>');
+                });
+            });
+        };
+    </script>
 
         <!--TOP SIDE BAR-->
 	    <nav class="navbar navbar-light bg-light">
@@ -344,7 +360,7 @@
         	            <spring:message code="category_label"/>
         	        </label>
         	        <div class="input-group mb-3">
-                        <select id="searchCategoryId" name="categoryId" class="custom-select">
+                        <select id="searchCategoryId" name="categoryId" class="custom-select" onchange="javascript:selectSubcategory();">
                             <option selected
                                 <c:if test="${sessionScope.searchParams.categoryId == 0}">
                                     selected
@@ -369,13 +385,13 @@
                                     selected
                                 </c:if>
                             value="0"><spring:message code="all"/></option>
-                            <c:forEach var="subcategory" items="${subcategoryList}">
-                                <option
-                                    <c:if test="${sessionScope.searchParams.subcategoryId == subcategory.id}">
-                                        selected
-                                    </c:if>
-                                value=${subcategory.id}>${subcategory.name}</option>
-                            </c:forEach>
+                            <!--<c:forEach var="subcategory" items="${subcategoryList}">-->
+                                <!--<option-->
+                                    <!--<c:if test="${sessionScope.searchParams.subcategoryId == subcategory.id}">-->
+                                        <!--selected-->
+                                    <!--</c:if>-->
+                                <!--value=${subcategory.id}>${subcategory.name}</option>-->
+                            <!--</c:forEach>-->
                         </select>
                     </div>
                     <label>
