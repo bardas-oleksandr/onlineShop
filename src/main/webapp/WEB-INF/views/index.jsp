@@ -22,11 +22,8 @@
         function selectSubcategory(){
             var subcategorySelect = $('select[name="subcategoryId"]');
             var id_category = $('select[name="categoryId"]').val();
-
-            try{
             subcategorySelect.html('');
             subcategorySelect.append('<option selected value="0"><spring:message code="all"/></option>');
-
             jQuery.ajax({
                 type: 'GET',
                 url: '/onlineShop/rest/category/parent/' + id_category,
@@ -35,20 +32,11 @@
                 headers:{'Accept':'application/json', 'Content-Type':'application/json'},
                 dataType: 'json',
                 success: function(subcategoryList){
-                    alert('Success!');
                     $.each(subcategoryList, function(){
                         subcategorySelect.append('<option value="' + this.id + '">' + this.name + '</option>');
                     });
-                },
-                error: function(jqXHR, textStatus, errorThrown){
-                    alert('Error:' + errorThrown.message);
-                }}
-            );
-
-            alert('WE ARE DONE!!!');
-            }catch(err){
-                alert('Ошибка ' + err.name + ":" + err.message + "\n" + err.stack);
-            }
+                }
+            });
         };
     </script>
 
