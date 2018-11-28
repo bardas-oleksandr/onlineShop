@@ -83,7 +83,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     }
 
     @Bean("localeChangeInterceptor")
-    public LocaleChangeInterceptor localeChangeInterceptor(){
+    public LocaleChangeInterceptor localeChangeInterceptor() {
         LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
         localeChangeInterceptor.setParamName("lang");
         return localeChangeInterceptor;
@@ -114,8 +114,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public CookieLocaleResolver cookieLocaleResolver() {
         CookieLocaleResolver cookieLocaleResolver = new CookieLocaleResolver();
         cookieLocaleResolver.setCookieName("locale");
-        cookieLocaleResolver.setDefaultLocale(new Locale("ua","UA"));
-        cookieLocaleResolver.setCookieMaxAge(1440*31);  //срок жизни куки - 1 месяц
+        cookieLocaleResolver.setDefaultLocale(new Locale("ua", "UA"));
+        cookieLocaleResolver.setCookieMaxAge(1440 * 31);  //срок жизни куки - 1 месяц
         return cookieLocaleResolver;
     }
 }

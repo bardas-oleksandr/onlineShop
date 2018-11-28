@@ -27,6 +27,7 @@ public class MainController {
     private static final String LOGIN = "/login";
     private static final String REGISTER = "/register";
     private static final String SUCCESS = "/success";
+    private static final String ERROR = "/error";
     private static final String LOGIN_FAILED = "/loginfailed";
     private static final String VALIDATION_ERROR = "/validationerror";
     private static final String INDEX_PAGE = "index";
@@ -78,6 +79,11 @@ public class MainController {
     @GetMapping(value = SUCCESS)
     public String sucessPage() {
         return SUCCESS_PAGE;
+    }
+
+    @GetMapping(value = ERROR)
+    public String errorPage() {
+        return ERROR_PAGE;
     }
 
     @GetMapping(value = VALIDATION_ERROR)

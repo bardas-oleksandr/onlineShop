@@ -10,10 +10,11 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 		<title>Online shop</title>
 		<link href="${pageContext.request.contextPath}/resources/css/index_styles.css" type="text/css" rel="stylesheet">
+	    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+	    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+	    <script src="${pageContext.request.contextPath}/resources/scripts/scripts.js" type="text/javascript"></script>
 	</head>
 	<body>
 
@@ -22,13 +23,32 @@
             var subcategorySelect = $('select[name="subcategoryId"]');
             var id_category = $('select[name="categoryId"]').val();
 
-            $.getJSON('http://localhost:8080/onlineShop/rest/category/parent/1', {action:'getSubcategory', categoryId:select.value}, function(subcategoryList){
-                subcategorySelect.html('');
+            try{
+            subcategorySelect.html('');
+            subcategorySelect.append('<option selected value="0"><spring:message code="all"/></option>');
 
-                $.each(subcategoryList, function(i){
-                    subcategorySelect.append('<option value="' + i + '">' + i + '</option>');
-                });
-            });
+            jQuery.ajax({
+                type: 'GET',
+                url: '/onlineShop/rest/category/parent/' + id_category,
+                accepts: 'application/json',
+                contentType: 'application/json',
+                headers:{'Accept':'application/json', 'Content-Type':'application/json'},
+                dataType: 'json',
+                success: function(subcategoryList){
+                    alert('Success!');
+                    $.each(subcategoryList, function(){
+                        subcategorySelect.append('<option value="' + this.id + '">' + this.name + '</option>');
+                    });
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    alert('Error:' + errorThrown.message);
+                }}
+            );
+
+            alert('WE ARE DONE!!!');
+            }catch(err){
+                alert('Ошибка ' + err.name + ":" + err.message + "\n" + err.stack);
+            }
         };
     </script>
 
@@ -164,7 +184,7 @@
                                             <spring:message code="category_label"/>
                                         </label>
                                         <div class="input-group mb-3">
-                                            <select name="parentCategoryId" class="custom-select">
+                                            <select name="parentCategoryId" class="custom-select" >
                                                 <c:forEach var="parentCategory" items="${categoryList}">
                                                     <option value=${parentCategory.id}>${parentCategory.name}</option>
                                                 </c:forEach>
@@ -378,20 +398,22 @@
                     <label>
                         <spring:message code="subcategory_label"/>
                     </label>
-                    <div class="input-group mb-3">
+                    <div name="subcategoryIdDiv" class="input-group mb-3">
                         <select id="searchSubcategoryId" name="subcategoryId" class="custom-select">
                             <option
                                 <c:if test="${sessionScope.searchParams.subcategoryId == 0}">
                                     selected
                                 </c:if>
                             value="0"><spring:message code="all"/></option>
-                            <!--<c:forEach var="subcategory" items="${subcategoryList}">-->
-                                <!--<option-->
-                                    <!--<c:if test="${sessionScope.searchParams.subcategoryId == subcategory.id}">-->
-                                        <!--selected-->
-                                    <!--</c:if>-->
-                                <!--value=${subcategory.id}>${subcategory.name}</option>-->
-                            <!--</c:forEach>-->
+                            <c:forEach var="subcategory" items="${subcategoryList}">
+                                <c:if test="${sessionScope.searchParams.categoryId == subcategory.parentCategoryViewDto.id}">
+                                    <option
+                                        <c:if test="${sessionScope.searchParams.subcategoryId == subcategory.id}">
+                                            selected
+                                        </c:if>
+                                    value=${subcategory.id}>${subcategory.name}</option>
+                                </c:if>
+                            </c:forEach>
                         </select>
                     </div>
                     <label>
@@ -614,9 +636,5 @@
                 </c:forEach>
             </div>
         </div>
-
-	    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 	</body>
 </html>

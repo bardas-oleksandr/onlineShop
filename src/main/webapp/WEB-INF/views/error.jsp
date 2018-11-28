@@ -16,8 +16,8 @@
 
 	    <div class="message-style">
     	    <div class="alert alert-danger" role="alert">
-    	        <p><spring:message code="operation_cant_be_performed"/></p>
     	        <c:if test="${not empty message_code}">
+    	            <p><spring:message code="operation_cant_be_performed"/></p>
     	            <p><spring:message code="${message_code}"/></p>
     	        </c:if>
                 <div>
