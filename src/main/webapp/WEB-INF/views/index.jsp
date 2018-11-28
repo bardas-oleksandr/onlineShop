@@ -21,7 +21,7 @@
     <script type="text/javascript">
         function selectSubcategory(){
             var subcategorySelect = $('select[name="subcategoryId"]');
-            var id_category = $('select[name="categoryId"]').val();
+            var id_category = $('select[id="searchCategoryId"]').val();
             subcategorySelect.html('');
             subcategorySelect.append('<option selected value="0"><spring:message code="all"/></option>');
             jQuery.ajax({
