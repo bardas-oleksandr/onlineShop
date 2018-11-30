@@ -12,8 +12,6 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-//При xml-конфигурировании мы бы использовали аннотацию @ImportResource
-//@ImportResource({"classpath:context/app-context.xml"})
 @ContextConfiguration
 @Import({ApplicationConfig.class})
 @WebAppConfiguration

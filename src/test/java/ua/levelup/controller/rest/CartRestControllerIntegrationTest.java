@@ -11,52 +11,6 @@ public class CartRestControllerIntegrationTest {
 
     private static final String PATH = "onlineShop/rest/cart";
 
-//    /*Сценарий: получение текущей корзины товаров;
-//    *           корзине не пуста.
-//    *   Дано:
-//    *       -   Accept = "application/json;charset=UTF-8"
-//    *       -   Content-Type = "application/json;charset=UTF-8"
-//    *       -   url = "/rest/cart"
-//    *   Результат:
-//    *       -   CartViewDto;
-//    *       -   статус ответа = ОК
-//    * */
-//    @Test
-//    public void getTest_givenJSONAcceptAndJSONContentTypeAndCartIsNotEmpty_whenGet_thenOk()
-//            throws Exception {
-//        given()
-//                .log().all()
-//                .header("Accept", MediaType.APPLICATION_JSON_UTF8_VALUE)
-//                .header("Content-Type", MediaType.APPLICATION_JSON_UTF8_VALUE)
-//        .when()
-//                .get(PATH)
-//        .then()
-//                .log().body()
-//                .statusCode(HttpStatus.OK.value());
-//    }
-
-//    /*Сценарий: получение текущей корзины товаров;
-//    *           корзине пуста.
-//    *   Дано:
-//    *       -   Accept = "application/json;charset=UTF-8"
-//    *       -   Content-Type = "application/json;charset=UTF-8"
-//    *       -   url = "/rest/cart"
-//    *   Результат:
-//    *       -   статус ответа = NOT_FOUND
-//    * */
-//    @Test
-//    public void getTest_givenJSONAcceptAndJSONContentTypeAndCartIsEmpty_whenGet_thenNotFound()
-//            throws Exception {
-//        given()
-//                .log().all()
-//                .header("Accept", MediaType.APPLICATION_JSON_UTF8_VALUE)
-//                .header("Content-Type", MediaType.APPLICATION_JSON_UTF8_VALUE)
-//        .when()
-//                .get(PATH)
-//        .then()
-//                .statusCode(HttpStatus.NOT_FOUND.value());
-//    }
-
     /*Сценарий: получение текущей корзины товаров;
     *           параметры http-запроса не соответсвуют ожидаемым.
     *   Дано:
@@ -254,50 +208,6 @@ public class CartRestControllerIntegrationTest {
         .then()
                 .statusCode(HttpStatus.UNSUPPORTED_MEDIA_TYPE.value());
     }
-
-//    /*Сценарий: очистка корзины от товаров;
-//    *           корзина не пуста.
-//    *   Дано:
-//    *       -   Accept = "application/json;charset=UTF-8"
-//    *       -   Content-Type = "application/json;charset=UTF-8"
-//    *       -   url = "/rest/cart"
-//    *   Результат:
-//    *       -   статус ответа = NO_CONTENT
-//    * */
-//    @Test
-//    public void deleteTest_givenJSONAcceptAndJSONContentTypeAndCartNotEmpty_whenDelete_thenNoContent()
-//            throws Exception {
-//        given()
-//                .log().all()
-//                .header("Accept", MediaType.APPLICATION_JSON_UTF8_VALUE)
-//                .header("Content-Type", MediaType.APPLICATION_JSON_UTF8_VALUE)
-//        .when()
-//                .delete(PATH)
-//        .then()
-//                .statusCode(HttpStatus.NO_CONTENT.value());
-//    }
-
-//    /*Сценарий: очистка корзины от товаров;
-//    *           корзина пуста.
-//    *   Дано:
-//    *       -   Accept = "application/json;charset=UTF-8"
-//    *       -   Content-Type = "application/json;charset=UTF-8"
-//    *       -   url = "/rest/cart"
-//    *   Результат:
-//    *       -   статус ответа = NOT_FOUND
-//    * */
-//    @Test
-//    public void deleteTest_givenJSONAcceptAndJSONContentTypeAndEmptyCart_whenDelete_thenNotFound()
-//            throws Exception {
-//        given()
-//                .log().all()
-//                .header("Accept", MediaType.APPLICATION_JSON_UTF8_VALUE)
-//                .header("Content-Type", MediaType.APPLICATION_JSON_UTF8_VALUE)
-//        .when()
-//                .delete(PATH)
-//        .then()
-//                .statusCode(HttpStatus.NOT_FOUND.value());
-//    }
 
     /*Сценарий: очистка корзины от товаров;
     *           параметры http-запроса не соответсвуют ожидаемым.

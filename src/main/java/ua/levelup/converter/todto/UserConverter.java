@@ -9,8 +9,6 @@ import ua.levelup.web.dto.view.UserViewDto;
 /**
  *
  */
-//Если пометить класс каждого конвертера как @Component, тогда Spring
-//сам соберет все конвертеры в Set<Converter<?,?>> и вручную собирать уже не нужно
 @Component("userConverter")
 public class UserConverter implements Converter<User, UserViewDto> {
 

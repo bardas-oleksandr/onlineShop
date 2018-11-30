@@ -12,7 +12,6 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import ua.levelup.dao.factory.ConnectionFactory;
-import ua.levelup.dao.support.DataBaseScriptExecutor;
 import ua.levelup.exception.ApplicationException;
 
 import javax.annotation.Resource;
@@ -43,8 +42,6 @@ public class ApplicationConfig {
     @Autowired
     private GenericObjectPool<Connection> connectionPool;
 
-    //Если пометить класс каждого конвертера как @Component, тогда Spring
-    //сам соберет все конвертеры в Set<Converter<?,?>> и вручную собирать уже не нужно
     @Autowired
     private Set<Converter<?, ?>> converterSet;
 
@@ -56,10 +53,6 @@ public class ApplicationConfig {
         return new BCryptPasswordEncoder();
     }
 
-    //---------------Конфигурирование конвертеров--------------------------------
-    //Бин для получения конвертеров
-    //В Spring MVC уже есть встроенный бин mvcConversionService,
-    //поэтому нам не нужно создавать еще один.
     @Bean("conversionService")
     public ConversionServiceFactoryBean conversionServiceFactoryBean() {
         ConversionServiceFactoryBean factoryBean = new ConversionServiceFactoryBean();
@@ -67,30 +60,6 @@ public class ApplicationConfig {
         return factoryBean;
     }
 
-    //Так как класс каждого конвертера помечен как @Component, то Spring
-    //сам собирает все конвертеры в Set<Converter<?,?>> и вручную собирать уже не нужно
-//    @Bean("converterSet")
-//    public Set<Converter<?, ?>> converterSet() {
-//        Set<Converter<?, ?>> converterSet = new HashSet<>();
-//        converterSet.add(new CategoryCreateDtoConverter());
-//        converterSet.add(new CredentialsCreateDtoConverter());
-//        converterSet.add(new ManufacturerCreateDtoConverter());
-//        converterSet.add(new OrderCreateDtoConverter());
-//        converterSet.add(new OrderPositionCreateDtoConverter());
-//        converterSet.add(new ProductCreateDtoConverter());
-//        converterSet.add(new SearchParamsDtoConverter());
-//        converterSet.add(new UserCreateDtoConverter());
-//        converterSet.add(new CategoryConverter());
-//        converterSet.add(new ManufacturerConverter());
-//        converterSet.add(new OrderConverter());
-//        converterSet.add(new OrderPositionConverter());
-//        converterSet.add(new ProductConverter());
-//        converterSet.add(new UserConverter());
-//        converterSet.add(new ProductInCartToOrderPositionConverter());
-//        return converterSet;
-//    }
-
-    //------------Конфигурирование валидаторов-------------------------------------
     @Bean("validator")
     public LocalValidatorFactoryBean localValidatorFactoryBean() {
         return new LocalValidatorFactoryBean();
@@ -118,16 +87,6 @@ public class ApplicationConfig {
     public Connection connection() throws Exception {
         return connectionPool.borrowObject();
     }
-
-//    @Profile("!test")
-//    public DriverManagerDataSource driverManagerDataSource(){
-//        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-//        dataSource.setDriverClassName(applicationProperties().getProperty("driver"));
-//        dataSource.setUrl(applicationProperties().getProperty("url"));
-//        dataSource.setUsername(applicationProperties().getProperty("username"));
-//        dataSource.setPassword(applicationProperties().getProperty("password"));
-//        return dataSource;
-//    }
 
     @Bean("dataSource")
     @Profile("!test")

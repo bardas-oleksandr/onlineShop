@@ -9,8 +9,6 @@ import ua.levelup.web.dto.view.OrderPositionViewDto;
 /**
  *
  */
-//Если пометить класс каждого конвертера как @Component, тогда Spring
-//сам соберет все конвертеры в Set<Converter<?,?>> и вручную собирать уже не нужно
 @Component("orderPositionConverter")
 public class OrderPositionConverter implements Converter<OrderPosition, OrderPositionViewDto> {
 

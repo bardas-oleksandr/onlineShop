@@ -668,32 +668,6 @@ public class CategoryRestControllerIntegrationTest {
                 .statusCode(HttpStatus.OK.value());
     }
 
-//    /*Сценарий: получение списка категорий товаров заданного уровня;
-//    *           категорий такого уровня нет в БД.
-//    *   Дано:
-//    *       -   level = 1
-//    *       -   Accept = "application/json;charset=UTF-8"
-//    *       -   Content-Type = "application/json;charset=UTF-8"
-//    *       -   url = "/rest/category/level/{id}"
-//    *   Результат:
-//    *       -   статус ответа = NOT_FOUND
-//    * */
-//    @Test
-//    @Sql({"classpath:schema_clean.sql", "classpath:schema_insert_categoryTest.sql"})
-//    public void getAllByLevelTest_givenJSONAcceptAndJSONContentTypeAndNotCorrectId_whenGet_thenNotFound()
-//            throws Exception {
-//        int level = 1;
-//        given()
-//                .log().all()
-//                .pathParam("id", level)
-//                .header("Accept", MediaType.APPLICATION_JSON_UTF8_VALUE)
-//                .header("Content-Type", MediaType.APPLICATION_JSON_UTF8_VALUE)
-//        .when()
-//                .get(PATH + LEVEL + ID)
-//        .then()
-//                .statusCode(HttpStatus.NOT_FOUND.value());
-//    }
-
     /*Сценарий: получение списка категорий товаров заданного уровня;
     *           параметры http-запроса не соответсвуют ожидаемым.
     *   Дано:

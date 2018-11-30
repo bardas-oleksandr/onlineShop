@@ -657,29 +657,6 @@ public class UserRestControllerIntegrationTest {
                 .statusCode(HttpStatus.OK.value());
     }
 
-//    /*Сценарий: получение списка всех пользователей;
-//    *           в базе данных нет пользователей.
-//    *   Дано:
-//    *       -   Accept = "application/json;charset=UTF-8"
-//    *       -   Content-Type = "application/json;charset=UTF-8"
-//    *       -   url = "/rest/user"
-//    *   Результат:
-//    *       -   статус ответа = NOT_FOUND
-//    * */
-//    @Test
-//    @Sql({"classpath:schema_clean.sql", "classpath:schema_insert_userTest.sql"})
-//    public void getAllTest_givenJSONAcceptAndJSONContentTypeAndEmptyDb_whenGet_thenNotFound()
-//            throws Exception {
-//        given()
-//                .log().all()
-//                .header("Accept", MediaType.APPLICATION_JSON_UTF8_VALUE)
-//                .header("Content-Type", MediaType.APPLICATION_JSON_UTF8_VALUE)
-//        .when()
-//                .get(PATH)
-//        .then()
-//                .statusCode(HttpStatus.NOT_FOUND.value());
-//    }
-
     /*Сценарий: получение списка всех пользователей;
     *           параметры http-запроса не соответсвуют ожидаемым.
     *   Дано:

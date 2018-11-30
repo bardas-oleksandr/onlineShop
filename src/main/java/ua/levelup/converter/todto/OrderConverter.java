@@ -15,8 +15,6 @@ import java.util.List;
 /**
  *
  */
-//Если пометить класс каждого конвертера как @Component, тогда Spring
-//сам соберет все конвертеры в Set<Converter<?,?>> и вручную собирать уже не нужно
 @Component("orderConverter")
 public class OrderConverter  implements Converter<Order, OrderViewDto> {
 

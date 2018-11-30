@@ -669,32 +669,6 @@ public class ProductRestControllerIntegrationTest {
                 .statusCode(HttpStatus.OK.value());
     }
 
-//    /*Сценарий: получение фильтрованного списка товаров;
-//    *           в базе данных нет товаров, соответствующие параметрам запроса.
-//    *   Дано:
-//    *       -   Accept = "application/json;charset=UTF-8"
-//    *       -   Content-Type = "application/json;charset=UTF-8"
-//    *       -   url = "/rest/product/search"
-//    *   Результат:
-//    *       -   статус ответа = NOT_FOUND
-//    * */
-//    @Test
-//    @Sql({"classpath:schema_clean.sql", "classpath:schema_insert_productTest.sql"})
-//    public void searchProductsTest_givenJSONAcceptAndJSONContentTypeAndEmptyDb_whenPost_thenNotFound()
-//            throws Exception {
-//        SearchParamsDto searchParamsDto = new SearchParamsDto(100,101
-//                ,8,true,0.5f,200.0f,0);
-//        given()
-//                .log().all()
-//                .header("Accept", MediaType.APPLICATION_JSON_UTF8_VALUE)
-//                .header("Content-Type", MediaType.APPLICATION_JSON_UTF8_VALUE)
-//                .body(searchParamsDto)
-//        .when()
-//                .post(PATH + SEARCH)
-//        .then()
-//                .statusCode(HttpStatus.NOT_FOUND.value());
-//    }
-
     /*Сценарий: получение фильтрованного списка товаров;
     *           параметры http-запроса не соответсвуют ожидаемым.
     *   Дано:

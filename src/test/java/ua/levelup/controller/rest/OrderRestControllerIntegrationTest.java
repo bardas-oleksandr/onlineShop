@@ -17,40 +17,6 @@ public class OrderRestControllerIntegrationTest {
     private static final String USER = "/user";
     private static final String ID = "/{id}";
 
-    //Чтобы этот сценарий заработал, сначала надо добавить в корзину товар
-//    /*Сценарий: сохранение заказа товаров в базу данных;
-//    *           заказ имеет валидные параметры;
-//    *   Дано:
-//    *       -   объект OrderCreateDto
-//    *       -   Accept = "application/json;charset=UTF-8"
-//    *       -   Content-Type = "application/json;charset=UTF-8"
-//    *       -   url = "/rest/order"
-//    *   Результат:
-//    *       -   объект OrderViewDto;
-//    *       -   статус ответа = CREATED
-//    * */
-//    @Test
-//    @Sql({"classpath:schema_clean.sql", "classpath:schema_insert_orderTest.sql"})
-//    public void createTest_givenJSONAcceptAndJSONContentTypeAndCorrectObject_whenPost_thenCreated()
-//            throws Exception {
-//        final String ADDRESS = "address";
-//        OrderCreateDto order = new OrderCreateDto(1,ADDRESS,new Timestamp(1)
-//                ,true,0,0);
-//        given()
-//                .log().all()
-//                .header("Accept", MediaType.APPLICATION_JSON_UTF8_VALUE)
-//                .header("Content-Type", MediaType.APPLICATION_JSON_UTF8_VALUE)
-//                .body(order)
-//        .when()
-//                .post(PATH)
-//        .then()
-//                .log().body()
-//                .statusCode(HttpStatus.CREATED.value())
-//                .assertThat()
-//                .log().body()
-//                .body("address", is(ADDRESS));
-//    }
-
     /*Сценарий: сохранение заказа товаров в базу данных;
     *           заказ имеет не валидные параметры.
     *   Дано:
@@ -604,29 +570,6 @@ public class OrderRestControllerIntegrationTest {
                 .log().body()
                 .statusCode(HttpStatus.OK.value());
     }
-
-//    /*Сценарий: получение списка всех заказов;
-//    *           в базе данных нет заказов.
-//    *   Дано:
-//    *       -   Accept = "application/json;charset=UTF-8"
-//    *       -   Content-Type = "application/json;charset=UTF-8"
-//    *       -   url = "/rest/order"
-//    *   Результат:
-//    *       -   статус ответа = NOT_FOUND
-//    * */
-//    @Test
-//    @Sql({"classpath:schema_clean.sql", "classpath:schema_insert_orderTest.sql"})
-//    public void getAllTest_givenJSONAcceptAndJSONContentTypeAndEmptyDb_whenGet_thenNotFound()
-//            throws Exception {
-//        given()
-//                .log().all()
-//                .header("Accept", MediaType.APPLICATION_JSON_UTF8_VALUE)
-//                .header("Content-Type", MediaType.APPLICATION_JSON_UTF8_VALUE)
-//        .when()
-//                .get(PATH)
-//        .then()
-//                .statusCode(HttpStatus.NOT_FOUND.value());
-//    }
 
     /*Сценарий: получение списка всех заказов;
     *           параметры http-запроса не соответсвуют ожидаемым.

@@ -1,31 +1,29 @@
 1. ЗАПУСК И ТЕСТИРОВАНИЕ ПРИЛОЖЕНИЯ.
-В проекте используется зависимость javax.el-api version 3.0.0
-А плагин tomcat7 использует ту же зависимость но version 2.2
-Поэтому использование плагина tomcat7 для старта этого приложения представляет из себя
-нецелесообразно сложную задачу.
-Вместо этого, можно использовать плагин cargo-maven2-plugin.
-Для разворачивания приложения на сервере - команда cargo:run
-Для выполнения интеграционных тестов - команда mvn clean install -P=integration
+    1.1 Для выполнения юнит- и интеграционных тестов - команда mvn clean install -P=integration
+    1.2 Для разворачивания приложения на сервере - команда mvn cargo:run
+        Доступ к приложению по адресу http://localhost:8080/onlineShop/
 
 
 2. ОПИСАНИЕ ПРОЕКТА
-Users of application might have one of three possible states:
+Пользователи приложения могут находиться в одном из трех возможных состояний:
 -ADMIN
 -ACTIVE
 -BLOCKED
 
-Different user states provide different rights during using of application.
-After mvn liquibase:update is executed, application database will
-contain three users - one for each orderState.
+После старта приложения,в базе данных будет находиться четыре пользователя
 
-Admin credentials:
+Администратор Admin:
 email - admin@gmail.com
 password - admin
 
-Active user credentials:
+Активный пользователь John Doe:
 email - active@gmail.com
 password - 1234
 
-Blocked user credentials:
+Заблокированный пользователь Dr. Evil:
 email - blocked@gmail.com
+password - 1234
+
+Активный пользователь Spiderman:
+email - spider@gmail.com
 password - 1234
